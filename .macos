@@ -1,5 +1,11 @@
 osascript -e 'tell application "System Preferences" to quit'
 
+# Set computer name (as done via System Preferences → Sharing)
+sudo scutil --set ComputerName "Anonymous"
+sudo scutil --set HostName "Anonymous"
+sudo scutil --set LocalHostName "Anonymous"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Anonymous"
+
 # Show the ~/Library folder.
 chflags nohidden ~/Library
 
@@ -23,3 +29,22 @@ defaults write com.apple.Terminal ShowLineMarks -int 0
 
 # Disable automatic emoji substitution (i.e. use plain text smileys)
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+
+
+for app in "Activity Monitor" \
+	"Address Book" \
+	"Calendar" \
+	"cfprefsd" \
+	"Contacts" \
+	"Dock" \
+	"Finder" \
+	"Mail" \
+	"Messages" \
+	"Photos" \
+	"Safari" \
+	"SystemUIServer" \
+	"Terminal" \
+	"iCal"; do
+	killall "${app}" &> /dev/null
+done
+echo "Done. Note that some of these changes require a logout/restart to take effect."

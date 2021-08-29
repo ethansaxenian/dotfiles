@@ -14,6 +14,9 @@ alias config="vi ~/.dotfiles/.zshrc"
 # reloads the terminal
 alias reload="source ~/.zshrc"
 
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
 # colors
 alias ls="ls -FGh"
 alias la="ls -A"
