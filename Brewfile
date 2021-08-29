@@ -1,0 +1,9 @@
+# Apps
+cask 'atom'
+cask 'github'
+cask 'google-chrome'
+cask 'microsoft-word'
+cask 'pycharm'
+cask 'spotify'
+cask 'visual-studio-code'
+cask 'zoom'
