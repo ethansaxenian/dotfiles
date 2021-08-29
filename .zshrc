@@ -2,9 +2,16 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# displays ip address
 alias myip="curl http://ipecho.net/plain; echo"
+
+# opens the zsh config file
 alias config="open ~/.zshrc"
+
+# colors directory names blue
 alias ls="ls -G"
+
+# shows hidden directories
 alias la="ls -a"
 
 function acp(){
@@ -20,6 +27,7 @@ function irao(){
 
 PROMPT='%B%F{red}%1~%f%b %# '
 
+# shows branch name on right if applicable
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
