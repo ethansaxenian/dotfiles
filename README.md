@@ -1,4 +1,4 @@
 ```
-git clone git@github.com:driesvints/dotfiles.git ~/.dotfiles
+git clone https://github.com/ethansaxenian/dotfiles.git ~/.dotfiles
 ~/.dotfiles/fresh.sh
 ```
