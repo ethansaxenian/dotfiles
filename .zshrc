@@ -37,12 +37,22 @@ alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && kil
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
-# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume output volume 100'"
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+alias newbranch="git checkout -b"
+alias gco="git checkout"
+alias ga="git add ."
+alias gc="git commit -m"
+alias gac="git add . && git commit -m"
+alias gpush="git push"
+alias gpu="git push -u origin"
+alias gs="git status"
+alias gb="git branch"
+alias gpull="git pull"
 
 function acp(){
   git add .
@@ -50,7 +60,7 @@ function acp(){
   git push
 }
 
-function irao(){
+function initrepo(){
   git init
   git remote add origin "$1"
 }
