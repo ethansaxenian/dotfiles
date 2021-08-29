@@ -15,8 +15,7 @@ alias reload="source ~/.zshrc"
 alias ls="ls -GF"
 alias la="ls -aGF"
 
-# shows hidden directories
-alias la="ls -a"
+alias activate="source venv/bin/activate"
 
 function acp(){
   git add .
@@ -35,6 +34,19 @@ function saveconfig() {
   cd zshconfig
   acp "update .zshrc"
   cd
+}
+
+# can do "up" or "up x"
+function up {
+  if [[ "$#" < 1 ]] ; then
+    cd ..
+  else
+    CDSTR=""
+    for i in {1..$1} ; do
+      CDSTR="../$CDSTR"
+        done
+      cd $CDSTR
+  fi
 }
 
 PROMPT='%B%F{red}%1~%f%b %# '
