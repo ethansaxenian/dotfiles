@@ -90,8 +90,43 @@ function fs() {
   fi;
 }
 
+function battery_status() {
+  if test ! "$(uname)" = "Darwin"
+    then
+    printf ""
+    exit 0
+  fi
 
-PROMPT='%B%F{red}%~%f%b %# '
+  battstat=$(pmset -g batt)
+  time_left=$(echo $battstat |
+    tail -1 |
+    cut -f2 |
+    awk -F"; " '{print $3}' |
+    cut -d' ' -f1
+  )
+
+  if [[ $(pmset -g ac) == *"No adapter attached."* ]]
+  then
+    emoji='🔋'
+  else
+    emoji='🔌'
+  fi
+
+  if [[ $time_left == *"(no"* || $time_left == *"not"* ]]
+  then
+    time_left='⌛️ '
+  fi
+
+  if [[ $time_left == *"0:00"* ]]
+  then
+    time_left='⚡️ '
+  fi
+
+  printf "\033[1;92m$emoji  $time_left \033[0m"
+}
+
+
+PROMPT='$(battery_status)%B%F{red}%~%f%b %# '
 
 # shows branch name on right if applicable
 autoload -Uz vcs_info
