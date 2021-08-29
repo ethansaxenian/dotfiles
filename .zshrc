@@ -1,6 +1,10 @@
+. "/Users/ethansaxenian/.local/share/lscolors.sh"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias dircolors="gdircolors"
 
 # displays ip address
 alias myip="curl http://ipecho.net/plain; echo"
@@ -11,11 +15,9 @@ alias config="vi ~/zshconfig/.zshrc"
 # reloads the terminal
 alias reload="source ~/.zshrc"
 
-# colors directory names blue
-alias ls="ls -F -G"
-alias la="ls -AF -G"
-#export LSCOLORS='exfxcxdxbxegedabagacad'
-#export LSCOLORS=GxFxCxDxBxegedabagaced
+# colors
+alias ls="ls -FGh"
+alias la="ls -A"
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
 alias activate="source venv/bin/activate"
@@ -88,6 +90,7 @@ function fs() {
     du $arg .[^.]* ./*;
   fi;
 }
+
 
 PROMPT='%B%F{red}%~%f%b %# '
 
