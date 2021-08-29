@@ -6,7 +6,7 @@ export NVM_DIR="$HOME/.nvm"
 alias myip="curl http://ipecho.net/plain; echo"
 
 # opens the zsh config file
-alias config="open ~/.zshrc"
+alias config="vi ~/zshconfig/.zshrc"
 
 # colors directory names blue
 alias ls="ls -G"
@@ -23,6 +23,13 @@ function acp(){
 function irao(){
   git init
   git remote add origin "$1"
+}
+
+function saveconfig() {
+  cd
+  cd zshconfig
+  acp "update .zshrc"
+  cd
 }
 
 PROMPT='%B%F{red}%1~%f%b %# '
