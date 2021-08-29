@@ -90,72 +90,14 @@ function fs() {
 }
 
 
-autoload colors && colors
-# cheers, @ehrenmurdick
-# http://github.com/ehrenmurdick/config/blob/master/zsh/prompt.zsh
-
-if (( $+commands[git] ))
-then
-  git="$commands[git]"
-else
-  git="/usr/bin/git"
-fi
-
-git_branch() {
-  echo $($git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
-}
-
-git_dirty() {
-  if $(! $git status -s &> /dev/null)
-  then
-    echo ""
-  else
-    if [[ $($git status --porcelain) == "" ]]
-    then
-      echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
-    else
-      echo "on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
-    fi
-  fi
-}
-
-git_prompt_info () {
- ref=$($git symbolic-ref HEAD 2>/dev/null) || return
-# echo "(%{\e[0;33m%}${ref#refs/heads/}%{\e[0m%})"
- echo "${ref#refs/heads/}"
-}
-
-need_push () {
-  if [ $($git rev-parse --is-inside-work-tree 2>/dev/null) ]
-  then
-    number=$($git cherry -v origin/$(git symbolic-ref --short HEAD) 2>/dev/null | wc -l | bc)
-
-    if [[ $number == 0 ]]
-    then
-      echo " "
-    else
-      echo " with %{$fg_bold[magenta]%}$number unpushed%{$reset_color%}"
-    fi
-  fi
-}
-
-
-
-export PROMPT='%B%F{cyan}%~%f%b $(git_dirty)$(need_push)%# '
-set_prompt () {
-  export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
-}
-
-precmd() {
-  set_prompt
-}
+PROMPT='%B%F{red}%~%f%b %# '
 
 # shows branch name on right if applicable
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-#RPROMPT=\$vcs_info_msg_0_
+RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%F{green}(%b)%f'
 zstyle ':vcs_info:*' enable git
 
@@ -172,6 +114,9 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' # partial completion suggestions zstyle ':completion:*' list-suffixes zstyle ':completion:*' expand prefix suffix
 
 osascript -e 'tell application "System Preferences" to quit'
+
+# Show the ~/Library folder.
+chflags nohidden ~/Library
 
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
