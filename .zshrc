@@ -125,9 +125,6 @@ git_prompt_info () {
  echo "${ref#refs/heads/}"
 }
 
-# This assumes that you always have an origin named `origin`, and that you only
-# care about one specific origin. If this is not the case, you might want to use
-# `$git cherry -v @{upstream}` instead.
 need_push () {
   if [ $($git rev-parse --is-inside-work-tree 2>/dev/null) ]
   then
@@ -142,11 +139,9 @@ need_push () {
   fi
 }
 
-directory_name() {
-  echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
-}
 
-export PROMPT=$'in $(directory_name) $(git_dirty)$(need_push)\n› '
+
+export PROMPT='%B%F{cyan}%~%f%b $(git_dirty)$(need_push)%# '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
 }
@@ -160,7 +155,7 @@ autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-RPROMPT=\$vcs_info_msg_0_
+#RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%F{green}(%b)%f'
 zstyle ':vcs_info:*' enable git
 
