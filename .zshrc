@@ -139,7 +139,7 @@ function battery_status() {
 }
 
 
-PROMPT='$(battery_status)%B%F{red}%~%f%b %# '
+PROMPT='%B%F{red}%~%f%b %# '
 
 # shows branch name on right if applicable
 autoload -Uz vcs_info
