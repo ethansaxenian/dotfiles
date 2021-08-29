@@ -14,7 +14,9 @@ alias reload="source ~/.zshrc"
 # colors directory names blue
 alias ls="ls -F -G"
 alias la="ls -AF -G"
-export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
+#export LSCOLORS='exfxcxdxbxegedabagacad'
+#export LSCOLORS=GxFxCxDxBxegedabagaced
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
 alias activate="source venv/bin/activate"
 
@@ -73,7 +75,21 @@ function up {
   fi
 }
 
-PROMPT='%B%F{red}%1~%f%b %# '
+# Determine size of a file or total size of a directory
+function fs() {
+  if du -b /dev/null > /dev/null 2>&1; then
+    local arg=-sbh;
+  else
+    local arg=-sh;
+  fi
+  if [[ -n "$@" ]]; then
+    du $arg -- "$@";
+  else
+    du $arg .[^.]* ./*;
+  fi;
+}
+
+PROMPT='%B%F{red}%~%f%b %# '
 
 # shows branch name on right if applicable
 autoload -Uz vcs_info
