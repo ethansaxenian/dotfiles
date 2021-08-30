@@ -1,0 +1,8 @@
+<application>
+  <component name="UISettings">
+    <option name="ACTIVATE_MRU_EDITOR_ON_CLOSE" value="true" />
+    <option name="IDE_AA_TYPE" value="Greyscale" />
+    <option name="OVERRIDE_NONIDEA_LAF_FONTS" value="true" />
+    <option name="SORT_TABS_ALPHABETICALLY" value="true" />
+  </component>
+</application>
