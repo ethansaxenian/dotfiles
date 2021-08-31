@@ -3,6 +3,7 @@
 # Binaries
 brew 'coreutils'
 brew 'git'
+brew 'tree'
 brew 'zsh'
 
 # Apps
