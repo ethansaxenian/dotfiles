@@ -599,6 +599,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .mdb                  38;5;60
 .mde                  38;5;60
 .sqlite               38;5;60
+.sqlite3              38;5;60
 .typelib              38;5;60
 # NetCDF database
 .nc                   38;5;60
