@@ -1,6 +1,8 @@
 # Path to your dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -18,9 +20,9 @@ alias reload="source ~/.zshrc"
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
 # colors
-alias ls="ls -FGh"
+eval `gdircolors ~/.dotfiles/LS_COLORS`
+alias ls="gls --color=auto -Fh"
 alias la="ls -A"
-export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
 alias activate="source venv/bin/activate"
 

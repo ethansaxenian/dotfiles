@@ -1,3 +1,10 @@
+# https://github.com/driesvints/dotfiles/blob/main/Brewfile
+
+# Binaries
+brew 'coreutils'
+brew 'git'
+brew 'zsh'
+
 # Apps
 cask 'atom'
 cask 'github'
