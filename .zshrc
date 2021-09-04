@@ -48,16 +48,27 @@ alias pumpitup="osascript -e 'set volume output volume 100'"
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
-alias newbranch="git checkout -b"
+alias vscode='open "/Applications/Visual Studio Code.app"'
+alias pycharm='open "/Applications/PyCharm CE.app"'
+alias facetime='open "/Applications/FaceTime.app"'
+alias chrome='open "/Applications/Google Chrome.app"'
+alias spotify='open "/Applications/Spotify.app"'
+alias github='open "/Applications/GitHub Desktop.app"'
+alias messages='open "/Applications/Messages.app"'
+alias colorpicker='open "/Applications/Digital Color Meter.app"'
+alias word='open "/Applications/Microsoft Word.app"'
+
+alias gcob="git checkout -b"
 alias gco="git checkout"
 alias ga="git add ."
 alias gc="git commit -m"
 alias gac="git add . && git commit -m"
-alias gpush="git push"
+alias gp="git push"
 alias gpu="git push -u origin"
 alias gs="git status"
 alias gb="git branch"
 alias gpull="git pull"
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 function acp(){
   git add .
@@ -140,6 +151,20 @@ function battery_status() {
   printf "\033[1;92m$emoji  $time_left \033[0m"
 }
 
+#shortcut voor zhs quick-look command
+function ql() {
+  quick-look "$1"
+}
+
+function weather() {
+  city="$1"
+
+  if [ -z "$city" ]; then
+    city="Middlebury"
+  fi
+
+  eval "curl http://wttr.in/${city}"
+}
 
 PROMPT='%B%F{red}%~%f%b %# '
 
