@@ -50,13 +50,14 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 
 alias vscode='open "/Applications/Visual Studio Code.app"'
 alias pycharm='open "/Applications/PyCharm CE.app"'
-alias facetime='open "/Applications/FaceTime.app"'
 alias chrome='open "/Applications/Google Chrome.app"'
+alias word='open "/Applications/Microsoft Word.app"'
 alias spotify='open "/Applications/Spotify.app"'
 alias github='open "/Applications/GitHub Desktop.app"'
-alias messages='open "/Applications/Messages.app"'
-alias colorpicker='open "/Applications/Digital Color Meter.app"'
-alias word='open "/Applications/Microsoft Word.app"'
+alias facetime='open "/System/Applications/FaceTime.app"'
+alias messages='open "/System/Applications/Messages.app"'
+alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
+
 
 alias gcob="git checkout -b"
 alias gco="git checkout"
