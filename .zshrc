@@ -23,6 +23,8 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 eval `gdircolors ~/.dotfiles/LS_COLORS`
 alias ls="gls --color=auto -Fh"
 alias la="ls -A"
+alias ll="ls -l"
+alias lla="ls -lA"
 
 alias activate="source venv/bin/activate"
 
