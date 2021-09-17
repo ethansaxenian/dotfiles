@@ -90,6 +90,11 @@ function saveconfig() {
   cd
 }
 
+# starts a virtual maching
+function startvm() {
+  VBoxManage startvm "$1"
+}
+
 # can do "up" or "up x"
 function up {
   if [[ "$#" < 1 ]] ; then
