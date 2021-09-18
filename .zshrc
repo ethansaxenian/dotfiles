@@ -26,6 +26,8 @@ alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
 
+alias v="vim"
+
 alias activate="source venv/bin/activate"
 
 # Recursively delete `.DS_Store` files
@@ -60,18 +62,27 @@ alias facetime='open "/System/Applications/FaceTime.app"'
 alias messages='open "/System/Applications/Messages.app"'
 alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
 
-
-alias gcob="git checkout -b"
-alias gco="git checkout"
 alias ga="git add ."
-alias gc="git commit -m"
 alias gac="git add . && git commit -m"
+alias gb="git branch"
+alias gc="git commit -m"
+alias gco="git checkout"
+alias gcob="git checkout -b"
+alias gf="git fetch"
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias grst="git reset ."
 alias gp="git push"
 alias gpu="git push -u origin"
-alias gs="git status"
-alias gb="git branch"
-alias gpull="git pull"
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gpl="git pull"
+alias gs="git status -sb"
+alias gst="git stash"
+alias gstp="git stash pop"
+
+alias sva="svn add"
+alias svc="svn commit -m"
+alias svs="svn status"
+alias svu="svn update"
+
 
 function acp(){
   git add .
@@ -79,15 +90,17 @@ function acp(){
   git push
 }
 
-function initrepo(){
+function ginit(){
   git init
   git remote add origin "$1"
+	git add .
+	git commit -m "initial commit"
+	git push -u origin main
 }
 
 # saves this config file to github
 function saveconfig() {
-  cd
-  cd .dotfiles
+  cd ~/.dotfiles
   acp "update .zshrc"
   cd
 }

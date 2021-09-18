@@ -18,5 +18,9 @@ brew bundle
 rm -rf $HOME/.zshrc
 ln -s $HOME/.dotfiles/.zshrc $HOME/.zshrc
 
+# Removes .gitconfig from $HOME (if it exists) and symlinks the .gitconfig file from the .dotfiles
+rm -rf $HOME/.gitconfig
+ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
+
 # Set macOS preferences - we will run this last because this will reload the shell
 source .macos
