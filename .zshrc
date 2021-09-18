@@ -21,6 +21,8 @@ alias reload="source ~/.zshrc"
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
+alias dotfiles="cd ~/.dotfiles"
+
 # colors
 eval `gdircolors ~/.dotfiles/LS_COLORS`
 alias ls="gls --color=auto -Fh"
