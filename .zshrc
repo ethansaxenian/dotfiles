@@ -7,6 +7,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+alias startvm="VBoxManage startvm CS315"
+
 # displays ip address
 alias myip="curl http://ipecho.net/plain; echo"
 
@@ -103,11 +105,6 @@ function saveconfig() {
   cd ~/.dotfiles
   acp "update .zshrc"
   cd
-}
-
-# starts a virtual maching
-function startvm() {
-  VBoxManage startvm "$1"
 }
 
 # can do "up" or "up x"
