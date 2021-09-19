@@ -168,6 +168,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 *known_hosts          1
 .ini                  1
 .plist                1
+# macOS config
+.macos 								1
 # bash environment config
 .profile              1
 .bash_profile         1
@@ -225,6 +227,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # python
 .py                   38;5;41
 .ipynb                38;5;41
+.pyc                  38;5;240
+.pyi									38;5;240
 # ruby
 .rb                   38;5;41
 .gemspec              38;5;41
@@ -339,8 +343,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .zig                  38;5;81
 # V
 .v                    38;5;81
-# Python
-.pyc                  38;5;240
 # }}}
 # orchestration {{{2
 .tf                   38;5;168
@@ -385,6 +387,9 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 *Makefile             38;5;155
 *MANIFEST             38;5;243
 *pm_to_blib           38;5;240
+# Dependencies
+*Gemfile							38;5;9;1
+*Brewfile							38;5;9;1
 # Functional Configuration
 .nix                  38;5;155
 .dhall                38;5;178
@@ -413,6 +418,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .cdr                  38;5;97
 .flif                 38;5;97
 .gif                  38;5;97
+.heic									38;5;97
 .icns                 38;5;97
 .ico                  38;5;97
 .jpeg                 38;5;97
