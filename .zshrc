@@ -65,6 +65,7 @@ alias github='open "/Applications/GitHub Desktop.app"'
 alias facetime='open "/System/Applications/FaceTime.app"'
 alias messages='open "/System/Applications/Messages.app"'
 alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
+alias blender='open "/Applications/Blender.app"'
 
 alias ga="git add ."
 alias gac="git add . && git commit -m"
