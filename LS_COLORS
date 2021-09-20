@@ -765,6 +765,9 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .wrl                  38;5;216
 # }}}
 # unsorted {{{1
+# Virtual Box
+.vbox									38;5;132
+.vdi  								38;5;132
 # Portable Object Translation for GNU Gettext
 .pot                  38;5;7
 # CAD files for printed circuit boards
