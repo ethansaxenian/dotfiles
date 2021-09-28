@@ -123,6 +123,11 @@ function up {
   fi
 }
 
+function mkcd {
+	mkdir -p $1
+	cd $1
+}
+
 # Determine size of a file or total size of a directory
 function fs() {
   if du -b /dev/null > /dev/null 2>&1; then
@@ -170,11 +175,6 @@ function battery_status() {
   fi
 
   printf "\033[1;92m$emoji  $time_left \033[0m"
-}
-
-#shortcut voor zhs quick-look command
-function ql() {
-  quick-look "$1"
 }
 
 function weather() {
