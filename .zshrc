@@ -7,6 +7,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
 alias startvm="VBoxManage startvm CS315"
 
 # displays ip address
@@ -187,7 +190,7 @@ function weather() {
   eval "curl http://wttr.in/${city}"
 }
 
-PROMPT='%B%F{red}%~%f%b %# '
+PROMPT='%B%F{red}%.%f%b %# '
 
 # shows branch name on right if applicable
 autoload -Uz vcs_info
