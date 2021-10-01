@@ -110,7 +110,6 @@ function ginit(){
 function saveconfig() {
   cd ~/.dotfiles
   acp "update .zshrc"
-  cd
 }
 
 # can do "up" or "up x"
