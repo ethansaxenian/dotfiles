@@ -4,6 +4,7 @@
 brew 'coreutils'
 brew 'git'
 brew 'tree'
+brew 'vim'
 brew 'zsh'
 
 # Apps

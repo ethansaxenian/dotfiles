@@ -91,6 +91,9 @@ alias svc="svn commit -m"
 alias svs="svn status"
 alias svu="svn update"
 
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
 
 function acp(){
   git add .
@@ -187,6 +190,25 @@ function weather() {
   fi
 
   eval "curl http://wttr.in/${city}"
+}
+
+# display a list of supported colors
+function lscolors {
+	((cols = $COLUMNS - 4))
+	s=$(printf %${cols}s)
+	for i in {000..$(tput colors)}; do
+		echo -e $i $(tput setaf $i; tput setab $i)${s// /=}$(tput op);
+	done
+}
+
+function apod {
+  dateparam="?date=${1}"
+
+  if [ -z "$1" ]; then
+    dateparam=""
+  fi
+
+  open $(curl -s "https://apodapi.herokuapp.com/api/${dateparam}" | python3 -c "import sys, json; print(json.load(sys.stdin)['apod_site'])")s
 }
 
 PROMPT='%B%F{red}%.%f%b %# '
