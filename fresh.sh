@@ -22,5 +22,9 @@ ln -s $HOME/.dotfiles/.zshrc $HOME/.zshrc
 rm -rf $HOME/.gitconfig
 ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
 
+# Removes .vimrc from $HOME (if it exists) and symlinks the .vimrc file from the .dotfiles
+rm -rf $HOME/.vimrc
+ln -s $HOME/.dotfiles/.vimrc $HOME/.vimrc
+
 # Set macOS preferences - we will run this last because this will reload the shell
 source .macos
