@@ -3,10 +3,6 @@ export DOTFILES=$HOME/.dotfiles
 
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
@@ -97,7 +93,7 @@ alias svs="svn status"
 alias svu="svn update"
 
 # Print each PATH entry on a separate line
-alias path='echo -e ${PATH//:/\\n}'
+alias path='echo $PATH | tr ":" "\n"'
 
 
 function acp(){
@@ -232,3 +228,8 @@ setopt CORRECT_ALL
 autoload -Uz compinit && compinit
 # case insensitive path-completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+
+
+
+# remove uniques from $PATH
+typeset -aU path
