@@ -16,7 +16,7 @@ alias startvm="VBoxManage startvm CS315"
 alias myip="curl http://ipecho.net/plain; echo"
 
 # opens the zsh config file for editing
-alias config="vi ~/.dotfiles/.zshrc"
+alias config="v ~/.dotfiles/.zshrc"
 
 # reloads the terminal
 alias reload="source ~/.zshrc"
@@ -70,9 +70,14 @@ alias messages='open "/System/Applications/Messages.app"'
 alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
 alias blender='open "/Applications/Blender.app"'
 
+alias grep="grep --color=auto"
+alias m="make"
+alias mc="make clean"
+
 alias ga="git add ."
 alias gac="git add . && git commit -m"
 alias gb="git branch"
+alias gbd="git branch -d"
 alias gc="git commit -m"
 alias gco="git checkout"
 alias gcob="git checkout -b"
@@ -208,7 +213,7 @@ function apod {
     dateparam=""
   fi
 
-  open $(curl -s "https://apodapi.herokuapp.com/api/${dateparam}" | python3 -c "import sys, json; print(json.load(sys.stdin)['apod_site'])")s
+  open $(curl -s "https://apodapi.herokuapp.com/api/${dateparam}" | python3 -c "import sys, json; print(json.load(sys.stdin)['apod_site'])")
 }
 
 PROMPT='%B%F{red}%.%f%b %# '
