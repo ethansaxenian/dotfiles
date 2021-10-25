@@ -114,12 +114,6 @@ function ginit(){
 	git push -u origin main
 }
 
-# saves this config file to github
-function saveconfig() {
-  cd ~/.dotfiles
-  acp "update .zshrc"
-}
-
 # can do "up" or "up x"
 function up {
   if [[ "$#" < 1 ]] ; then
