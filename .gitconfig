@@ -6,8 +6,7 @@
   defaultBranch = main
 [color]
 	ui = auto
-[filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+[core]
+  editor = vim
+[credential]
+	helper = osxkeychain

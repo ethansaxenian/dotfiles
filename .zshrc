@@ -1,3 +1,5 @@
+export EDITOR="vim"
+
 # Path to your dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
@@ -24,7 +26,7 @@ alias dotfiles="cd ~/.dotfiles"
 
 # colors
 eval `gdircolors ~/.dotfiles/LS_COLORS`
-alias ls="gls --color=auto -Fh"
+alias ls="gls --color -Fh"
 alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
@@ -70,19 +72,20 @@ alias grep="grep --color=auto"
 alias m="make"
 alias mc="make clean"
 
-alias ga="git add ."
-alias gac="git add . && git commit -m"
+alias ga="git add -A"
+alias gac="git add -A && git commit -m"
 alias gb="git branch"
 alias gbd="git branch -d"
 alias gc="git commit -m"
 alias gco="git checkout"
 alias gcob="git checkout -b"
+alias gd="git diff --color | sed 's/^\([^-+ ]*\)[-+ ]/\\1/' | less -r"
 alias gf="git fetch"
+alias gl="git pull --prune"
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias grst="git reset ."
 alias gp="git push"
 alias gpu="git push -u origin"
-alias gpl="git pull"
 alias gs="git status -sb"
 alias gst="git stash"
 alias gstp="git stash pop"
@@ -95,9 +98,13 @@ alias svu="svn update"
 # Print each PATH entry on a separate line
 alias path='echo $PATH | tr ":" "\n"'
 
+alias brewup='brew update && brew upgrade && brew cleanup'
+alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
+alias sysup='sudo softwareupdate -i -a'
+
 
 function acp(){
-  git add .
+  git add -A
   git commit -m "$1"
   git push
 }
@@ -105,7 +112,7 @@ function acp(){
 function ginit(){
   git init
   git remote add origin "$1"
-	git add .
+	git add -A
 	git commit -m "initial commit"
 	git push -u origin main
 }
@@ -166,15 +173,15 @@ function battery_status() {
 
   if [[ $time_left == *"(no"* || $time_left == *"not"* ]]
   then
-    time_left='⌛️ '
+    time_left='⌛️'
   fi
 
   if [[ $time_left == *"0:00"* ]]
   then
-    time_left='⚡️ '
+    time_left='⚡️'
   fi
 
-  printf "\033[1;92m$emoji  $time_left \033[0m"
+  printf "\033[1;92m$emoji  $time_left\n\033[0m"
 }
 
 function weather() {
@@ -204,6 +211,17 @@ function apod {
   fi
 
   open $(curl -s "https://apodapi.herokuapp.com/api/${dateparam}" | python3 -c "import sys, json; print(json.load(sys.stdin)['apod_site'])")
+}
+
+function man() {
+	env \
+		LESS_TERMCAP_md=$'\e[1;36m' \
+		LESS_TERMCAP_me=$'\e[0m' \
+		LESS_TERMCAP_se=$'\e[0m' \
+		LESS_TERMCAP_so=$'\e[1;40;92m' \
+		LESS_TERMCAP_ue=$'\e[0m' \
+		LESS_TERMCAP_us=$'\e[1;32m' \
+			man "$@"
 }
 
 PROMPT='%B%F{red}%.%f%b %# '
