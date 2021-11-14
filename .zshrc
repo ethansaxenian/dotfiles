@@ -5,8 +5,20 @@ export DOTFILES=$HOME/.dotfiles
 
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
+
+# rerun the previous command with sudo (lol)
+alias ffs="sudo !!"
+
+alias checksize="du -sh ~/* | sort -hr && du -sh ~/.* | sort -hr"
+
+# Personal
+alias coding="cd ~/Documents/Programming"
 
 alias startvm="VBoxManage startvm CS315"
 
@@ -78,7 +90,6 @@ alias gb="git branch"
 alias gbd="git branch -d"
 alias gc="git commit -m"
 alias gco="git checkout"
-alias gcob="git checkout -b"
 alias gd="git diff --color | sed 's/^\([^-+ ]*\)[-+ ]/\\1/' | less -r"
 alias gf="git fetch"
 alias gl="git pull --prune"
@@ -89,6 +100,15 @@ alias gpu="git push -u origin"
 alias gs="git status -sb"
 alias gst="git stash"
 alias gstp="git stash pop"
+
+function gcob {
+  git checkout -b "$1"
+  git push -u origin "$1"
+}
+
+alias n="npm"
+alias ni="npm install"
+alias nd="npm install --save-dev"
 
 alias sva="svn add"
 alias svc="svn commit -m"

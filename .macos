@@ -95,6 +95,9 @@ sudo pmset -c sleep 0
 # Finder: show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
+# Showing Scroll Bars Only When Scrolling
+defaults write com.apple.NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
+
 # Finder: show status bar
 defaults write com.apple.finder ShowStatusBar -bool true
 
@@ -112,6 +115,9 @@ defaults write com.apple.finder QLEnableTextSelection -bool true
 
 # Display full POSIX path as Finder window title
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+# Adds the path bar to the bottom of the finder
+defaults write com.apple.finder ShowPathbar -bool true
 
 # Finder: Disable the warning when changing a file extension"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
@@ -186,6 +192,9 @@ defaults write com.apple.dock show-process-indicators -bool true
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
+# Sets Dock Autohide Time to O Seconds
+defaults write com.apple.dock autohide-time-modifier -int 0
+
 # Don’t animate opening applications from the Dock
 defaults write com.apple.dock launchanim -bool false
 
@@ -224,6 +233,9 @@ defaults write com.apple.dock wvous-br-modifier -int 0
 # Show the main window when launching Activity Monitor
 defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
 
+# Sets Windows Resize Time to the Minimize Possible
+defaults write com.apple.NSGlobalDomain NSWindowResizeTime -float 0.001
+
 # Visualize CPU usage in the Activity Monitor Dock icon
 defaults write com.apple.ActivityMonitor IconType -int 5
 
@@ -260,6 +272,16 @@ defaults write com.google.Chrome DisablePrintPreview -bool true
 
 # Expand the print dialog by default
 defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
+
+# Removes Warning Before Emptying Trash
+defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+# Disables Miniaturize on Double Click
+defaults write com.apple.NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool NO
+
+# Setting Double Click Action to Minimize
+defaults write com.apple.NSGlobalDomain AppleActionOnDoubleClick -string "Minimize"
+
 
 for app in "Activity Monitor" \
 	"Dock" \
