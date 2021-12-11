@@ -99,6 +99,8 @@ alias gp="git push"
 alias gpu="git push -u origin"
 alias gs="git status -sb"
 alias gst="git stash"
+alias gstd="git stash drop"
+alias gstl="git stash list"
 alias gstp="git stash pop"
 
 function gcob {
