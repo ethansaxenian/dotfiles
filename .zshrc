@@ -45,6 +45,7 @@ alias lla="ls -lA"
 
 alias v="vim"
 
+alias py="python3"
 alias activate="source venv/bin/activate"
 
 # Recursively delete `.DS_Store` files
