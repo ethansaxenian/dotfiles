@@ -18,9 +18,9 @@ alias ffs="sudo !!"
 alias checksize="du -sh ~/* | sort -hr && du -sh ~/.* | sort -hr"
 
 # Personal
-alias coding="cd ~/Documents/Programming"
+alias coding="cd ~/Documents/Programming/"
 
-alias startvm="VBoxManage startvm CS315"
+alias startvm="VBoxManage startvm EthanLinux"
 
 # displays ip address
 alias myip="curl http://ipecho.net/plain; echo"
@@ -112,6 +112,7 @@ function gcob {
 alias n="npm"
 alias ni="npm install"
 alias nd="npm install --save-dev"
+alias nu="npm uninstall"
 
 alias sva="svn add"
 alias svc="svn commit -m"
