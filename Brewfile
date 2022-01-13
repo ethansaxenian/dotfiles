@@ -8,7 +8,6 @@ brew 'vim'
 brew 'zsh'
 
 # Apps
-cask 'atom'
 cask 'github'
 cask 'google-chrome'
 cask 'microsoft-word'
@@ -16,4 +15,3 @@ cask 'pycharm'
 cask 'spotify'
 cask 'virtualbox'
 cask 'visual-studio-code'
-cask 'zoom'
