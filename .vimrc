@@ -1,10 +1,21 @@
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
 
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-	Plug 'sheerun/vim-polyglot'	
+	Plug 'sheerun/vim-polyglot'
 	Plug 'flazz/vim-colorschemes'
 	Plug 'arcticicestudio/nord-vim'
 
@@ -33,7 +44,7 @@ set mouse=a
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 
-" Start scrolling four lines before the horizontal window border 
+" Start scrolling four lines before the horizontal window border
 set scrolloff=4
 
 " Turn on the Wild menu
@@ -112,7 +123,7 @@ let g:cpp_member_highlight = 1
 let g:cpp_simple_highlight = 1
 let g:python_highlight_all = 1
 
-colorscheme jellybeans 
+colorscheme jellybeans
 "other colorschemes i like: badwolf
 "autocmd Filetype python colorscheme badwolf
 
@@ -152,7 +163,7 @@ let mapleader = ","
 " Disable highlight when <leader><cr> is pressed
 map <leader><cr> :noh<cr>
 
-" Type jj to exit insert mode quickly 
+" Type jj to exit insert mode quickly
 inoremap jj <esc>
 
 " Press ,, to jump back to the last cursor position.
@@ -180,6 +191,3 @@ nnoremap E $
 " $/^ doesn't do anything
 nnoremap $ <nop>
 nnoremap ^ <nop>
-
-
-
