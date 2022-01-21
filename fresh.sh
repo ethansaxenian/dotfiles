@@ -35,3 +35,6 @@ echo "Symlinking vim colorschemes..."
 rm -rf $HOME/.vim/colors/
 mkdir $HOME/.vim/colors/ -p
 ln -s $DOTFILES/vimcolors/* $HOME/.vim/colors
+
+
+source ~/.zshrc
