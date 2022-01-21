@@ -1,11 +1,11 @@
 #!/bin/sh
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    ./configure-mac.sh
+	$HOME/.dotfiles/configure-mac.sh
 fi
 
 if [[ "$OSTYPE" =~ ^linux ]]; then
-    ./configure-arch.sh
+	$HOME/.dotfiles/configure-arch.sh
 fi
 
 echo "Symlinking .zshrc..."

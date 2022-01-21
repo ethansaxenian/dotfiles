@@ -4,11 +4,11 @@ export EDITOR="vim"
 export DOTFILES=$HOME/.dotfiles
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    source $HOME/.dotfiles/mac.zsh
+	source $HOME/.dotfiles/mac.zsh
 fi
 
 if [[ "$OSTYPE" =~ ^linux ]]; then
-    source $HOME/.dotfiles/arch.zsh
+	source $HOME/.dotfiles/arch.zsh
 fi
 
 # enable aliases to be sudo'ed
