@@ -1,16 +1,27 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
 
+" Plugins
+call plug#begin('~/.vim/plugged')
+
+	Plug 'sheerun/vim-polyglot'	
+	Plug 'flazz/vim-colorschemes'
+	Plug 'arcticicestudio/nord-vim'
+
+call plug#end()
+
 " Sets how many lines of history VIM has to remember
-set history=500
+set history=1000
+
+" automatically re-read files if unmodified inside Vim
+set autoread
+
+" Enable file type detection
+filetype plugin on
+filetype indent on
 
 " Automatic commands
 if has("autocmd")
-	" Enable file type detection
-	filetype on
 	" Treat .md files as Markdown
 	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
@@ -22,9 +33,6 @@ set mouse=a
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Start scrolling four lines before the horizontal window border 
 set scrolloff=4
 
@@ -90,19 +98,28 @@ set title
 " Enable line numbers
 set number
 
+" show command in bottom bar
+set showcmd
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable
+set t_Co=256
 
-try
-	colorscheme desert
-catch
-endtry
+let g:jellybeans_overrides = {
+\    'background': { 'guibg': '000000' },
+\}
+
+let g:cpp_function_highlight = 1
+let g:cpp_member_highlight = 1
+let g:cpp_simple_highlight = 1
+let g:python_highlight_all = 1
+
+colorscheme jellybeans 
+"other colorschemes i like: badwolf
+"autocmd Filetype python colorscheme badwolf
 
 set background=dark
+
+" Enable syntax highlighting
+syntax enable
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -111,18 +128,12 @@ set encoding=utf8
 set ffs=unix,dos,mac
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
 set nobackup
 set nowb
 set noswapfile
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Be smart when using tabs ;)
 set smarttab
 
@@ -134,16 +145,12 @@ set softtabstop=4
 set ai "Auto indent
 set si "Smart indent
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mappings 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
 
 " Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
+map <leader><cr> :noh<cr>
 
 " Type jj to exit insert mode quickly 
 inoremap jj <esc>
@@ -161,3 +168,18 @@ nnoremap N Nzz
 
 " Yank from cursor to the end of line.
 nnoremap Y y$
+
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" move to beginning/end of line
+nnoremap B ^
+nnoremap E $
+
+" $/^ doesn't do anything
+nnoremap $ <nop>
+nnoremap ^ <nop>
+
+
+

@@ -34,7 +34,7 @@
 BLK                   38;5;68
 CAPABILITY            38;5;17
 CHR                   38;5;113;1
-DIR                   38;5;30
+DIR                   38;5;33
 DOOR                  38;5;127
 EXEC                  38;5;208;1
 FIFO                  38;5;126
@@ -760,10 +760,10 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .dwg                  38;5;216
 .ply                  38;5;216
 .wrl                  38;5;216
-# }}} 
+# }}}
 # unsorted {{{1
 # Blender
-.blend                38;5;216                
+.blend                38;5;216
 # Virtual Box
 .vbox		          38;5;132
 .vdi  				  38;5;132
