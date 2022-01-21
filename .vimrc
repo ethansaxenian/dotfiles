@@ -109,7 +109,7 @@ let g:cpp_member_highlight = 1
 let g:cpp_simple_highlight = 1
 let g:python_highlight_all = 1
 
-colorscheme onehalfdark
+colorscheme custom
 
 set background=dark
 
