@@ -13,14 +13,15 @@ set background=dark
 highlight clear
 syntax reset
 
-let g:colors_name="custom"
-let colors_name="custom"
+let g:colors_name="normal"
+let colors_name="normal"
 
 
 let s:black       = { "gui": "#000000", "cterm": "0" }
 let s:red         = { "gui": "#e06c75", "cterm": "168" }
 let s:green       = { "gui": "#98c379", "cterm": "114" }
-let s:yellow      = { "gui": "#e5c07b", "cterm": "180" }
+let s:yellow      = { "gui": "#ffd700", "cterm": "229" }
+let s:orange      = { "gui": "#e5c07b", "cterm": "180" }
 let s:blue        = { "gui": "#61afef", "cterm": "75"  }
 let s:purple      = { "gui": "#c678dd", "cterm": "176" }
 let s:cyan        = { "gui": "#56b6c2", "cterm": "73"  }
@@ -71,12 +72,12 @@ call s:h("LineNr", s:gutter_fg, s:gutter_bg, "")
 call s:h("CursorLineNr", s:fg, "", "")
 
 call s:h("DiffAdd", s:green, "", "")
-call s:h("DiffChange", s:yellow, "", "")
+call s:h("DiffChange", s:orange, "", "")
 call s:h("DiffDelete", s:red, "", "")
 call s:h("DiffText", s:blue, "", "")
 
-call s:h("IncSearch", s:bg, s:yellow, "")
-call s:h("Search", s:bg, s:yellow, "")
+call s:h("IncSearch", s:bg, s:orange, "")
+call s:h("Search", s:bg, s:orange, "")
 
 call s:h("ErrorMsg", s:fg, "", "")
 call s:h("ModeMsg", s:fg, "", "")
@@ -90,9 +91,9 @@ call s:h("PmenuSbar", "", s:selection, "")
 call s:h("PmenuThumb", "", s:fg, "")
 
 call s:h("SpellBad", s:red, "", "")
-call s:h("SpellCap", s:yellow, "", "")
-call s:h("SpellLocal", s:yellow, "", "")
-call s:h("SpellRare", s:yellow, "", "")
+call s:h("SpellCap", s:orange, "", "")
+call s:h("SpellLocal", s:orange, "", "")
+call s:h("SpellRare", s:orange, "", "")
 
 call s:h("StatusLine", s:blue, s:cursor_line, "")
 call s:h("StatusLineNC", s:comment_fg, s:cursor_line, "")
@@ -127,9 +128,9 @@ call s:h("Comment", s:comment_fg, "", "")
 call s:h("Constant", s:cyan, "", "")
 call s:h("String", s:green, "", "")
 call s:h("Character", s:green, "", "")
-call s:h("Number", s:yellow, "", "")
-call s:h("Boolean", s:yellow, "", "")
-call s:h("Float", s:yellow, "", "")
+call s:h("Number", s:orange, "", "")
+call s:h("Boolean", s:orange, "", "")
+call s:h("Float", s:orange, "", "")
 
 call s:h("Identifier", s:red, "", "")
 call s:h("Function", s:blue, "", "")
@@ -142,16 +143,16 @@ call s:h("Operator", s:fg, "", "")
 call s:h("Keyword", s:red, "", "")
 call s:h("Exception", s:purple, "", "")
 
-call s:h("PreProc", s:yellow, "", "")
+call s:h("PreProc", s:orange, "", "")
 call s:h("Include", s:purple, "", "")
 call s:h("Define", s:purple, "", "")
 call s:h("Macro", s:purple, "", "")
-call s:h("PreCondit", s:yellow, "", "")
+call s:h("PreCondit", s:orange, "", "")
 
-call s:h("Type", s:yellow, "", "")
-call s:h("StorageClass", s:yellow, "", "")
-call s:h("Structure", s:yellow, "", "")
-call s:h("Typedef", s:yellow, "", "")
+call s:h("Type", s:orange, "", "")
+call s:h("StorageClass", s:orange, "", "")
+call s:h("Structure", s:orange, "", "")
+call s:h("Typedef", s:orange, "", "")
 
 call s:h("Special", s:blue, "", "")
 call s:h("SpecialChar", s:fg, "", "")

@@ -3,23 +3,23 @@ export EDITOR="vim"
 # Path to your dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
-alias start="startxfce4"
-alias halt="sudo halt -p"
-alias reboot="sudo reboot"
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    source $HOME/.dotfiles/mac.zsh
+fi
+
+if [[ "$OSTYPE" =~ ^linux ]]; then
+    source $HOME/.dotfiles/arch.zsh
+fi
 
 # enable aliases to be sudo'ed
 alias sudo="sudo "
 
 # rerun the previous command with sudo (lol)
-alias ffs='sudo !!'
+alias ffs="sudo !!"
 
 alias v="vim"
 
-alias pac="sudo pacman"
-alias paci="sudo pacman -S"
-alias pacr="sudo pacman -R"
-alias pacu="sudo pacman -Syu"
-alias pacl="sudo pacman -Qe"
+alias vconfig="v ~/.vimrc"
 
 function mkcd() {
   mkdir "$1" && cd "$1";
@@ -31,8 +31,6 @@ alias myip="curl http://ipecho.net/plain; echo"
 # opens the zsh config file for editing
 alias config="vim ~/.zshrc"
 
-alias vc="v ~/.vimrc"
-
 # reloads the terminal
 alias reload="source ~/.zshrc"
 
@@ -41,10 +39,6 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 
 alias dotfiles="cd ~/.dotfiles"
 
-alias my-malloc='LD_PRELOAD=~/CS315/assignment3/my-malloc.so'
-
-eval `dircolors ~/.dotfiles/LS_COLORS`
-alias ls="ls --color=auto -F"
 alias la="ls -Ah"
 alias ll="ls -lh"
 alias lla="ls -lAh"
@@ -52,31 +46,37 @@ alias lla="ls -lAh"
 alias grep="grep --color=auto"
 alias m="make"
 alias mc="make clean"
-alias c="clear"
 
 alias path="echo $PATH | tr ':' '\n'"
 
-alias gcob="git checkout -b"
-alias gco="git checkout"
 alias ga="git add -A"
-alias gc="git commit -m"
 alias gac="git add -A && git commit -m"
+alias gb="git branch"
+alias gbd="git branch -d"
+alias gc="git commit -m"
+alias gco="git checkout"
+alias gd="git diff --color | sed 's/^\([^-+ ]*\)[-+ ]/\\1/' | less -r"
+alias gf="git fetch"
+alias gl="git pull --prune"
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias grst="git reset ."
 alias gp="git push"
 alias gpu="git push -u origin"
 alias gs="git status -sb"
-alias gb="git branch"
-alias gl="git pull --prune"
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gst="git stash"
 alias gstd="git stash drop"
 alias gstl="git stash list"
 alias gstp="git stash pop"
-alias gd="git diff --color | sed 's/^\([^-+ ]*\)[-+ ]/\\1/' | less -r"
 
 function acp(){
   git add -A
   git commit -m "$1"
   git push
+}
+
+function gcob {
+  git checkout -b "$1"
+  git push -u origin "$1"
 }
 
 function ginit(){
@@ -143,6 +143,41 @@ function man() {
 		LESS_TERMCAP_ue=$'\e[0m' \
 		LESS_TERMCAP_us=$'\e[1;32m' \
 			man "$@"
+}
+
+function battery_status() {
+  if test ! "$(uname)" = "Darwin"
+    then
+    printf ""
+    exit 0
+  fi
+
+  battstat=$(pmset -g batt)
+  time_left=$(echo $battstat |
+    tail -1 |
+    cut -f2 |
+    awk -F"; " '{print $3}' |
+    cut -d' ' -f1
+  )
+
+  if [[ $(pmset -g ac) == *"No adapter attached."* ]]
+  then
+    emoji='🔋'
+  else
+    emoji='🔌'
+  fi
+
+  if [[ $time_left == *"(no"* || $time_left == *"not"* ]]
+  then
+    time_left='⌛️'
+  fi
+
+  if [[ $time_left == *"0:00"* ]]
+  then
+    time_left='⚡️'
+  fi
+
+  printf "\033[1;92m$emoji  $time_left\n\033[0m"
 }
 
 PROMPT='%B%F{red}%.%f%b %# '
