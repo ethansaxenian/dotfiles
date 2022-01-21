@@ -15,6 +15,8 @@ ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
 # Removes .vimrc from $HOME (if it exists) and symlinks the .vimrc file from the .dotfiles
 rm -rf $HOME/.vimrc
 ln -s $HOME/.dotfiles/.vimrc $HOME/.vimrc
+# install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 rm -rf $HOME/.gdbinit
 ln -s $HOME/.dotfiles/.gdbinit $HOME/.gdbinit
