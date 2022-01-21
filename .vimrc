@@ -1,17 +1,12 @@
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
 
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
-
 " Plugins
 call plug#begin('~/.vim/plugged')
 
 	Plug 'sheerun/vim-polyglot'
+	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'flazz/vim-colorschemes'
-	Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
@@ -107,19 +102,14 @@ set number
 set showcmd
 
 set t_Co=256
-
-let g:jellybeans_overrides = {
-\    'background': { 'guibg': '000000' },
-\}
+set termguicolors
 
 let g:cpp_function_highlight = 1
 let g:cpp_member_highlight = 1
 let g:cpp_simple_highlight = 1
 let g:python_highlight_all = 1
 
-colorscheme jellybeans
-"other colorschemes i like: badwolf
-"autocmd Filetype python colorscheme badwolf
+colorscheme onehalfdark
 
 set background=dark
 
