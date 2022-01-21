@@ -28,6 +28,8 @@ alias myip="curl http://ipecho.net/plain; echo"
 # opens the zsh config file for editing
 alias config="v ~/.dotfiles/.zshrc"
 
+alias vc="v ~/.vimrc"
+
 # reloads the terminal
 alias reload="source ~/.zshrc"
 
@@ -120,9 +122,9 @@ alias svs="svn status"
 alias svu="svn update"
 
 # Print each PATH entry on a separate line
-alias path='echo $PATH | tr ":" "\n"'
+alias path="echo $PATH | tr ':' '\n'"
 
-alias brewup='brew update && brew upgrade && brew cleanup'
+alias brewup="brew update && brew upgrade && brew cleanup"
 alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
 alias sysup='sudo softwareupdate -i -a'
 
