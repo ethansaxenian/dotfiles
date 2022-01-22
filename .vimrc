@@ -164,18 +164,12 @@ nnoremap j gj
 nnoremap k gk
 
 " move to beginning/end of line
-nnoremap H 0
+nnoremap H ^
 nnoremap L $
 
 " $/0 doesn't do anything
 nnoremap $ <nop>
-nnoremap 0 <nop>
-
-" map d and c with E and B
-nnoremap dL d$
-nnoremap dH d0
-nnoremap cL d$
-nnoremap cH c0
+nnoremap ^ <nop>
 
 " quick reload
 noremap <leader>r :source ~/.vimrc<cr>
