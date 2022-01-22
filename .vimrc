@@ -20,12 +20,6 @@ set autoread
 filetype plugin on
 filetype indent on
 
-" Automatic commands
-if has("autocmd")
-	" Treat .md files as Markdown
-	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-endif
-
 " enable mouse in all modes
 set mouse=a
 
@@ -203,6 +197,7 @@ map <right> <nop>
 
 " d and c now don't copy text - _ is the blackhole buffer
 noremap d "_d
+noremap dd "_dd
 noremap c "_c
 
 " indent visually selected blocks
