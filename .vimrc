@@ -113,6 +113,7 @@ colorscheme mydefault
 autocmd Filetype c colorscheme myc
 autocmd Filetype python colorscheme mypython
 autocmd Filetype javascript colorscheme myjavascript
+autocmd BufRead,BufNewFile *.asm set filetype=asm
 
 set background=dark
 
@@ -172,151 +173,38 @@ nnoremap j gj
 nnoremap k gk
 
 " move to beginning/end of line
-nnoremap B ^
-nnoremap E $
+nnoremap H 0
+nnoremap L $
 
-" $/^ doesn't do anything
+" $/0 doesn't do anything
 nnoremap $ <nop>
-nnoremap ^ <nop>
+nnoremap 0 <nop>
 
-"  Load Once: {{{1
-if exists("g:loaded_hilinks") || &cp
-  finish
-endif
-let g:loaded_hilinks= "v4j"
-if v:version < 700
- echohl WarningMsg
- echo "***warning*** this version of hilinks needs vim 7.0"
- echohl Normal
- finish
-endif
-let s:keepcpo= &cpo
-set cpo&vim
+" map d and c with E and B
+nnoremap dL d$
+nnoremap dH d0
+nnoremap cL d$
+nnoremap cB c0
 
-" ---------------------------------------------------------------------
-"  Initialization: {{{1
-let s:HLTmode       = 0
+" quick reload
+noremap <leader>r :source ~/.vimrc<cr>
 
-" ---------------------------------------------------------------------
-" Public Interface: {{{1
-if !hasmapto('<Plug>HiLinkTrace')
-  map <s-F10>  <Leader>hlt
-  map <unique> <Leader>hlt <Plug>HiLinkTrace
-endif
-map <script> <Plug>HiLinkTrace	:call <SID>HiLinkTrace(0)<CR>
-com! -bang	HLT					call s:HiLinkTrace(<bang>0)
-com!		HLTm				call s:HiLinkTrace(1)
+" quick saving and quitting
+noremap <leader>q :q<cr>
+noremap <leader>w :wq<cr>
+nnoremap <leader>s :w<cr>
+inoremap <leader>s <C-c>:w<cr>
 
-" ---------------------------------------------------------------------
-"  Options: {{{1
-if !exists("g:hilinks_fmtwidth")
- let g:hilinks_fmtwidth= 35
-endif
+" Don't use arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
 
-" ---------------------------------------------------------------------
-" HiLinkTrace: this function traces the highlighting group names {{{1
-"             from transparent/top level through to the bottom
-fun! <SID>HiLinkTrace(always)
-"  call Dfunc("HiLinkTrace(always=".a:always.")")
+" d and c now don't copy text - _ is the blackhole buffer
+noremap d "_d
+noremap c "_c
 
-  " save register a
-  let keep_rega= @a
-
-  " get highlighting linkages into register "a"
-  redir @a
-   silent! hi
-  redir END
-"  call Decho("reg-A now has :hi output")
-
-  " initialize with top-level highlighting
-  let firstlink = synIDattr(synID(line("."),col("."),1),"name")
-  let lastlink  = synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")
-  let translink = synIDattr(synID(line("."),col("."),0),"name")
-"  call Decho("firstlink<".firstlink."> lastlink<".lastlink."> translink<".translink.">")
-
-  " if transparent link isn't the same as the top highlighting link,
-  " then indicate it with a leading "T:"
-  if firstlink != translink
-   let hilink= "T:".translink."->".firstlink
-"   call Decho("firstlink!=translink<".hilink.">")
-  else
-   let hilink= firstlink
-"   call Decho("firstlink==translink<".hilink.">")
-  endif
-
-  " trace through the linkages
-  if firstlink != lastlink
-   let no_overflow= 0
-   let curlink    = firstlink
-"   call Decho("loop#".no_overflow.": hilink<".hilink.">")
-   while curlink != lastlink && no_overflow < 10
-   	let no_overflow = no_overflow + 1
-   	let nxtlink     = substitute(@a,'^.*\<'.curlink.'\s\+xxx links to \(\a\+\).*$','\1','')
-	if nxtlink =~ '\<start=\|\<cterm[fb]g=\|\<gui[fb]g='
-	 let nxtlink= substitute(nxtlink,'^[ \t\n]*\(\S\+\)\s\+.*$','\1','')
-   	 let hilink = hilink ."->". nxtlink
-	 break
-	endif
-"    call Decho("loop#".no_overflow.": curlink<".curlink."> nxtlink<".nxtlink."> hilink<".hilink.">")
-   	let hilink      = hilink ."->". nxtlink
-   	let curlink     = nxtlink
-   endwhile
-"   call Decho("endloop: hilink<".hilink.">")
-  endif
-
-  " Use new synstack() function, available with 7.1 and patch#215
-  if v:version > 701 || ( v:version == 701 && has("patch215"))
-   let syntaxstack = ""
-   let isfirst     = 1
-   let idlist      = synstack(line("."),col("."))
-   if !empty(idlist)
-    for id in idlist
-     if isfirst
-      let syntaxstack= syntaxstack." ".synIDattr(id,"name")
-      let isfirst = 0
-     else
-      let syntaxstack= syntaxstack."->".synIDattr(id,"name")
-     endif
-    endfor
-   endif
-  endif
-
-  " display hilink traces
-  redraw
-  let synid= hlID(lastlink)
-  if !exists("syntaxstack")
-   echo printf("HltTrace: %-".g:hilinks_fmtwidth."s fg<%s> bg<%s>",hilink,synIDattr(synid,"fg"),synIDattr(synid,"bg"))
-  else
-   echo printf("SynStack: %-".g:hilinks_fmtwidth."s  HltTrace: %-".g:hilinks_fmtwidth."s fg<%s> bg<%s>",syntaxstack,hilink,synIDattr(synid,"fg"),synIDattr(synid,"bg"))
-  endif
-
-  " restore register a
-  let @a= keep_rega
-
-  " set up CursorMoved autocmd on bang
-  if a:always
-   if !s:HLTmode
-	" install a CursorMoved highlighting trace
-"	call Decho("install CursorMoved HLT")
-	let s:HLTmode= 1
-	augroup HLTMODE
-	 au!
-	 au CursorMoved * call s:HiLinkTrace(0)
-	augroup END
-   else
-	" remove the CursorMoved highlighting trace
-"	call Decho("remove CursorMoved HLT")
-	let s:HLTmode= 0
-	augroup HLTMODE
-	 au!
-	augroup END
-	augroup! HLTMODE
-   endif
-  endif
-
-"  call Dret("HiLinkTrace : hilink<".hilink.">")
-endfun
-
-let &cpo= s:keepcpo
-" ---------------------------------------------------------------------
-" vim: fdm=marker
+" indent visually selected blocks
+vnoremap < <gv
+vnoremap > >gv

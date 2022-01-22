@@ -9,7 +9,7 @@ let colors_name="myc"
 let s:black       = { "gui": "#000000", "cterm": "0" }
 let s:red         = { "gui": "#e06c75", "cterm": "168" }
 let s:green       = { "gui": "#98c379", "cterm": "114" }
-let s:yellow      = { "gui": "#ffd700", "cterm": "229" }
+let s:yellow      = { "gui": "#ffffaf", "cterm": "229" }
 let s:orange      = { "gui": "#e5c07b", "cterm": "180" }
 let s:blue        = { "gui": "#61afef", "cterm": "75"  }
 let s:purple      = { "gui": "#c678dd", "cterm": "176" }
@@ -144,7 +144,7 @@ call s:h("Structure", s:blue, "", "")
 call s:h("Typedef", s:blue, "", "")
 
 call s:h("Special", s:purple, "", "")
-call s:h("SpecialChar", s:fg, "", "")
+call s:h("SpecialChar", s:orange, "", "")
 call s:h("Tag", s:fg, "", "")
 call s:h("Delimiter", s:fg, "", "")
 call s:h("SpecialComment", s:fg, "", "")
