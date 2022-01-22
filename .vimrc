@@ -26,7 +26,6 @@ set mouse=a
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-
 " Start scrolling four lines before the horizontal window border
 set scrolloff=4
 
@@ -120,12 +119,10 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
 set nobackup
 set nowb
 set noswapfile
-
 
 " Be smart when using tabs ;)
 set smarttab
@@ -184,7 +181,7 @@ nnoremap cH c0
 noremap <leader>r :source ~/.vimrc<cr>
 
 " quick saving and quitting
-noremap <leader>q :q<cr>
+noremap <leader>q :q!<cr>
 noremap <leader>w :wq<cr>
 nnoremap <leader>s :w<cr>
 inoremap <leader>s <C-c>:w<cr>
