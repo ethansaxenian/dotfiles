@@ -178,7 +178,7 @@ nnoremap 0 <nop>
 nnoremap dL d$
 nnoremap dH d0
 nnoremap cL d$
-nnoremap cB c0
+nnoremap cH c0
 
 " quick reload
 noremap <leader>r :source ~/.vimrc<cr>
@@ -195,10 +195,9 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
-" d and c now don't copy text - _ is the blackhole buffer
+" d doesn't copy text: _ is the blackhole buffer
 noremap d "_d
 noremap dd "_dd
-noremap c "_c
 
 " indent visually selected blocks
 vnoremap < <gv
