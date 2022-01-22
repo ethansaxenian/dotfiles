@@ -109,8 +109,10 @@ let g:cpp_member_highlight = 1
 let g:cpp_simple_highlight = 1
 let g:python_highlight_all = 1
 
-colorscheme normal 
-autocmd Filetype c colorscheme c
+colorscheme mydefault
+autocmd Filetype c colorscheme myc
+autocmd Filetype python colorscheme mypython
+autocmd Filetype javascript colorscheme myjavascript
 
 set background=dark
 

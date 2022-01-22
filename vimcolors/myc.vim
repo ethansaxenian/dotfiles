@@ -2,8 +2,8 @@ set background=dark
 highlight clear
 syntax reset
 
-let g:colors_name="c"
-let colors_name="c"
+let g:colors_name="myc"
+let colors_name="myc"
 
 
 let s:black       = { "gui": "#000000", "cterm": "0" }

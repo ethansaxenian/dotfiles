@@ -1,20 +1,9 @@
-" ==============================================================================
-"   Name:        One Half Dark
-"   Author:      Son A. Pham <sp@sonpham.me>
-"   Url:         https://github.com/sonph/onehalf
-"   License:     The MIT License (MIT)
-"
-"   A dark vim color scheme based on Atom's One. See github.com/sonph/onehalf
-"   for installation instructions, a light color scheme, versions for other
-"   editors/terminals, and a matching theme for vim-airline.
-" ==============================================================================
-
 set background=dark
 highlight clear
 syntax reset
 
-let g:colors_name="normal"
-let colors_name="normal"
+let g:colors_name="myjavascript"
+let colors_name="myjavascript"
 
 
 let s:black       = { "gui": "#000000", "cterm": "0" }
@@ -126,21 +115,21 @@ call s:h("Whitespace", s:non_text, "", "")
 call s:h("NonText", s:non_text, "", "")
 call s:h("Comment", s:comment_fg, "", "")
 call s:h("Constant", s:cyan, "", "")
-call s:h("String", s:green, "", "")
+call s:h("String", s:orange, "", "")
 call s:h("Character", s:green, "", "")
 call s:h("Number", s:orange, "", "")
 call s:h("Boolean", s:orange, "", "")
 call s:h("Float", s:orange, "", "")
 
-call s:h("Identifier", s:red, "", "")
-call s:h("Function", s:blue, "", "")
+call s:h("Identifier", s:blue, "", "")
+call s:h("Function", s:yellow, "", "")
 call s:h("Statement", s:purple, "", "")
 
 call s:h("Conditional", s:purple, "", "")
 call s:h("Repeat", s:purple, "", "")
 call s:h("Label", s:purple, "", "")
 call s:h("Operator", s:fg, "", "")
-call s:h("Keyword", s:red, "", "")
+call s:h("Keyword", s:blue, "", "")
 call s:h("Exception", s:purple, "", "")
 
 call s:h("PreProc", s:orange, "", "")
@@ -149,8 +138,8 @@ call s:h("Define", s:purple, "", "")
 call s:h("Macro", s:purple, "", "")
 call s:h("PreCondit", s:orange, "", "")
 
-call s:h("Type", s:orange, "", "")
-call s:h("StorageClass", s:orange, "", "")
+call s:h("Type", s:blue, "", "")
+call s:h("StorageClass", s:blue, "", "")
 call s:h("Structure", s:orange, "", "")
 call s:h("Typedef", s:orange, "", "")
 
