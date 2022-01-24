@@ -8,7 +8,7 @@ let colors_name="myc"
 
 let s:black       = { "gui": "#000000", "cterm": "0" }
 let s:red         = { "gui": "#e06c75", "cterm": "168" }
-let s:green       = { "gui": "#98c379", "cterm": "114" }
+let s:green       = { "gui": "#00d700", "cterm": "114" }
 let s:yellow      = { "gui": "#ffffaf", "cterm": "229" }
 let s:orange      = { "gui": "#e5c07b", "cterm": "180" }
 let s:blue        = { "gui": "#61afef", "cterm": "75"  }
