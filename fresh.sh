@@ -33,5 +33,4 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 echo "Symlinking vim colorschemes..."
 # add custom colorscheme
 rm -rf $HOME/.vim/colors/
-mkdir $HOME/.vim/colors/ -p
-ln -s $DOTFILES/vimcolors/* $HOME/.vim/colors
+ln -s $DOTFILES/colors $HOME/.vim/colors
