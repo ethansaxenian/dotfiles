@@ -23,6 +23,8 @@ filetype indent on
 " enable mouse in all modes
 set mouse=a
 
+set foldmethod=marker
+
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -97,15 +99,9 @@ set showcmd
 set t_Co=256
 set termguicolors
 
-let g:cpp_function_highlight = 1
-let g:cpp_member_highlight = 1
-let g:cpp_simple_highlight = 1
-let g:python_highlight_all = 1
+let g:python_highlight_operators = 0
 
-colorscheme mydefault
-autocmd Filetype c colorscheme myc
-autocmd Filetype python colorscheme mypython
-autocmd Filetype javascript colorscheme myjavascript
+colorscheme mycolors
 autocmd BufRead,BufNewFile *.asm set filetype=asm
 
 set background=dark
@@ -135,6 +131,7 @@ set softtabstop=4
 set ai "Auto indent
 set si "Smart indent
 
+" MAPPINGS {{{
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
@@ -193,3 +190,30 @@ noremap dd "_dd
 " indent visually selected blocks
 vnoremap < <gv
 vnoremap > >gv
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+" }}}
+
+
+function! SyntaxItem()
+  return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+
+if has('statusline')
+  set statusline=%#StatusLine2#				   " set highlighting
+  set statusline+=%-2.2n\                      " buffer number
+  set statusline+=%#StatusLine1#               " set highlighting
+  set statusline+=%f\                          " file name
+  set statusline+=%#StatusLine2#               " set highlighting
+  set statusline+=%h%m%r%w\                    " flags
+  set statusline+=%{strlen(&ft)?&ft:'none'}\ \ " file type
+  set statusline+=%{SyntaxItem()}              " syntax highlight group under cursor
+  set statusline+=%=                           " ident to the right
+  set statusline+=%-7.(%l,%c%V%)\ %<%P         " cursor position/offset
+endif
+
+set laststatus=2
