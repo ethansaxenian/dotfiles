@@ -162,11 +162,13 @@ nnoremap k gk
 
 " move to beginning/end of line
 nnoremap H ^
+vnoremap H ^
 nnoremap L $
+vnoremap L $
 
 " use H and L with c and d
-nnoremap cH c^
-nnoremap cL c$
+nnoremap cH "_c^
+nnoremap cL "_c$
 nnoremap dH "_d^
 nnoremap dL "_d$
 
@@ -189,9 +191,11 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
-" d doesn't copy text: _ is the blackhole buffer
+" d/c don't copy text: _ is the blackhole buffer
 noremap d "_d
 noremap dd "_dd
+noremap c "_c
+noremap cc "_cc
 
 " indent visually selected blocks
 vnoremap < <gv

@@ -11,6 +11,7 @@ let s:red         = { "gui": "#e06c75", "cterm": "168" }
 let s:green       = { "gui": "#87af5f", "cterm": "107" }
 let s:forestgreen = { "gui": "#00af87", "cterm": "36"  }
 let s:yellow      = { "gui": "#ffffaf", "cterm": "229" }
+let s:dullyellow  = { "gui": "#ffffd7", "cterm": "230" }
 let s:deeporange  = { "gui": "#d78700", "cterm": "172" }
 let s:orange      = { "gui": "#ffaf87", "cterm": "216" }
 let s:lightorange = { "gui": "#ffd787", "cterm": "222" }
@@ -20,7 +21,7 @@ let s:lightblue   = { "gui": "#6897BB", "cterm": "153" }
 let s:purple      = { "gui": "#c678dd", "cterm": "176" }
 let s:softpurple  = { "gui": "#8282BB", "cterm": "104" }
 let s:brightpink  = { "gui": "#af5faf", "cterm": "164" }
-let s:pink		  = { "gui": "#af5faf", "cterm": "133" }
+let s:pink		    = { "gui": "#af5faf", "cterm": "133" }
 let s:cyan        = { "gui": "#56b6c2", "cterm": "73"  }
 let s:white       = { "gui": "#ffffff", "cterm": "15"  }
 
@@ -178,8 +179,8 @@ call s:h("cFormat", s:lightblue, "", "")
 call s:h("cSpecial", s:lightorange, "", "")
 call s:h("cSpecialCharacter", s:lightorange, "", "")
 
-call s:h("cNumber", s:yellow, "", "")
-call s:h("cFloat", s:yellow, "", "")
+call s:h("cNumber", s:dullyellow, "", "")
+call s:h("cFloat", s:dullyellow, "", "")
 
 call s:h("cCommentStart", s:green, "", "")
 call s:h("cComment", s:green, "", "")
@@ -229,9 +230,9 @@ call s:h("pythonFunctionCall", s:fg, "", "")
 "and in is not or
 call s:h("pythonOperator", s:deeporange, "", "")
 
-call s:h("pythonDecorator", s:yellow, "", "")
-call s:h("pythonDecoratorName", s:yellow, "", "")
-call s:h("pythonDottedName", s:yellow, "", "")
+call s:h("pythonDecorator", s:dullyellow, "", "")
+call s:h("pythonDecoratorName", s:dullyellow, "", "")
+call s:h("pythonDottedName", s:dullyellow, "", "")
 
 call s:h("pythonComment", s:comment_fg, "", "")
 call s:h("pythonTodo", s:bg, s:fg, "")
@@ -277,8 +278,8 @@ call s:h("jsTemplateString", s:orange, "", "")
 
 call s:h("jsComment", s:green, "", "")
 
-call s:h("jsNumber", s:yellow, "", "")
-call s:h("jsFloat", s:yellow, "", "")
+call s:h("jsNumber", s:dullyellow, "", "")
+call s:h("jsFloat", s:dullyellow, "", "")
 
 call s:h("jsBooleanTrue", s:darkblue, "", "")
 call s:h("jsBooleanFalse", s:darkblue, "", "")
@@ -334,4 +335,95 @@ call s:h("jsxExpressionBlock", s:blue, "", "")
 call s:h("jsxAttrib", s:lightblue, "", "")
 call s:h("jsxElement", s:fg, "", "")
 call s:h("jsxTagName", s:blue, "", "")
+" }}}
+" Css Syntax {{{
+call s:h("cssBraces", s:fg, "", "")
+call s:h("cssFunctionName", s:yellow, "", "")
+call s:h("cssFunctionComma", s:fg, "", "")
+call s:h("cssAttrComma", s:fg, "", "")
+call s:h("cssComment", s:green, "", "")
+call s:h("cssHacks", s:blue, "", "")
+call s:h("cssImportant", s:blue, "", "")
+call s:h("cssAtRule", s:purple, "", "")
+
+call s:h("cssClassName", s:lightorange, "", "")
+hi! link cssClassNameDot cssClassName
+hi! link cssPseudoClassId cssClassName
+hi! link cssPseudoClass cssClassName
+hi! link cssTagName cssClassName
+hi! link cssVendor cssClassName
+
+call s:h("cssColor", s:orange, "", "")
+hi! link cssAttrRegion cssColor
+hi! link cssFontAttr cssColor
+hi! link cssFlexibleBoxAttr cssColor
+hi! link cssCommonAttr cssColor
+hi! link cssBorderAttr cssColor
+hi! link cssUIAttr cssColor
+hi! link cssBoxAttr cssColor
+hi! link cssMediaAttr cssColor
+hi! link cssMultiColumnAttr cssColor
+hi! link cssTextAttr cssColor
+hi! link cssFunction cssColor
+hi! link cssPositioningAttr cssColor
+hi! link cssTransitionAttr cssColor
+hi! link cssAnimationAttr cssColor
+
+call s:h("cssBoxProp", s:lightblue, "", "")
+hi! link cssListProp cssBoxProp
+hi! link cssMediaProp cssBoxProp
+hi! link cssBackgroundProp cssBoxProp
+hi! link cssBorderProp cssBoxProp
+hi! link cssFontProp cssBoxProp
+hi! link cssTextProp cssBoxProp
+hi! link cssUIProp cssBoxProp
+hi! link cssTransitionProp cssBoxProp
+hi! link cssPositioningProp cssBoxProp
+hi! link cssFlexibleBoxProp cssBoxProp
+hi! link cssTransformProp cssBoxProp
+hi! link cssAnimationProp cssBoxProp
+hi! link cssCustomProp cssBoxProp
+
+call s:h("cssValueNumber", s:dullyellow, "", "")
+hi! link cssValueTime cssValueNumber
+hi! link cssUnitDecorators cssValueNumber
+hi! link cssValueLength cssValueNumber
+" }}}
+" Json Syntax {{{
+call s:h("jsonKeyword", s:lightblue, "", "")
+call s:h("jsonString", s:orange, "", "")
+call s:h("jsonBoolean", s:blue, "", "")
+call s:h("jsonNull", s:blue, "", "")
+call s:h("jsonNumber", s:yellow, "", "")
+" }}}
+" Markdown Syntax {{{
+call s:h("mkdDelimiter", s:fg, "", "")
+call s:h("mkdLink", s:orange, "", "")
+call s:h("mkdURL", s:fg, "", "")
+call s:h("mkdHeading", s:blue, "", "bold")
+call s:h("htmlH3", s:blue, "", "bold")
+call s:h("htmlH2", s:blue, "", "bold")
+call s:h("htmlH1", s:blue, "", "bold")
+call s:h("mkdListItem", s:blue, "", "")
+call s:h("mkdCodeDelimiter", s:orange, "", "")
+call s:h("mkdCode", s:orange, "", "")
+" }}}
+" Makefile Syntax {{{
+call s:h("makeTarget", s:yellow, "", "")
+call s:h("makeSpecTarget", s:yellow, "", "")
+call s:h("makeStatement", s:yellow, "", "")
+call s:h("makeCommands", s:fg, "", "")
+call s:h("makeComment", s:green, "", "")
+call s:h("makeIdent", s:lightblue, "", "")
+" }}}
+" Yaml Syntax {{{
+call s:h("yamlFlowString", s:orange, "", "")
+call s:h("yamlFlowStringDelimiter", s:orange, "", "")
+call s:h("yamlBlockMappingKey", s:blue, "", "")
+call s:h("yamlInteger", s:yellow, "", "")
+call s:h("yamlKeyValueDelimiter", s:fg, "", "")
+call s:h("yamlBlockCollectionItemStart", s:fg, "", "")
+call s:h("yamlComment", s:green, "", "")
+call s:h("yamlFlowIndicator", s:fg, "", "")
+call s:h("yamlPlainScalar", s:orange, "", "")
 " }}}
