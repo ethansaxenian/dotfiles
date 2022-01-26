@@ -204,16 +204,16 @@ function! SyntaxItem()
 endfunction
 
 if has('statusline')
-  set statusline=%#StatusLine2#				   " set highlighting
-  set statusline+=%-2.2n\                      " buffer number
-  set statusline+=%#StatusLine1#               " set highlighting
-  set statusline+=%f\                          " file name
-  set statusline+=%#StatusLine2#               " set highlighting
-  set statusline+=%h%m%r%w\                    " flags
-  set statusline+=%{strlen(&ft)?&ft:'none'}\ \ " file type
-  set statusline+=%{SyntaxItem()}              " syntax highlight group under cursor
-  set statusline+=%=                           " ident to the right
-  set statusline+=%-7.(%l,%c%V%)\ %<%P         " cursor position/offset
+  set statusline=%#StatusLine2#				    " set highlighting
+  set statusline+=%-2.2n\                       " buffer number
+  set statusline+=%#StatusLine1#                " set highlighting
+  set statusline+=%f\                           " file name
+  set statusline+=%#StatusLine2#                " set highlighting
+  set statusline+=%h%m%r%w\                     " flags
+  set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
+  set statusline+=%{SyntaxItem()}               " syntax highlight group under cursor
+  set statusline+=%=                            " ident to the right
+  set statusline+=%-7.(%l,%c%V%)\ %<%P          " cursor position/offset
 endif
 
 set laststatus=2

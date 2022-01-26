@@ -17,11 +17,11 @@ let s:orange      = { "gui": "#e5c07b", "cterm": "180" }
 let s:lightorange = { "gui": "#ffd7f5", "cterm": "221" }
 let s:darkblue    = { "gui": "#0087ff", "cterm": "33"  }
 let s:blue        = { "gui": "#61afef", "cterm": "75"  }
-let s:lightblue  	= { "gui": "#afd7ff", "cterm": "153" }
+let s:lightblue   = { "gui": "#afd7ff", "cterm": "153" }
 let s:purple      = { "gui": "#c678dd", "cterm": "176" }
 let s:softpurple  = { "gui": "#8787d7", "cterm": "104" }
-let s:brightpink	= { "gui": "#af5faf", "cterm": "164" }
-let s:pink			  = { "gui": "#af5faf", "cterm": "133" }
+let s:brightpink  = { "gui": "#af5faf", "cterm": "164" }
+let s:pink		  = { "gui": "#af5faf", "cterm": "133" }
 let s:cyan        = { "gui": "#56b6c2", "cterm": "73"  }
 let s:white       = { "gui": "#ffffff", "cterm": "15"  }
 
@@ -74,8 +74,8 @@ call s:h("DiffChange", s:orange, "", "")
 call s:h("DiffDelete", s:red, "", "")
 call s:h("DiffText", s:blue, "", "")
 
-call s:h("IncSearch", s:bg, s:orange, "")
-call s:h("Search", s:bg, s:orange, "")
+call s:h("IncSearch", s:bg, s:lightblue, "")
+call s:h("Search", s:bg, s:lightblue, "")
 
 call s:h("ErrorMsg", s:fg, "", "")
 call s:h("ModeMsg", s:fg, "", "")
