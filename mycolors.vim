@@ -8,18 +8,17 @@ let colors_name="mycolors"
 
 let s:black       = { "gui": "#000000", "cterm": "0"   }
 let s:red         = { "gui": "#e06c75", "cterm": "168" }
-let s:green       = { "gui": "#00d700", "cterm": "114" }
-let s:darkgreen   = { "gui": "#87af5f", "cterm": "107" }
+let s:green       = { "gui": "#87af5f", "cterm": "107" }
 let s:forestgreen = { "gui": "#00af87", "cterm": "36"  }
 let s:yellow      = { "gui": "#ffffaf", "cterm": "229" }
 let s:deeporange  = { "gui": "#d78700", "cterm": "172" }
-let s:orange      = { "gui": "#e5c07b", "cterm": "180" }
-let s:lightorange = { "gui": "#ffd7f5", "cterm": "221" }
+let s:orange      = { "gui": "#ffaf87", "cterm": "216" }
+let s:lightorange = { "gui": "#ffd787", "cterm": "222" }
 let s:darkblue    = { "gui": "#0087ff", "cterm": "33"  }
 let s:blue        = { "gui": "#61afef", "cterm": "75"  }
-let s:lightblue   = { "gui": "#afd7ff", "cterm": "153" }
+let s:lightblue   = { "gui": "#6897BB", "cterm": "153" }
 let s:purple      = { "gui": "#c678dd", "cterm": "176" }
-let s:softpurple  = { "gui": "#8787d7", "cterm": "104" }
+let s:softpurple  = { "gui": "#8282BB", "cterm": "104" }
 let s:brightpink  = { "gui": "#af5faf", "cterm": "164" }
 let s:pink		  = { "gui": "#af5faf", "cterm": "133" }
 let s:cyan        = { "gui": "#56b6c2", "cterm": "73"  }
@@ -39,6 +38,7 @@ let s:color_col   = { "gui": "#313640", "cterm": "237" }
 let s:selection   = { "gui": "#474e5d", "cterm": "239" }
 let s:vertsplit   = { "gui": "#313640", "cterm": "237" }
 
+let s:search      = { "gui": "#afd7ff", "cterm": "153" }
 
 function! s:h(group, fg, bg, attr)
   if type(a:fg) == type({})
@@ -74,8 +74,8 @@ call s:h("DiffChange", s:orange, "", "")
 call s:h("DiffDelete", s:red, "", "")
 call s:h("DiffText", s:blue, "", "")
 
-call s:h("IncSearch", s:bg, s:lightblue, "")
-call s:h("Search", s:bg, s:lightblue, "")
+call s:h("IncSearch", s:bg, s:search, "")
+call s:h("Search", s:bg, s:search, "")
 
 call s:h("ErrorMsg", s:fg, "", "")
 call s:h("ModeMsg", s:fg, "", "")
@@ -111,13 +111,11 @@ call s:h("Folded", s:fg, "", "")
 call s:h("FoldColumn", s:fg, "", "")
 call s:h("SignColumn", s:fg, "", "")
 
-call s:h("MatchParen", s:red, s:cursor_line, "")
+call s:h("MatchParen", s:darkblue, s:cursor_line, "")
 call s:h("SpecialKey", s:fg, "", "")
 call s:h("Title", s:green, "", "")
 call s:h("WildMenu", s:fg, "", "")
 " }}}
-
-
 " Syntax colors {{{
 " Whitespace is defined in Neovim, not Vim.
 " See :help hl-Whitespace and :help hl-SpecialKey
@@ -164,7 +162,6 @@ call s:h("Ignore", s:fg, "", "")
 call s:h("Error", s:red, s:gutter_bg, "")
 call s:h("Todo", s:purple, "", "")
 " }}}
-
 " C Syntax {{{
 " goto break return continue asm
 call s:h("cStatement", s:purple, "", "")
@@ -179,6 +176,7 @@ call s:h("cString", s:orange, "", "")
 " % items in strings
 call s:h("cFormat", s:lightblue, "", "")
 call s:h("cSpecial", s:lightorange, "", "")
+call s:h("cSpecialCharacter", s:lightorange, "", "")
 
 call s:h("cNumber", s:yellow, "", "")
 call s:h("cFloat", s:yellow, "", "")
@@ -237,14 +235,14 @@ call s:h("pythonDottedName", s:yellow, "", "")
 
 call s:h("pythonComment", s:comment_fg, "", "")
 call s:h("pythonTodo", s:bg, s:fg, "")
-call s:h("pythonTripleQuotes", s:darkgreen, "", "")
+call s:h("pythonTripleQuotes", s:green, "", "")
 
-call s:h("pythonQuotes", s:darkgreen, "", "")
-call s:h("pythonString", s:darkgreen, "", "")
-call s:h("pythonFString", s:darkgreen, "", "")
+call s:h("pythonQuotes", s:green, "", "")
+call s:h("pythonString", s:green, "", "")
+call s:h("pythonFString", s:green, "", "")
 call s:h("pythonStrFormat", s:deeporange, "", "")
-call s:h("pythonStrFormatting", s:darkgreen, "", "")
-call s:h("pythonStrTemplate", s:darkgreen, "", "")
+call s:h("pythonStrFormatting", s:green, "", "")
+call s:h("pythonStrTemplate", s:green, "", "")
 call s:h("pythonBytesEscape", s:deeporange, "", "")
 call s:h("pythonStrInterpRegion", s:fg, "", "")
 
@@ -277,7 +275,7 @@ call s:h("jsExceptions", s:forestgreen, "", "")
 call s:h("jsString", s:orange, "", "")
 call s:h("jsTemplateString", s:orange, "", "")
 
-call s:h("jsComment", s:darkgreen, "", "")
+call s:h("jsComment", s:green, "", "")
 
 call s:h("jsNumber", s:yellow, "", "")
 call s:h("jsFloat", s:yellow, "", "")

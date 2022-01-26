@@ -164,6 +164,12 @@ nnoremap k gk
 nnoremap H ^
 nnoremap L $
 
+" use H and L with c and d
+nnoremap cH c^
+nnoremap cL c$
+nnoremap dH "_d^
+nnoremap dL "_d$
+
 " $/0 doesn't do anything
 nnoremap $ <nop>
 nnoremap ^ <nop>
