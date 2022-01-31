@@ -70,7 +70,7 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
 	alias paci="sudo pacman -S"
 	alias pacr="sudo pacman -R"
 	alias pacu="sudo pacman -Syu"
-	alias pacl="sudo pacman -Qe"s
+	alias pacl="sudo pacman -Qe"
 
 	alias my-malloc='LD_PRELOAD=~/CS315/assignment3/my-malloc.so'
 
