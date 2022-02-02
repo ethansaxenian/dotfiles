@@ -10,8 +10,12 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+" MISC {{{
 " Sets how many lines of history VIM has to remember
 set history=1000
+
+" set undo history size
+set undolevels=1000
 
 " automatically re-read files if unmodified inside Vim
 set autoread
@@ -23,11 +27,16 @@ filetype indent on
 " enable mouse in all modes
 set mouse=a
 
-set foldmethod=marker
-
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+"
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
 
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+" }}}
+" UI {{{
 " Start scrolling four lines before the horizontal window border
 set scrolloff=4
 
@@ -52,19 +61,6 @@ set backspace=eol,start,indent
 
 " wrap lines with h and l
 set whichwrap+=<,>,h,l
-
-" Ignore case when searching
-set ignorecase
-
-" Override the ignorecase option if searching for capital letters.
-" This will allow you to search specifically for capital letters.
-set smartcase
-
-" Highlight search results
-set hlsearch
-
-" Highlight dynamically as pattern is typed
-set incsearch
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -96,6 +92,23 @@ set number
 " show command in bottom bar
 set showcmd
 
+set foldmethod=marker
+" }}}
+" SEARCHING {{{
+" Ignore case when searching
+set ignorecase
+
+" Override the ignorecase option if searching for capital letters.
+" This will allow you to search specifically for capital letters.
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Highlight dynamically as pattern is typed
+set incsearch
+" }}}
+" COLORS {{{
 set t_Co=256
 set termguicolors
 
@@ -108,18 +121,24 @@ set background=dark
 
 " Enable syntax highlighting
 syntax enable
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
+" }}}
+" BACKUPS {{{
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
 set nobackup
 set nowb
-set noswapfile
 
+" set directory for swap files
+set directory=~/.vim/swp//
+
+" turn persistent undo on
+" means that you can undo even when you close a buffer/VIM
+try
+    set undodir=~/.vim/undo//
+    set undofile
+catch
+endtry
+" }}}
+" TABS/SPACES {{{
 " Be smart when using tabs ;)
 set smarttab
 
@@ -131,6 +150,30 @@ set softtabstop=4
 set ai "Auto indent
 set si "Smart indent
 
+" set tab size to 2 spaces for Javascript and HTML
+au BufNewFile,BufRead *.js,*.jsx*,*.html,*.xml :setlocal sw=2 ts=2 sts=2
+" }}}
+" STATUS LINE {{{
+function! SyntaxItem()
+	return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+
+" set the status line
+if has('statusline')
+	set statusline=%#StatusLine2#				  " set highlighting
+	set statusline+=%-2.2n\                       " buffer number
+	set statusline+=%#StatusLine1#                " set highlighting
+	set statusline+=%f\                           " file name
+	set statusline+=%#StatusLine2#                " set highlighting
+	set statusline+=%h%m%r%w\                     " flags
+	set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
+	set statusline+=%{SyntaxItem()}               " syntax highlight group under cursor
+	set statusline+=%=                            " indent to the right
+	set statusline+=%-7.(%l,%c%V%)\ %<%P          " cursor position/offset
+endif
+
+set laststatus=2
+" }}}
 " MAPPINGS {{{
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -206,24 +249,18 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+" space open/closes folds
+nnoremap <space> za
 " }}}
-
-
-function! SyntaxItem()
-  return synIDattr(synID(line("."),col("."),1),"name")
+" FUNCTIONS {{{
+" toggle between number and relativenumber
+function! ToggleNumber()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+    else
+        set relativenumber
+    endif
 endfunction
-
-if has('statusline')
-  set statusline=%#StatusLine2#				    " set highlighting
-  set statusline+=%-2.2n\                       " buffer number
-  set statusline+=%#StatusLine1#                " set highlighting
-  set statusline+=%f\                           " file name
-  set statusline+=%#StatusLine2#                " set highlighting
-  set statusline+=%h%m%r%w\                     " flags
-  set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
-  set statusline+=%{SyntaxItem()}               " syntax highlight group under cursor
-  set statusline+=%=                            " ident to the right
-  set statusline+=%-7.(%l,%c%V%)\ %<%P          " cursor position/offset
-endif
-
-set laststatus=2
+" }}}
