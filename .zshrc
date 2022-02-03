@@ -4,6 +4,7 @@ export EDITOR="vim"
 export DOTFILES=$HOME/.dotfiles
 
 # mac-specific aliases {{{
+
 if [[ "$OSTYPE" =~ ^darwin ]]; then
 	export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
@@ -43,22 +44,14 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
 	alias blender='open "/Applications/Blender.app"'
 
-	alias n="npm"
-	alias ni="npm install"
-	alias nd="npm install --save-dev"
-	alias nu="npm uninstall"
-
-	alias sva="svn add"
-	alias svc="svn commit -m"
-	alias svs="svn status"
-	alias svu="svn update"
-
 	alias brewup="brew update && brew upgrade && brew cleanup"
 	alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
 	alias sysup='sudo softwareupdate -i -a'
 fi
+
 # }}}
 # linux-specific aliases {{{
+
 if [[ "$OSTYPE" =~ ^linux ]]; then
 	alias start="startxfce4"
 	alias halt="sudo halt -p"
@@ -74,8 +67,10 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
 
 	alias c="clear"
 fi
+
 # }}}
 # misc aliases {{{
+
 # enable aliases to be sudo'ed
 alias sudo="sudo "
 
@@ -115,6 +110,7 @@ alias pth="echo $PATH | tr ':' '\n'"
 
 # }}}
 # ls {{{
+
 if [[ "$OSTYPE" =~ ^darwin ]]; then
 	eval `gdircolors ~/.dotfiles/LS_COLORS`
 	alias ls="gls --color -Fh"
@@ -127,8 +123,10 @@ fi
 alias la="ls -Ah"
 alias ll="ls -lh"
 alias lla="ls -lAh"
+
 # }}}
 # git {{{
+
 alias ga="git add -A"
 alias gac="git add -A && git commit -m"
 alias gb="git branch"
@@ -166,8 +164,26 @@ function ginit(){
 	git commit -m "initial commit"
 	git push -u origin main
 }
+
+# }}}
+# npm {{{
+
+alias n="npm"
+alias ni="npm install"
+alias nid="npm install --save-dev"
+alias nu="npm uninstall"
+
+# }}}
+# svn {{{
+
+alias sva="svn add"
+alias svc="svn commit -m"
+alias svs="svn status"
+alias svu="svn update"
+
 # }}}
 # misc functions {{{
+
 # can do "up" or "up x"
 function up {
   if [[ "$#" < 1 ]] ; then
@@ -260,8 +276,10 @@ function battery_status() {
 
   printf "\033[1;92m$emoji  $time_left\n\033[0m"
 }
+
 # }}}
 # prompt {{{
+
 PROMPT='%B%F{red}%.%f%b %# '
 
 # shows branch name on right if applicable
@@ -272,6 +290,7 @@ setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%F{green}(%b)%f'
 zstyle ':vcs_info:*' enable git
+
 # }}}
 
 setopt NO_CASE_GLOB
