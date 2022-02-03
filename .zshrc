@@ -57,6 +57,8 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
 	alias halt="sudo halt -p"
 	alias reboot="sudo reboot"
 
+	alias wifi="sudo dhclient enp0s3"
+
 	alias pac="sudo pacman"
 	alias paci="sudo pacman -S"
 	alias pacr="sudo pacman -R"
