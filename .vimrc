@@ -209,12 +209,6 @@ vnoremap H ^
 nnoremap L $
 vnoremap L $
 
-" use H and L with c and d
-nnoremap cH "_c^
-nnoremap cL "_c$
-nnoremap dH "_d^
-nnoremap dL "_d$
-
 " $/0 doesn't do anything
 nnoremap $ <nop>
 nnoremap ^ <nop>
@@ -239,6 +233,12 @@ noremap d "_d
 noremap dd "_dd
 noremap c "_c
 noremap cc "_cc
+
+" use H and L with c and d
+nnoremap cH "_c^
+nnoremap cL "_c$
+nnoremap dH "_d^
+nnoremap dL "_d$
 
 " indent visually selected blocks
 vnoremap < <gv

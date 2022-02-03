@@ -3,7 +3,7 @@ export EDITOR="vim"
 # Path to your dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
-# mac aliases
+# mac-specific aliases {{{
 if [[ "$OSTYPE" =~ ^darwin ]]; then
 	export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
@@ -12,11 +12,9 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 		[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 	# Personal
-	alias coding="cd ~/Documents/Programming/"
+	alias prog="cd ~/Documents/Programming/"
 
 	alias startvm="VBoxManage startvm EthanLinux"
-
-	alias activate="source venv/bin/activate"
 
 	# Recursively delete `.DS_Store` files
 	alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
@@ -59,8 +57,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
 	alias sysup='sudo softwareupdate -i -a'
 fi
-
-# linux aliases
+# }}}
+# linux-specific aliases {{{
 if [[ "$OSTYPE" =~ ^linux ]]; then
 	alias start="startxfce4"
 	alias halt="sudo halt -p"
@@ -76,15 +74,16 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
 
 	alias c="clear"
 fi
-
+# }}}
+# misc aliases {{{
 # enable aliases to be sudo'ed
 alias sudo="sudo "
 
 alias v="vim"
 
 alias py="python3"
-
-alias vconfig="v ~/.vimrc"
+alias pip="pip3"
+alias activate="source venv/bin/activate"
 
 function mkcd() {
   mkdir "$1" && cd "$1";
@@ -96,6 +95,8 @@ alias myip="curl http://ipecho.net/plain; echo"
 # opens the zsh config file for editing
 alias config="vim ~/.zshrc"
 
+alias vconfig="v ~/.vimrc"
+
 # reloads the terminal
 alias reload="source ~/.zshrc"
 
@@ -106,7 +107,14 @@ alias dotfiles="cd ~/.dotfiles"
 
 alias checksize="du -sh ~/* | sort -hr && du -sh ~/.* | sort -hr"
 
-# colors
+alias grep="grep --color=auto"
+alias m="make"
+alias mc="make clean"
+
+alias pth="echo $PATH | tr ':' '\n'"
+
+# }}}
+# ls {{{
 if [[ "$OSTYPE" =~ ^darwin ]]; then
 	eval `gdircolors ~/.dotfiles/LS_COLORS`
 	alias ls="gls --color -Fh"
@@ -119,13 +127,8 @@ fi
 alias la="ls -Ah"
 alias ll="ls -lh"
 alias lla="ls -lAh"
-
-alias grep="grep --color=auto"
-alias m="make"
-alias mc="make clean"
-
-alias pth="echo $PATH | tr ':' '\n'"
-
+# }}}
+# git {{{
 alias ga="git add -A"
 alias gac="git add -A && git commit -m"
 alias gb="git branch"
@@ -163,7 +166,8 @@ function ginit(){
 	git commit -m "initial commit"
 	git push -u origin main
 }
-
+# }}}
+# misc functions {{{
 # can do "up" or "up x"
 function up {
   if [[ "$#" < 1 ]] ; then
@@ -256,7 +260,8 @@ function battery_status() {
 
   printf "\033[1;92m$emoji  $time_left\n\033[0m"
 }
-
+# }}}
+# prompt {{{
 PROMPT='%B%F{red}%.%f%b %# '
 
 # shows branch name on right if applicable
@@ -267,6 +272,7 @@ setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%F{green}(%b)%f'
 zstyle ':vcs_info:*' enable git
+# }}}
 
 setopt NO_CASE_GLOB
 setopt AUTO_CD

@@ -59,7 +59,6 @@ function! s:h(group, fg, bg, attr)
   endif
 endfun
 
-
 " User interface colors {{{
 call s:h("Normal", s:fg, s:bg, "")
 
@@ -108,14 +107,14 @@ call s:h("ColorColumn", "", s:color_col, "")
 call s:h("Conceal", s:fg, "", "")
 call s:h("Directory", s:blue, "", "")
 call s:h("VertSplit", s:vertsplit, s:vertsplit, "")
-call s:h("Folded", s:fg, "", "")
+call s:h("Folded", s:fg, s:cursor_line, "")
 call s:h("FoldColumn", s:fg, "", "")
 call s:h("SignColumn", s:fg, "", "")
 
 call s:h("MatchParen", s:darkblue, s:cursor_line, "")
 call s:h("SpecialKey", s:fg, "", "")
 call s:h("Title", s:green, "", "")
-call s:h("WildMenu", s:fg, "", "")
+call s:h("WildMenu", s:red, "", "")
 " }}}
 " Syntax colors {{{
 " Whitespace is defined in Neovim, not Vim.
@@ -205,6 +204,8 @@ call s:h("cDefine", s:purple, "", "")
 call s:h("cInclude", s:purple, "", "")
 call s:h("cIncluded", s:orange, "", "")
 call s:h("cUserFunction", s:yellow, "", "")
+call s:h("cPreCondit", s:purple, "", "")
+call s:h("cPreConditMatch", s:purple, "", "")
 
 call s:h("cAnsiName", s:fg, "", "")
 call s:h("cTodo", s:bg, s:fg, "")
