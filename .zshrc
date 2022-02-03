@@ -292,18 +292,37 @@ zstyle ':vcs_info:git:*' formats '%F{green}(%b)%f'
 zstyle ':vcs_info:*' enable git
 
 # }}}
+# shell options {{{
+export HISTFILE=$HOME/.zsh_history
+export SAVEHIST=5000
+export HISTSIZE=2000
 
 setopt NO_CASE_GLOB
 setopt AUTO_CD
+# share history across multiple zsh sessions
+setopt SHARE_HISTORY
+# append to history
+setopt APPEND_HISTORY
+# adds commands as they are typed, not at shell exit
+setopt INC_APPEND_HISTORY
+# expire duplicates first
+setopt HIST_EXPIRE_DUPS_FIRST
+# do not store duplications
 setopt HIST_IGNORE_DUPS
+# ignore duplicates when searching
+setopt HIST_FIND_NO_DUPS
+# removes blank lines from history
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt CORRECT
 setopt CORRECT_ALL
 
+# }}}
+# completion {{{
 autoload -Uz compinit && compinit
 # case insensitive path-completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+# }}}
 
 # remove uniques from $PATH
 typeset -aU path
