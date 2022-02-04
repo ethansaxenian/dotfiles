@@ -159,18 +159,14 @@ function! SyntaxItem()
 endfunction
 
 " set the status line
-if has('statusline')
-	set statusline=%#StatusLine2#				  " set highlighting
-	set statusline+=%-2.2n\                       " buffer number
-	set statusline+=%#StatusLine1#                " set highlighting
-	set statusline+=%f\                           " file name
-	set statusline+=%#StatusLine2#                " set highlighting
-	set statusline+=%h%m%r%w\                     " flags
-	set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
-	set statusline+=%{SyntaxItem()}               " syntax highlight group under cursor
-	set statusline+=%=                            " indent to the right
-	set statusline+=%-7.(%l,%c%V%)\ %<%P          " cursor position/offset
-endif
+set statusline=%#StatusLine1#                 " set highlighting
+set statusline+=%<%f\                         " file name
+set statusline+=%#StatusLine2#                " set highlighting
+set statusline+=%h%m%r%w\                     " flags
+set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
+set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
+set statusline+=%=\                           " indent to the right
+set statusline+=%(%l,%c%V%)\ \ %P			  " cursor position/offset
 
 set laststatus=2
 " }}}
