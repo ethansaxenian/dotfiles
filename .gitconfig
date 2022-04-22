@@ -1,17 +1,17 @@
 [user]
-	name = Ethan Saxenian
-	email = ethansaxenian@gmail.com
-	email = esaxenian@middlebury.edu
+    name = Ethan Saxenian
+    email = ethansaxenian@gmail.com
+    email = esaxenian@middlebury.edu
 [init]
-  defaultBranch = main
+    defaultBranch = main
 [color]
-	ui = auto
+    ui = auto
 [core]
-  editor = vim
+    editor = vim
 [credential]
-	helper = osxkeychain
+    helper = osxkeychain
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

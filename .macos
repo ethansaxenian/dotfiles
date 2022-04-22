@@ -286,7 +286,7 @@ defaults write com.apple.NSGlobalDomain AppleActionOnDoubleClick -string "Minimi
 for app in "Activity Monitor" \
 	"Dock" \
 	"Finder" \
-  "Google Chrome" \
+    "Google Chrome" \
 	"Messages" \
 	"Photos" \
 	"SystemUIServer" \
