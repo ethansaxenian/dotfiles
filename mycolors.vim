@@ -21,7 +21,7 @@ let s:lightblue   = { "gui": "#6897BB", "cterm": "153" }
 let s:purple      = { "gui": "#c678dd", "cterm": "176" }
 let s:softpurple  = { "gui": "#8282BB", "cterm": "104" }
 let s:brightpink  = { "gui": "#af5faf", "cterm": "164" }
-let s:pink		  = { "gui": "#af5faf", "cterm": "133" }
+let s:pink        = { "gui": "#af5faf", "cterm": "133" }
 let s:cyan        = { "gui": "#56b6c2", "cterm": "73"  }
 let s:white       = { "gui": "#ffffff", "cterm": "15"  }
 
@@ -43,21 +43,21 @@ let s:vertsplit   = { "gui": "#313640", "cterm": "237" }
 let s:search      = { "gui": "#afd7ff", "cterm": "153" }
 
 function! s:h(group, fg, bg, attr)
-  if type(a:fg) == type({})
-    exec "hi " . a:group . " guifg=" . a:fg.gui . " ctermfg=" . a:fg.cterm
-  else
-    exec "hi " . a:group . " guifg=NONE cterm=NONE"
-  endif
-  if type(a:bg) == type({})
-    exec "hi " . a:group . " guibg=" . a:bg.gui . " ctermbg=" . a:bg.cterm
-  else
-    exec "hi " . a:group . " guibg=NONE ctermbg=NONE"
-  endif
-  if a:attr != ""
-    exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
-  else
-    exec "hi " . a:group . " gui=NONE cterm=NONE"
-  endif
+    if type(a:fg) == type({})
+        exec "hi " . a:group . " guifg=" . a:fg.gui . " ctermfg=" . a:fg.cterm
+    else
+        exec "hi " . a:group . " guifg=NONE cterm=NONE"
+    endif
+    if type(a:bg) == type({})
+        exec "hi " . a:group . " guibg=" . a:bg.gui . " ctermbg=" . a:bg.cterm
+    else
+        exec "hi " . a:group . " guibg=NONE ctermbg=NONE"
+    endif
+    if a:attr != ""
+        exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
+    else
+        exec "hi " . a:group . " gui=NONE cterm=NONE"
+    endif
 endfun
 
 " User interface colors {{{
@@ -220,7 +220,7 @@ call s:h("pythonClassVar", s:pink, "", "")
 call s:h("pythonRepeat", s:deeporange, "", "")
 " if elif else
 call s:h("pythonConditional", s:deeporange, "", "")
-"	try except finally
+"   try except finally
 call s:h("pythonException", s:deeporange, "", "")
 " import as from
 call s:h("pythonImport", s:deeporange, "", "")
@@ -308,6 +308,7 @@ call s:h("jsFuncCall", s:yellow, "", "")
 call s:h("jsFuncArgs", s:lightblue, "", "")
 call s:h("jsArrowFunction", s:darkblue, "", "")
 call s:h("jsFuncBlock", s:blue, "", "")
+call s:h("jsFuncBraces", s:white, "", "")
 
 call s:h("jsConditional", s:purple, "", "")
 call s:h("jsReturn", s:purple, "", "")
@@ -391,7 +392,7 @@ hi! link cssValueTime cssValueNumber
 hi! link cssUnitDecorators cssValueNumber
 hi! link cssValueLength cssValueNumber
 " }}}
-" Json Syntax {{{
+" JSON Syntax {{{
 call s:h("jsonKeyword", s:lightblue, "", "")
 call s:h("jsonString", s:orange, "", "")
 call s:h("jsonBoolean", s:blue, "", "")

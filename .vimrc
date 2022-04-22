@@ -35,6 +35,7 @@ set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
+
 " }}}
 " UI {{{
 " Start scrolling four lines before the horizontal window border
@@ -140,18 +141,24 @@ endtry
 " }}}
 " TABS/SPACES {{{
 " Be smart when using tabs ;)
-set smarttab
+set softtabstop=4
 
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 
+" insert spaces whenever tab is pressed
+set expandtab
+
 set ai "Auto indent
 set si "Smart indent
 
-" set tab size to 2 spaces for Javascript and HTML
-au BufNewFile,BufRead *.js,*.jsx*,*.html,*.xml :setlocal sw=2 ts=2 sts=2
+" change tab size based on file type
+autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType css setlocal tabstop=2 shiftwidth=2 softtabstop=2
 " }}}
 " STATUS LINE {{{
 function! SyntaxItem()
@@ -159,8 +166,10 @@ function! SyntaxItem()
 endfunction
 
 " set the status line
-set statusline=%#StatusLine1#                 " set highlighting
-set statusline+=%<%f\                         " file name
+set statusline=%#StatusLine2#				  " set highlighting
+set statusline+=%-2.2n\                       " buffer number
+set statusline+=%#StatusLine1#                " set highlighting
+set statusline+=%f\                           " file name
 set statusline+=%#StatusLine2#                " set highlighting
 set statusline+=%h%m%r%w\                     " flags
 set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
@@ -248,6 +257,26 @@ map <C-l> <C-W>l
 
 " space open/closes folds
 nnoremap <space> za
+
+" Useful mappings for managing tabs
+map <leader>tt :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tn :tabnext<cr>
+map <leader>tp :tabprevious<cr>
+
+" Let 'tl' toggle between this and the last accessed tab
+let g:lasttab = 1
+nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/<cr>
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
 " }}}
 " FUNCTIONS {{{
 " toggle between number and relativenumber

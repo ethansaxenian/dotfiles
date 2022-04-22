@@ -6,68 +6,68 @@ export DOTFILES=$HOME/.dotfiles
 # mac-specific aliases {{{
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-	export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+    export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
-	export NVM_DIR="$HOME/.nvm"
-		[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-		[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+    [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-	# Personal
-	alias prog="cd ~/Documents/Programming/"
+    # Personal
+    alias prog="cd ~/Documents/Programming/"
 
-	alias startvm="VBoxManage startvm EthanLinux"
+    alias startvm="VBoxManage startvm EthanLinux"
 
-	# Recursively delete `.DS_Store` files
-	alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+    # Recursively delete `.DS_Store` files
+    alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
-	# Empty the Trash on all mounted volumes and the main HDD.
-	# Also, clear Apple’s System Logs to improve shell startup speed.
-	# Finally, clear download history from quarantine. https://mths.be/bum
-	alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+    # Empty the Trash on all mounted volumes and the main HDD.
+    # Also, clear Apple’s System Logs to improve shell startup speed.
+    # Finally, clear download history from quarantine. https://mths.be/bum
+    alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
-	# Show/hide hidden files in Finder
-	alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-	alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+    # Show/hide hidden files in Finder
+    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
-	# Hide/show all desktop icons (useful when presenting)
-	alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-	alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+    # Hide/show all desktop icons (useful when presenting)
+    alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+    alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
-	alias vscode='open "/Applications/Visual Studio Code.app"'
-	alias pycharm='open "/Applications/PyCharm CE.app"'
-	alias chrome='open "/Applications/Google Chrome.app"'
-	alias word='open "/Applications/Microsoft Word.app"'
-	alias spotify='open "/Applications/Spotify.app"'
-	alias github='open "/Applications/GitHub Desktop.app"'
-	alias facetime='open "/System/Applications/FaceTime.app"'
-	alias messages='open "/System/Applications/Messages.app"'
-	alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
-	alias blender='open "/Applications/Blender.app"'
+    alias vscode='open "/Applications/Visual Studio Code.app"'
+    alias pycharm='open "/Applications/PyCharm CE.app"'
+    alias chrome='open "/Applications/Google Chrome.app"'
+    alias word='open "/Applications/Microsoft Word.app"'
+    alias spotify='open "/Applications/Spotify.app"'
+    alias github='open "/Applications/GitHub Desktop.app"'
+    alias facetime='open "/System/Applications/FaceTime.app"'
+    alias messages='open "/System/Applications/Messages.app"'
+    alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
+    alias blender='open "/Applications/Blender.app"'
 
-	alias brewup="brew update && brew upgrade && brew cleanup"
-	alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
-	alias sysup='sudo softwareupdate -i -a'
+    alias brewup="brew update && brew upgrade && brew cleanup"
+    alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
+    alias sysup='sudo softwareupdate -i -a'
 fi
 
 # }}}
 # linux-specific aliases {{{
 
 if [[ "$OSTYPE" =~ ^linux ]]; then
-	alias start="startxfce4"
-	alias halt="sudo halt -p"
-	alias reboot="sudo reboot"
+    alias start="startxfce4"
+    alias halt="sudo halt -p"
+    alias reboot="sudo reboot"
 
-	alias wifi="sudo dhclient enp0s3"
+    alias wifi="sudo dhclient enp0s3"
 
-	alias pac="sudo pacman"
-	alias paci="sudo pacman -S"
-	alias pacr="sudo pacman -R"
-	alias pacu="sudo pacman -Syu"
-	alias pacl="sudo pacman -Qe"
+    alias pac="sudo pacman"
+    alias paci="sudo pacman -S"
+    alias pacr="sudo pacman -R"
+    alias pacu="sudo pacman -Syu"
+    alias pacl="sudo pacman -Qe"
 
-	alias my-malloc='LD_PRELOAD=~/CS315/assignment3/my-malloc.so'
+    alias my-malloc='LD_PRELOAD=~/CS315/assignment3/my-malloc.so'
 
-	alias c="clear"
+    alias c="clear"
 fi
 
 # }}}
@@ -114,12 +114,12 @@ alias pth="echo $PATH | tr ':' '\n'"
 # ls {{{
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-	eval `gdircolors ~/.dotfiles/LS_COLORS`
-	alias ls="gls --color -Fh"
+    eval `gdircolors ~/.dotfiles/LS_COLORS`
+    alias ls="gls --color -Fh"
 fi
 if [[ "$OSTYPE" =~ ^linux ]]; then
-	eval `dircolors ~/.dotfiles/LS_COLORS`
-	alias ls="ls --color=auto -F"
+    eval `dircolors ~/.dotfiles/LS_COLORS`
+    alias ls="ls --color=auto -F"
 fi
 
 alias la="ls -Ah"
@@ -149,22 +149,22 @@ alias gstl="git stash list"
 alias gstp="git stash pop"
 
 function acp(){
-  git add -A
-  git commit -m "$1"
-  git push
+    git add -A
+    git commit -m "$1"
+    git push
 }
 
 function gcob {
-  git checkout -b "$1"
-  git push -u origin "$1"
+    git checkout -b "$1"
+    git push -u origin "$1"
 }
 
 function ginit(){
-  git init
-  git remote add origin "$1"
-	git add -A
-	git commit -m "initial commit"
-	git push -u origin main
+    git init
+    git remote add origin "$1"
+    git add -A
+    git commit -m "initial commit"
+    git push -u origin main
 }
 
 # }}}
@@ -188,95 +188,95 @@ alias svu="svn update"
 
 # can do "up" or "up x"
 function up {
-  if [[ "$#" < 1 ]] ; then
-    cd ..
-  else
-    CDSTR=""
-    for i in {1..$1} ; do
-      CDSTR="../$CDSTR"
+    if [[ "$#" < 1 ]] ; then
+        cd ..
+    else
+        CDSTR=""
+        for i in {1..$1} ; do
+            CDSTR="../$CDSTR"
         done
-      cd $CDSTR
-  fi
+        cd $CDSTR
+    fi
 }
 
 # Determine size of a file or total size of a directory
 function fs() {
-  if du -b /dev/null > /dev/null 2>&1; then
-    local arg=-sbh;
-  else
-    local arg=-sh;
-  fi
-  if [[ -n "$@" ]]; then
-    du $arg -- "$@";
-  else
-    du $arg .[^.]* ./*;
-  fi;
+    if du -b /dev/null > /dev/null 2>&1; then
+        local arg=-sbh;
+    else
+        local arg=-sh;
+    fi
+    if [[ -n "$@" ]]; then
+        du $arg -- "$@";
+    else
+        du $arg .[^.]* ./*;
+    fi;
 }
 
 function weather() {
-  city="$1"
+    city="$1"
 
-  if [ -z "$city" ]; then
-    city="Middlebury"
-  fi
+    if [ -z "$city" ]; then
+        city="Middlebury"
+    fi
 
-  eval "curl http://wttr.in/${city}"
+    eval "curl http://wttr.in/${city}"
 }
 
 # display a list of supported colors
 function lscolors {
-	((cols = $COLUMNS - 4))
-	s=$(printf %${cols}s)
-	for i in {000..$(tput colors)}; do
-		echo -e $i $(tput setaf $i; tput setab $i)${s// /=}$(tput op);
-	done
+    ((cols = $COLUMNS - 4))
+    s=$(printf %${cols}s)
+    for i in {000..$(tput colors)}; do
+        echo -e $i $(tput setaf $i; tput setab $i)${s// /=}$(tput op);
+    done
 }
 
 # colorized manpages
 function man() {
-	env \
-		LESS_TERMCAP_md=$'\e[1;36m' \
-		LESS_TERMCAP_me=$'\e[0m' \
-		LESS_TERMCAP_se=$'\e[0m' \
-		LESS_TERMCAP_so=$'\e[1;40;91m' \
-		LESS_TERMCAP_ue=$'\e[0m' \
-		LESS_TERMCAP_us=$'\e[1;32m' \
-			man "$@"
+    env \
+        LESS_TERMCAP_md=$'\e[1;36m' \
+        LESS_TERMCAP_me=$'\e[0m' \
+        LESS_TERMCAP_se=$'\e[0m' \
+        LESS_TERMCAP_so=$'\e[1;40;91m' \
+        LESS_TERMCAP_ue=$'\e[0m' \
+        LESS_TERMCAP_us=$'\e[1;32m' \
+            man "$@"
 }
 
 function battery_status() {
-  if test ! "$(uname)" = "Darwin"
+    if test ! "$(uname)" = "Darwin"
+        then
+        printf ""
+        exit 0
+    fi
+
+    battstat=$(pmset -g batt)
+    time_left=$(echo $battstat |
+        tail -1 |
+        cut -f2 |
+        awk -F"; " '{print $3}' |
+        cut -d' ' -f1
+    )
+
+    if [[ $(pmset -g ac) == *"No adapter attached."* ]]
     then
-    printf ""
-    exit 0
-  fi
+        emoji='🔋'
+    else
+        emoji='🔌'
+    fi
 
-  battstat=$(pmset -g batt)
-  time_left=$(echo $battstat |
-    tail -1 |
-    cut -f2 |
-    awk -F"; " '{print $3}' |
-    cut -d' ' -f1
-  )
+    if [[ $time_left == *"(no"* || $time_left == *"not"* ]]
+    then
+        time_left='⌛️'
+    fi
 
-  if [[ $(pmset -g ac) == *"No adapter attached."* ]]
-  then
-    emoji='🔋'
-  else
-    emoji='🔌'
-  fi
+    if [[ $time_left == *"0:00"* ]]
+    then
+        time_left='⚡️'
+    fi
 
-  if [[ $time_left == *"(no"* || $time_left == *"not"* ]]
-  then
-    time_left='⌛️'
-  fi
-
-  if [[ $time_left == *"0:00"* ]]
-  then
-    time_left='⚡️'
-  fi
-
-  printf "\033[1;92m$emoji  $time_left\n\033[0m"
+    printf "\033[1;92m$emoji  $time_left\n\033[0m"
 }
 
 # }}}
