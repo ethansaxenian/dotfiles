@@ -1,16 +1,5 @@
 #!/bin/sh
 
-# Path to your dotfiles.
-export DOTFILES=$HOME/.dotfiles
-
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-	$DOTFILES/configure-mac.sh
-fi
-
-if [[ "$OSTYPE" =~ ^linux ]]; then
-	$DOTFILES/configure-arch.sh
-fi
-
 echo "Symlinking .zshrc..."
 # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
 rm -rf $HOME/.zshrc
@@ -35,3 +24,11 @@ echo "Symlinking vim colorschemes..."
 rm -rf $HOME/.vim/colors
 mkdir $HOME/.vim/colors
 ln -s $DOTFILES/mycolors.vim $HOME/.vim/colors/mycolors.vim
+
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+	$DOTFILES/configure-mac.sh
+fi
+
+if [[ "$OSTYPE" =~ ^linux ]]; then
+	$DOTFILES/configure-arch.sh
+fi

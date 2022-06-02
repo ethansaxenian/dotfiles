@@ -11,6 +11,9 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " MISC {{{
+" remove all autocommands
+autocmd!
+
 " Sets how many lines of history VIM has to remember
 set history=1000
 
@@ -36,6 +39,7 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+set re=2
 " }}}
 " UI {{{
 " Start scrolling four lines before the horizontal window border
@@ -113,10 +117,7 @@ set incsearch
 set t_Co=256
 set termguicolors
 
-let g:python_highlight_operators = 0
-
 colorscheme mycolors
-autocmd BufRead,BufNewFile *.asm set filetype=asm
 
 set background=dark
 
@@ -153,12 +154,6 @@ set expandtab
 
 set ai "Auto indent
 set si "Smart indent
-
-" change tab size based on file type
-autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2
-autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
-autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2
-autocmd FileType css setlocal tabstop=2 shiftwidth=2 softtabstop=2
 " }}}
 " STATUS LINE {{{
 function! SyntaxItem()
@@ -187,8 +182,8 @@ let mapleader = ","
 " Disable highlight when <leader><cr> is pressed
 map <leader><cr> :noh<cr>
 
-" Type jj to exit insert mode quickly
-inoremap jj <esc>
+" Type jk to exit insert mode quickly
+inoremap jk <esc>
 
 " Press ,, to jump back to the last cursor position.
 nnoremap <leader><leader> ``
@@ -219,7 +214,7 @@ nnoremap $ <nop>
 nnoremap ^ <nop>
 
 " quick reload
-noremap <leader>r :source ~/.vimrc<cr>
+noremap <leader>r :source ~/.vimrc<cr> :e<cr> :nohl<cr>
 
 " quick saving and quitting
 noremap <leader>q :q!<cr>
@@ -288,4 +283,44 @@ function! ToggleNumber()
         set relativenumber
     endif
 endfunction
+" }}}
+" FILETYPES {{{
+" Python
+let g:python_highlight_operators = 0
+
+augroup Python
+    autocmd!
+    autocmd BufRead,BufNewFile *.py setlocal foldmethod=indent
+    autocmd BufRead,BufNewFile *.py setlocal tabstop=4
+    autocmd BufRead,BufNewFile *.py setlocal shiftwidth=4
+    autocmd BufRead,BufNewFile *.py setlocal softtabstop=4 
+
+    autocmd BufRead,BufNewFile *.py nnoremap <buffer> <leader>/ 0i#<esc>
+augroup END
+
+" Javascript/Typescript
+augroup Javascript
+    autocmd!
+    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal foldmethod=syntax
+    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal tabstop=2
+    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal shiftwidth=2
+    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal softtabstop=2
+
+    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} nnoremap <buffer> <leader>/ 0i//<esc>
+augroup END
+
+" Misc
+augroup Misc
+    autocmd!
+    autocmd BufRead,BufNewFile *.{html,css} setlocal foldmethod=syntax
+    autocmd BufRead,BufNewFile *.{html,css} setlocal tabstop=2
+    autocmd BufRead,BufNewFile *.{html,css} setlocal shiftwidth=2
+    autocmd BufRead,BufNewFile *.{html,css} setlocal softtabstop=2
+
+    autocmd FileType make setlocal noexpandtab
+
+    autocmd BufRead,BufNewFile *.asm set filetype=asm
+
+    autocmd BufRead,BufNewFile *.{py,js,jsx,ts,tsx,html,css} normal zR
+augroup END
 " }}}

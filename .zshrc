@@ -3,6 +3,8 @@ export EDITOR="vim"
 # Path to your dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
+export PIPENV_VENV_IN_PROJECT=1
+
 # mac-specific aliases {{{
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
@@ -102,7 +104,7 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 
 alias dotfiles="cd ~/.dotfiles"
 
-alias checksize="du -sh ~/* | sort -hr && du -sh ~/.* | sort -hr"
+alias checksize="du -sch ~/* ~/.* | sort -hr"
 
 alias grep="grep --color=auto"
 alias m="make"
@@ -143,7 +145,7 @@ alias grst="git reset ."
 alias gp="git push"
 alias gpu="git push -u origin"
 alias gs="git status -sb"
-alias gst="git stash"
+alias gst="git stash -u"
 alias gstd="git stash drop"
 alias gstl="git stash list"
 alias gstp="git stash pop"
@@ -174,6 +176,8 @@ alias n="npm"
 alias ni="npm install"
 alias nid="npm install --save-dev"
 alias nu="npm uninstall"
+alias ns="npm start"
+alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
 
 # }}}
 # svn {{{
