@@ -7,6 +7,9 @@ call plug#begin('~/.vim/plugged')
 	Plug 'sheerun/vim-polyglot'
 	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'flazz/vim-colorschemes'
+    Plug 'scrooloose/nerdtree'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -160,16 +163,40 @@ function! SyntaxItem()
 	return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
 
+function! GitStatusA()
+    let [a,m,r] = GitGutterGetHunkSummary()
+    return printf('+%d', a)
+endfunction
+
+function! GitStatusM()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf('~%d', m)
+endfunction
+
+function! GitStatusR()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf('-%d', r)
+endfunction
+
 " set the status line
-set statusline=%#StatusLine2#				  " set highlighting
+set statusline=%#StatusLinePurple#			  " set highlighting
 set statusline+=%-2.2n\                       " buffer number
-set statusline+=%#StatusLine1#                " set highlighting
-set statusline+=%f\                           " file name
-set statusline+=%#StatusLine2#                " set highlighting
+set statusline+=%#StatusLineRed#              " set highlighting
+set statusline+=%f                            " file name
+set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%h%m%r%w\                     " flags
+set statusline+=%{FugitiveStatusline()}\      " git branch
+set statusline+=%#GitAdded#
+set statusline+=%{GitStatusA()}\              " number of lines added
+set statusline+=%#GitModified#
+set statusline+=%{GitStatusM()}\              " number of lines modified
+set statusline+=%#GitRemoved#
+set statusline+=%{GitStatusR()}\ \            " number of lines removed
+set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
 set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
 set statusline+=%=\                           " indent to the right
+set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%(%l,%c%V%)\ \ %P			  " cursor position/offset
 
 set laststatus=2
@@ -243,6 +270,10 @@ nnoremap dL "_d$
 " indent visually selected blocks
 vnoremap < <gv
 vnoremap > >gv
+
+" opening splits
+map <leader>sp :Se<cr>
+map <leader>vsp :Se!<cr>
 
 " Smart way to move between windows
 map <C-j> <C-W>j

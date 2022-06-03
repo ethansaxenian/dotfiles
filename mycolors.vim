@@ -17,7 +17,7 @@ let s:orange      = { "gui": "#ffaf87", "cterm": "216" }
 let s:lightorange = { "gui": "#ffd787", "cterm": "222" }
 let s:darkblue    = { "gui": "#0087ff", "cterm": "33"  }
 let s:blue        = { "gui": "#61afef", "cterm": "75"  }
-let s:lightblue   = { "gui": "#6897BB", "cterm": "153" }
+let s:lightblue   = { "gui": "#afd7ff", "cterm": "153" }
 let s:purple      = { "gui": "#c678dd", "cterm": "176" }
 let s:softpurple  = { "gui": "#8282BB", "cterm": "104" }
 let s:brightpink  = { "gui": "#af5faf", "cterm": "164" }
@@ -94,8 +94,11 @@ call s:h("SpellCap", s:orange, "", "")
 call s:h("SpellLocal", s:orange, "", "")
 call s:h("SpellRare", s:orange, "", "")
 
-call s:h("StatusLine1", s:red, s:cursor_line, "")
-call s:h("StatusLine2", s:purple, s:cursor_line, "")
+call s:h("StatusLineRed", s:red, s:cursor_line, "")
+call s:h("StatusLinePurple", s:purple, s:cursor_line, "")
+call s:h("GitAdded", s:green, s:cursor_line, "")
+call s:h("GitModified", s:blue, s:cursor_line, "")
+call s:h("GitRemoved", s:red, s:cursor_line, "")
 call s:h("StatusLineNC", s:comment_fg, s:cursor_line, "")
 call s:h("TabLine", s:comment_fg, s:cursor_line, "")
 call s:h("TabLineFill", s:comment_fg, s:cursor_line, "")
@@ -229,7 +232,7 @@ call s:h("pythonClass", s:fg, "", "")
 call s:h("pythonFunction", s:lightorange, "", "")
 call s:h("pythonFunctionCall", s:fg, "", "")
 
-"and in is not or
+" and in is not or
 call s:h("pythonOperator", s:deeporange, "", "")
 
 call s:h("pythonDecorator", s:dullyellow, "", "")
@@ -285,6 +288,8 @@ call s:h("jsFloat", s:dullyellow, "", "")
 
 call s:h("jsBooleanTrue", s:darkblue, "", "")
 call s:h("jsBooleanFalse", s:darkblue, "", "")
+call s:h("jsUndefined", s:darkblue, "", "")
+call s:h("jsNull", s:darkblue, "", "")
 
 call s:h("jsAsyncKeyword", s:darkblue, "", "")
 call s:h("jsForAwait", s:purple, "", "")
@@ -338,6 +343,61 @@ call s:h("jsxExpressionBlock", s:blue, "", "")
 call s:h("jsxAttrib", s:lightblue, "", "")
 call s:h("jsxElement", s:fg, "", "")
 call s:h("jsxTagName", s:blue, "", "")
+" }}}
+" Typescript Syntax {{{
+call s:h("typescriptCastKeyword", s:purple, "", "")
+call s:h("typescriptInterfaceKeyword", s:darkblue, "", "")
+call s:h("typescriptPredefinedType", s:forestgreen, "", "")
+hi! link typescriptTypeReference typescriptPredefinedType
+hi! link typescriptInterfaceName typescriptPredefinedType
+call s:h("typescriptTypeQuery", s:darkblue, "", "")
+call s:h("typescriptAliasKeyword", s:darkblue, "", "")
+call s:h("typescriptAliasDeclaration", s:forestgreen, "", "")
+
+hi! link typescriptImport jsImport
+hi! link typescriptBraces jsFuncBraces
+hi! link typescriptString jsString
+hi! link typescriptBlock jsModuleKeyword
+hi! link typescriptBOM jsModuleKeyword
+hi! link typescriptArrayMethod jsFuncCall
+hi! link typescriptCall jsFuncArgs
+hi! link typescriptArrowFunc jsArrowFunction
+hi! link typescriptObjectLiteral jsDestructuringPropertyValue
+hi! link typescriptObjectLabel jsObjectKey
+hi! link typescriptBoolean jsBooleanTrue
+hi! link typescriptMathStaticMethod jsFuncCall
+hi! link typescriptDOMDocMethod jsFuncCall
+hi! link typescriptES6SetMethod jsFuncCall
+hi! link typescriptBOMNavigatorProp jsFuncCall
+hi! link typescriptBOMLocationMethod jsFuncCall
+hi! link typescriptBOMWindowProp jsGlobalObjects
+hi! link typescriptDOMDocProp typescriptBOMWindowProp
+hi! link typescriptURLUtilsProp typescriptBOMWindowProp
+hi! link typescriptDOMFormProp typescriptBOMWindowProp
+hi! link typescriptDOMStorageMethod jsObjectProp
+hi! link typescriptNodeGlobal jsGlobalObjects
+hi! link typescriptGlobal jsGlobalObjects
+hi! link typescriptVariable jsStorageClass
+hi! link typescriptVariableDeclaration jsVariableDef
+hi! link typescriptFuncCallArg jsFuncArgs
+hi! link typescriptParamImpl jsFuncArgs
+hi! link typescriptExport jsExport
+hi! link typescriptDefault jsExportDefault
+hi! link typescriptDestructureVariable jsDestructuringPropertyValue
+hi! link typescriptComment jsComment
+hi! link typescriptLineComment jsComment
+call s:h("typescriptStringMethod", s:lightblue, "", "")
+hi! link typescriptTemplateSB jsTemplateBraces
+hi! link typescriptTemplateSubstitution jsTemplateExpression
+hi! link typescriptParenExp jsxExpressionBlock
+call s:h("typescriptEndColons", s:white, "", "")
+hi! link typescriptNumber jsNumber
+hi! link typescriptNull jsNull
+hi! link typescriptConditionalParen jsIfElseBlock
+call s:h("typescriptArray", s:lightblue, "", "")
+hi! link typescriptTernary jsTernaryIf
+hi! link typescriptIndexExpr jsBracket
+hi! link typescriptOperator jsOperatorKeyword
 " }}}
 " Css Syntax {{{
 call s:h("cssBraces", s:fg, "", "")

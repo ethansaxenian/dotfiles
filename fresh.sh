@@ -12,24 +12,24 @@ echo "Symlinking .gitconfig..."
 rm -rf $HOME/.gitconfig
 ln -s $DOTFILES/.gitconfig $HOME/.gitconfig
 
-echo "Symlinking .vimrc..."
+echo "Setting up vim configuration..."
 # Removes .vimrc from $HOME (if it exists) and symlinks the .vimrc file from the .dotfiles
 rm -rf $HOME/.vimrc
 ln -s $DOTFILES/.vimrc $HOME/.vimrc
 
-echo "Installing vim-plug..."
-# install vim-plug
+# install vim-plug and plugins
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 vim +PlugInstall +qall
 
-mkdir $HOME/.vim/undo
-mkdir $HOME/.vim/swp
+mkdir $HOME/.vim/undo $HOME/.vim/swp
 
-echo "Symlinking vim colorschemes..."
 # add custom colorscheme
 rm -rf $HOME/.vim/colors
 mkdir $HOME/.vim/colors
 ln -s $DOTFILES/mycolors.vim $HOME/.vim/colors/mycolors.vim
+
+# use zsh
+chsh -s $(which zsh)
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
 	$DOTFILES/configure-mac.sh
