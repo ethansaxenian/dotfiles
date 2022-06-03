@@ -293,7 +293,7 @@ augroup Python
     autocmd BufRead,BufNewFile *.py setlocal foldmethod=indent
     autocmd BufRead,BufNewFile *.py setlocal tabstop=4
     autocmd BufRead,BufNewFile *.py setlocal shiftwidth=4
-    autocmd BufRead,BufNewFile *.py setlocal softtabstop=4 
+    autocmd BufRead,BufNewFile *.py setlocal softtabstop=4
 
     autocmd BufRead,BufNewFile *.py nnoremap <buffer> <leader>/ 0i#<esc>
 augroup END

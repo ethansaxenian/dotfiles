@@ -20,6 +20,10 @@ ln -s $DOTFILES/.vimrc $HOME/.vimrc
 echo "Installing vim-plug..."
 # install vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim +PlugInstall +qall
+
+mkdir $HOME/.vim/undo
+mkdir $HOME/.vim/swp
 
 echo "Symlinking vim colorschemes..."
 # add custom colorscheme
