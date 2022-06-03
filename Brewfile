@@ -14,6 +14,7 @@ brew 'vim'
 brew 'zsh'
 
 # Apps
+cask 'bitwarden'
 cask 'github'
 cask 'google-chrome'
 cask 'iterm2'
