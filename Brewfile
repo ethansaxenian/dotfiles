@@ -5,11 +5,10 @@ tap 'homebrew/cask'
 brew 'coreutils'
 brew 'htop'
 brew 'git'
-brew 'node'
-brew 'nvm'
 brew 'python3'
 brew 'tree'
 brew 'vim'
+brew 'watchman'
 brew 'zsh'
 
 # Apps
@@ -22,3 +21,5 @@ cask 'pycharm'
 cask 'spotify'
 cask 'visual-studio-code'
 cask 'zoom'
+
+mas install 497799835 # Xcode

@@ -6,6 +6,9 @@ echo "Switching shell to zsh..."
 # use zsh
 chsh -s $(which zsh)
 
+echo "Installing Xcode command line tools..."
+xcode-select --install
+
 echo "Symlinking .zshrc..."
 # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
 rm -rf $HOME/.zshrc

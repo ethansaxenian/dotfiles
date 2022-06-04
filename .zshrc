@@ -8,15 +8,13 @@ export PIPENV_VENV_IN_PROJECT=1
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # misc aliases {{{
 
 # Personal
 alias projects="cd $HOME/Projects/"
-
-alias startvm="VBoxManage startvm EthanLinux"
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
@@ -62,7 +60,7 @@ alias myip="curl http://ipecho.net/plain; echo"
 # opens the zsh config file for editing
 alias config="vim $HOME/.zshrc"
 
-alias vconfig="v $HOME/.vimrc"
+alias vconfig="vim $HOME/.vimrc"
 
 # reloads the terminal
 alias reload="source $HOME/.zshrc"
@@ -78,7 +76,11 @@ alias grep="grep --color=auto"
 alias m="make"
 alias mc="make clean"
 
-alias path="echo $PATH | tr ':' '\n'"
+alias pth="echo $PATH | tr ':' '\n'"
+
+# change architecture
+alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
+alias arm="env /usr/bin/arch -arm64 /bin/zsh"
 
 # }}}
 # python {{{
@@ -91,15 +93,8 @@ alias activate="source .venv/bin/activate"
 # }}}
 # ls {{{
 
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-    eval `gdircolors $DOTFILES/LS_COLORS`
-    alias ls="gls --color -Fh"
-fi
-if [[ "$OSTYPE" =~ ^linux ]]; then
-    eval `dircolors $DOTFILES/LS_COLORS`
-    alias ls="ls --color=auto -F"
-fi
-
+eval `gdircolors $DOTFILES/LS_COLORS`
+alias ls="gls --color -Fh"
 alias la="ls -Ah"
 alias ll="ls -lh"
 alias lla="ls -lAh"
