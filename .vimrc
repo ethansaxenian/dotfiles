@@ -245,9 +245,9 @@ noremap <leader>r :source ~/.vimrc<cr> :e<cr> :nohl<cr>
 
 " quick saving and quitting
 noremap <leader>q :q!<cr>
-noremap <leader>w :wq<cr>
-nnoremap <leader>s :w<cr>
-inoremap <leader>s <C-c>:w<cr>
+noremap <leader>w :call StripExtraWhiteSpace()<cr>:wq<cr>
+nnoremap <leader>s :call StripExtraWhiteSpace()<cr>:w<cr>
+inoremap <leader>s <C-c>:call StripExtraWhiteSpace()<cr>:w<cr>
 
 " Don't use arrow keys
 map <up> <nop>
@@ -313,6 +313,14 @@ function! ToggleNumber()
     else
         set relativenumber
     endif
+endfunction
+
+" Trim extra whitespace
+function! StripExtraWhiteSpace()
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
 endfunction
 " }}}
 " FILETYPES {{{
