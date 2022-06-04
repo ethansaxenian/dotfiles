@@ -14,6 +14,11 @@ echo "Symlinking .zshrc..."
 rm -rf $HOME/.zshrc
 ln -s $DOTFILES/.zshrc $HOME/.zshrc
 
+echo "Symlinking .gitignore..."
+# Removes .gitignore from $HOME (if it exists) and symlinks the .gitignore file from the .dotfiles
+rm -rf $HOME/.gitignore
+ln -s $DOTFILES/.gitignore $HOME/.gitignore
+
 echo "Symlinking .gitconfig..."
 # Removes .gitconfig from $HOME (if it exists) and symlinks the .gitconfig file from the .dotfiles
 rm -rf $HOME/.gitconfig

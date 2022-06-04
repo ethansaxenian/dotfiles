@@ -8,8 +8,8 @@ export PIPENV_VENV_IN_PROJECT=1
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # misc aliases {{{
 
@@ -41,7 +41,7 @@ alias github='open "/Applications/GitHub Desktop.app"'
 alias facetime='open "/System/Applications/FaceTime.app"'
 alias messages='open "/System/Applications/Messages.app"'
 alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
-alias xcode='open "/Applications/Xcode.app"'
+# alias xcode='open "/Applications/Xcode.app"'
 alias zoom='open "/Applications/zoom.us.app"'
 alias bitwarden='open "/Applications/Bitwarden.app"'
 
@@ -81,6 +81,9 @@ alias pth="echo $PATH | tr ':' '\n'"
 # change architecture
 alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
 alias arm="env /usr/bin/arch -arm64 /bin/zsh"
+
+# open the current react native project in xcode
+alias xcode="open -a Xcode ios/$(basename "$PWD").xcodeproj"
 
 # }}}
 # python {{{
@@ -316,3 +319,4 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 
 # remove uniques from $PATH
 typeset -aU path
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
