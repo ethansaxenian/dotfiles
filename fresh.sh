@@ -2,6 +2,9 @@
 
 export DOTFILES=$HOME/.dotfiles
 
+echo "Switching shell to zsh..."
+chsh -s $(which zsh)
+
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   echo "Installing Xcode command line tools..."
   xcode-select --install
@@ -83,7 +86,4 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
   wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
   sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
   sudo apt install code
-
-  echo "Switching shell to zsh..."
-  chsh -s $(which zsh)
 fi
