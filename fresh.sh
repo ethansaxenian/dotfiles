@@ -2,12 +2,10 @@
 
 export DOTFILES=$HOME/.dotfiles
 
-echo "Switching shell to zsh..."
-# use zsh
-chsh -s $(which zsh)
-
-echo "Installing Xcode command line tools..."
-xcode-select --install
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  echo "Installing Xcode command line tools..."
+  xcode-select --install
+fi
 
 echo "Symlinking .zshrc..."
 # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
@@ -15,12 +13,10 @@ rm -rf $HOME/.zshrc
 ln -s $DOTFILES/.zshrc $HOME/.zshrc
 
 echo "Symlinking .gitignore..."
-# Removes .gitignore from $HOME (if it exists) and symlinks the .gitignore file from the .dotfiles
 rm -rf $HOME/.gitignore
 ln -s $DOTFILES/.gitignore $HOME/.gitignore
 
 echo "Symlinking .gitconfig..."
-# Removes .gitconfig from $HOME (if it exists) and symlinks the .gitconfig file from the .dotfiles
 rm -rf $HOME/.gitconfig
 ln -s $DOTFILES/.gitconfig $HOME/.gitconfig
 
@@ -41,30 +37,53 @@ mkdir $HOME/.vim/colors
 ln -s $DOTFILES/mycolors.vim $HOME/.vim/colors/mycolors.vim
 
 echo "Symlinking .vimrc..."
-# Removes .vimrc from $HOME (if it exists) and symlinks the .vimrc file from the .dotfiles
 rm -rf $HOME/.vimrc
 ln -s $DOTFILES/.vimrc $HOME/.vimrc
 
-echo "Installing homebrew..."
-# Check for Homebrew and install if we don't have it
-if test ! $(which brew); then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo "Symlinking .gdbinit..."
+rm -rf $HOME/.gdbinit
+ln -s $HOME/.dotfiles/.gdbinit $HOME/.gdbinit
 
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+# install mac-specific things
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  echo "Starting mac setup..."
+  echo "Installing homebrew..."
+  # Check for Homebrew and install if we don't have it
+  if test ! $(which brew); then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+
+  # Update Homebrew recipes
+  brew update
+
+  echo "Installing packages with homebrew..."
+  # Install all our dependencies with bundle (See Brewfile)
+  brew tap homebrew/bundle
+  brew bundle --file $DOTFILES/Brewfile
+
+  echo "Installing npm packages..."
+  source $DOTFILES/.npm
+
+  echo "Setting up mac preferences..."
+  # Set macOS preferences - we will run this last because this will reload the shell
+  source $DOTFILES/.macos
 fi
 
-# Update Homebrew recipes
-brew update
+# install linux-specific things
+if [[ "$OSTYPE" =~ ^linux ]]; then
+  echo "Starting linux setup..."
+  sudo apt update
+  sudo apt install code firefox gcc gdb git htop make python3 tldr tree vim zsh
 
-echo "Installing packages with homebrew..."
-# Install all our dependencies with bundle (See Brewfile)
-brew tap homebrew/bundle
-brew bundle --file $DOTFILES/Brewfile
+  # install vscode
+  sudo apt install software-properties-common apt-transport-https wget
+  wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+  sudo apt install code
 
-echo "Installing npm packages..."
-source $DOTFILES/.npm
-
-echo "Setting up mac preferences..."
-# Set macOS preferences - we will run this last because this will reload the shell
-source $DOTFILES/.macos
+  echo "Switching shell to zsh..."
+  chsh -s $(which zsh)
+fi

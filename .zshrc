@@ -5,49 +5,70 @@ export DOTFILES=$HOME/.dotfiles
 
 export PIPENV_VENV_IN_PROJECT=1
 
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
 
+# mac aliases {{{
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    # Personal
+    alias projects="cd $HOME/Projects/"
+
+    # Recursively delete `.DS_Store` files
+    alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+    # Empty the Trash on all mounted volumes and the main HDD.
+    # Also, clear Apple’s System Logs to improve shell startup speed.
+    # Finally, clear download history from quarantine. https://mths.be/bum
+    alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+    # Show/hide hidden files in Finder
+    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+    # Hide/show all desktop icons (useful when presenting)
+    alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+    alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+    alias vscode='open "/Applications/Visual Studio Code.app"'
+    alias pycharm='open "/Applications/PyCharm CE.app"'
+    alias chrome='open "/Applications/Google Chrome.app"'
+    alias word='open "/Applications/Microsoft Word.app"'
+    alias spotify='open "/Applications/Spotify.app"'
+    alias github='open "/Applications/GitHub Desktop.app"'
+    alias facetime='open "/System/Applications/FaceTime.app"'
+    alias messages='open "/System/Applications/Messages.app"'
+    alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
+    alias zoom='open "/Applications/zoom.us.app"'
+    alias bitwarden='open "/Applications/Bitwarden.app"'
+
+    alias brewup="brew update && brew upgrade && brew cleanup"
+    alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
+    alias sysup='sudo softwareupdate -i -a'
+
+    # change architecture
+    alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
+    alias arm="env /usr/bin/arch -arm64 /bin/zsh"
+fi
+# }}}
+# linux aliases {{{
+if [[ "$OSTYPE" =~ ^linux ]]; then
+    alias halt="sudo halt -p"
+    alias reboot="sudo reboot"
+
+    alias aptu="sudo apt update && sudo apt upgrade"
+    alias apti="sudo apt install"
+    alias aptr="sudo apt remove"
+    alias aptl="apt list --installed"
+
+    alias c="clear"
+fi
+# }}}
 # misc aliases {{{
-
-# Personal
-alias projects="cd $HOME/Projects/"
-
-# Recursively delete `.DS_Store` files
-alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
-
-# Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs to improve shell startup speed.
-# Finally, clear download history from quarantine. https://mths.be/bum
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
-alias vscode='open "/Applications/Visual Studio Code.app"'
-alias pycharm='open "/Applications/PyCharm CE.app"'
-alias chrome='open "/Applications/Google Chrome.app"'
-alias word='open "/Applications/Microsoft Word.app"'
-alias spotify='open "/Applications/Spotify.app"'
-alias github='open "/Applications/GitHub Desktop.app"'
-alias facetime='open "/System/Applications/FaceTime.app"'
-alias messages='open "/System/Applications/Messages.app"'
-alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
-# alias xcode='open "/Applications/Xcode.app"'
-alias zoom='open "/Applications/zoom.us.app"'
-alias bitwarden='open "/Applications/Bitwarden.app"'
-
-alias brewup="brew update && brew upgrade && brew cleanup"
-alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
-alias sysup='sudo softwareupdate -i -a'
 
 # enable aliases to be sudo'ed
 alias sudo="sudo "
@@ -78,29 +99,22 @@ alias mc="make clean"
 
 alias pth="echo $PATH | tr ':' '\n'"
 
-# change architecture
-alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
-alias arm="env /usr/bin/arch -arm64 /bin/zsh"
-
-# open the current react native project in xcode
-alias xcode="open -a Xcode ios/$(basename "$PWD").xcodeproj"
-
 # }}}
 # python {{{
 
 alias py="python3"
 alias pip="pip3"
-alias venv="python3 -m .venv"
+alias venv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
 
 # }}}
 # ls {{{
 
-eval `gdircolors $DOTFILES/LS_COLORS`
-alias ls="gls --color -Fh"
-alias la="ls -Ah"
-alias ll="ls -lh"
-alias lla="ls -lAh"
+eval `dircolors $DOTFILES/LS_COLORS`
+alias ls="ls --color=auto -Fh"
+alias la="ls -A"
+alias ll="ls -l"
+alias lla="ls -lA"
 
 # }}}
 # git {{{
@@ -164,6 +178,15 @@ alias svu="svn update"
 
 # }}}
 # misc functions {{{
+
+# open a react native project in xcode
+function xcode() {
+    if [[ "$#" < 1 ]]; then
+        open -a Xcode ios/$(basename "$PWD").xcworkspace
+    else
+        open -a Xcode $1/ios/$(basename "$1").xcworkspace
+    fi
+}
 
 function mkcd() {
     mkdir "$1" && cd "$1";
