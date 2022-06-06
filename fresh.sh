@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export DOTFILES=$HOME/.dotfiles
 
 if [[ $OSTYPE == darwin* ]]; then
