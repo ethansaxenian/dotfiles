@@ -24,6 +24,8 @@ if [[ $OSTYPE == linux* ]]; then
   chsh -s $(which zsh)
 fi
 
+source $DOTFILES/vim.sh
+
 source $DOTFILES/symlink.sh
 
 source $DOTFILES/ssh.sh
