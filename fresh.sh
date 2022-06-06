@@ -74,7 +74,7 @@ fi
 if [[ $OSTYPE == linux* ]]; then
   echo "Starting linux setup..."
   sudo apt update
-  sudo apt install -y code firefox gcc gdb git htop make python3 tldr tree vim zsh
+  sudo apt install -y firefox gcc gdb git htop make python3 tldr tree vim zsh
 
   # install vscode
   sudo apt install -y software-properties-common apt-transport-https wget
