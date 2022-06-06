@@ -2,7 +2,7 @@
 
 export DOTFILES=$HOME/.dotfiles
 
-if [ "$OSTYPE" =~ ^darwin ]; then
+if [[ $OSTYPE == darwin* ]]; then
   echo "Installing Xcode command line tools..."
   xcode-select --install
 fi
@@ -45,7 +45,7 @@ rm -rf $HOME/.gdbinit
 ln -s $HOME/.dotfiles/.gdbinit $HOME/.gdbinit
 
 # install mac-specific things
-if [ "$OSTYPE" =~ ^darwin ]; then
+if [[ $OSTYPE == darwin* ]]; then
   echo "Starting mac setup..."
   echo "Installing homebrew..."
   # Check for Homebrew and install if we don't have it
@@ -73,7 +73,7 @@ if [ "$OSTYPE" =~ ^darwin ]; then
 fi
 
 # install linux-specific things
-if [ "$OSTYPE" =~ ^linux ]; then
+if [[ $OSTYPE == linux* ]]; then
   echo "Starting linux setup..."
   sudo apt update
   sudo apt install code firefox gcc gdb git htop make python3 tldr tree vim zsh
