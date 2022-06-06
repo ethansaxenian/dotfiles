@@ -103,6 +103,9 @@ alias mc="make clean"
 
 alias pth="echo $PATH | tr ':' '\n'"
 
+# Make shell handle commands containing a leading $
+alias "$"="$@"
+
 # }}}
 # python {{{
 

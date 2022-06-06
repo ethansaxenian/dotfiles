@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export DOTFILES=$HOME/.dotfiles
 
@@ -28,7 +28,7 @@ if [[ $OSTYPE == darwin* ]]; then
   brew bundle --file $DOTFILES/Brewfile
 
   echo "Installing npm packages..."
-  source $DOTFILES/.npm
+  source $DOTFILES/npm.sh
 
   echo "Setting up mac preferences..."
   # Set macOS preferences - we will run this last because this will reload the shell
@@ -40,6 +40,8 @@ if [[ $OSTYPE == linux* ]]; then
   echo "Starting linux setup..."
   sudo apt update
   sudo apt install -y firefox gcc gdb git htop make python3 python3-dev python3-pip python3-setuptools tldr tree vim zsh
+
+  pip3 install thefuck --user
 
   echo "Installing vscode..."
   curl -L https://aka.ms/linux-arm64-deb > code_arm64.deb
