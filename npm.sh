@@ -1,3 +1,7 @@
+#!/usr/bin/env zsh
+
+echo "Installing nvm, node, and npm packages..."
+
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | zsh
 source $HOME/.nvm/nvm.sh
 

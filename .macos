@@ -1,3 +1,5 @@
+echo "Setting up mac preferences..."
+
 # Ask for the administrator password upfront
 sudo -v
 

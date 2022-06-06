@@ -17,5 +17,5 @@ if [[ $OSTYPE == linux* ]]; then
   ssh-add ~/.ssh/id_ed25519
 fi
 
-
-echo "run 'pbcopy < ~/.ssh/id_ed25519.pub' and paste that into GitHub"
+cat ~/.ssh/id_ed25519.pub
+echo "copy that ^ and paste into GitHub"
