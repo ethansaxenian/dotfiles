@@ -1,5 +1,3 @@
-#!/bin/sh
-
 export DOTFILES=$HOME/.dotfiles
 
 if [[ $OSTYPE == darwin* ]]; then
@@ -76,13 +74,13 @@ fi
 if [[ $OSTYPE == linux* ]]; then
   echo "Starting linux setup..."
   sudo apt update
-  sudo apt install code firefox gcc gdb git htop make python3 tldr tree vim zsh
+  sudo apt install -y code firefox gcc gdb git htop make python3 tldr tree vim zsh
 
   # install vscode
-  sudo apt install software-properties-common apt-transport-https wget
+  sudo apt install -y software-properties-common apt-transport-https wget
   wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
   sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-  sudo apt install code
+  sudo apt install -y code
 
   echo "Switching shell to zsh..."
   chsh -s $(which zsh)
