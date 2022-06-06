@@ -45,6 +45,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
     alias zoom='open "/Applications/zoom.us.app"'
     alias bitwarden='open "/Applications/Bitwarden.app"'
+    alias utm='open "/Applications/UTM.app"'
 
     alias brewup="brew update && brew upgrade && brew cleanup"
     alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
@@ -53,6 +54,9 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     # change architecture
     alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
     alias arm="env /usr/bin/arch -arm64 /bin/zsh"
+
+    # start linux VM
+    alias startvm=open "utm://start?name=Ubuntu"
 fi
 # }}}
 # linux aliases {{{
