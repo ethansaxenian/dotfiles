@@ -78,11 +78,10 @@ if [[ $OSTYPE == linux* ]]; then
   sudo apt update
   sudo apt install -y firefox gcc gdb git htop make python3 tldr tree vim zsh
 
-  # install vscode
-  sudo apt install -y software-properties-common apt-transport-https wget
-  wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
-  sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-  sudo apt install -y code
+  echo "Installing vscode..."
+  curl -L https://aka.ms/linux-arm64-deb > code_arm64.deb
+  sudo apt install -y ./code_arm64.deb
+  rm code_arm64.deb
 
   echo "Switching shell to zsh..."
   chsh -s $(which zsh)
