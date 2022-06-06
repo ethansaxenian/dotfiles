@@ -9,8 +9,6 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore
-[credential]
-    helper = osxkeychain
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f

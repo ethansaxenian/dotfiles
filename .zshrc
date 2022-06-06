@@ -346,3 +346,5 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 
 # remove uniques from $PATH
 typeset -aU path
+
+eval $(thefuck --alias)
