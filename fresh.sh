@@ -22,6 +22,10 @@ if [[ $OSTYPE == linux* ]]; then
 
   echo "Switching shell to zsh..."
   chsh -s $(which zsh)
+
+  # set terminator settings
+  rm -rf ~/.config/terminator/config
+  ln -s $DOTFILES/terminator/config ~/.config/terminator/config
 fi
 
 source $DOTFILES/vim.sh
@@ -32,7 +36,6 @@ source $DOTFILES/ssh.sh
 
 # reload zsh config
 source $HOME/.zshrc
-
 
 if [[ $OSTYPE == darwin* ]]; then
   # Set macOS preferences - we will run this last because this will reload the shell

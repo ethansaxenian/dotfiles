@@ -70,6 +70,8 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     alias aptl="apt list --installed"
 
     alias c="clear"
+
+    alias my-malloc="LD_PRELOAD=$HOME/Documents/my-malloc/my-malloc.so"
 fi
 # }}}
 # misc aliases {{{
