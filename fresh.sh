@@ -24,8 +24,8 @@ if [[ $OSTYPE == linux* ]]; then
   chsh -s $(which zsh)
 
   # set terminator settings
-  rm -rf ~/.config/terminator/config
-  ln -s $DOTFILES/terminator/config ~/.config/terminator/config
+  rm -rf $HOME/.config/terminator/config
+  ln -s $DOTFILES/terminator/config $HOME/.config/terminator/config
 fi
 
 source $DOTFILES/vim.sh
