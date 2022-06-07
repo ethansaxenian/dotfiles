@@ -5,12 +5,12 @@ export DOTFILES=$HOME/.dotfiles
 
 export PIPENV_VENV_IN_PROJECT=1
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
 # mac aliases {{{
@@ -56,7 +56,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     alias arm="env /usr/bin/arch -arm64 /bin/zsh"
 
     # start linux VM
-    alias startvm=open "utm://start?name=Ubuntu"
+    alias startvm='open "utm://start?name=Ubuntu"'
 fi
 # }}}
 # linux aliases {{{
@@ -174,14 +174,6 @@ alias nig="npm install --location=global"
 alias nu="npm uninstall"
 alias ns="npm start"
 alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
-
-# }}}
-# svn {{{
-
-alias sva="svn add"
-alias svc="svn commit -m"
-alias svs="svn status"
-alias svu="svn update"
 
 # }}}
 # misc functions {{{
@@ -398,6 +390,8 @@ setopt CORRECT_ALL
 autoload -Uz compinit && compinit
 # case insensitive path-completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+# partial completion suggestions
+zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 # }}}
 
 # remove uniques from $PATH

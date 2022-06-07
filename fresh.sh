@@ -10,8 +10,6 @@ if [[ $OSTYPE == darwin* ]]; then
   xcode-select --install
 
   source $DOTFILES/brew.sh
-
-  source $DOTFILES/npm.sh
 fi
 
 # install linux-specific things
@@ -23,6 +21,8 @@ if [[ $OSTYPE == linux* ]]; then
   echo "Switching shell to zsh..."
   chsh -s $(which zsh)
 fi
+
+source $DOTFILES/npm.sh
 
 source $DOTFILES/vim.sh
 

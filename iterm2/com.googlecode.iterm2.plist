@@ -2,45 +2,75 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AdjustWindowForFontSizeChange</key>
+	<true/>
 	<key>AllowClipboardAccess</key>
 	<true/>
-	<key>AppleAntiAliasingThreshold</key>
-	<integer>1</integer>
-	<key>ApplePressAndHoldEnabled</key>
-	<false/>
-	<key>AppleScrollAnimationEnabled</key>
-	<integer>0</integer>
-	<key>AppleSmoothFixedFontsSizeThreshold</key>
-	<integer>1</integer>
-	<key>AppleWindowTabbingMode</key>
-	<string>manual</string>
+	<key>Coprocess MRU</key>
+	<array>
+		<string>vim /Users/ethansaxenian/.dotfiles/mycolors.vim</string>
+		<string>echo /Users/ethansaxenian/.dotfiles/Brewfile.lock.json</string>
+		<string>echo /Users/ethansaxenian/.dotfiles/mycolors.vim</string>
+		<string>echo /Users/ethansaxenian/.dotfiles/README.md</string>
+		<string>echo /Users/ethansaxenian/Projects/Python/fraction.py</string>
+	</array>
 	<key>CopySelection</key>
 	<false/>
 	<key>Default Bookmark Guid</key>
 	<string>E1D1C4B8-3A04-4982-9532-49CBEACA2924</string>
+	<key>DimBackgroundWindows</key>
+	<false/>
 	<key>DimInactiveSplitPanes</key>
 	<false/>
 	<key>DimOnlyText</key>
 	<true/>
+	<key>DisableFullscreenTransparency</key>
+	<true/>
+	<key>DoubleClickPerformsSmartSelection</key>
+	<true/>
 	<key>EnableAPIServer</key>
 	<true/>
 	<key>EnableDivisionView</key>
-	<false/>
+	<true/>
 	<key>EnableProxyIcon</key>
 	<true/>
+	<key>FlashTabBarInFullscreen</key>
+	<false/>
 	<key>HTMLTabTitles</key>
 	<true/>
 	<key>HapticFeedbackForEsc</key>
+	<false/>
+	<key>HideMenuBarInFullscreen</key>
+	<true/>
+	<key>HideScrollbar</key>
+	<false/>
+	<key>HideTab</key>
+	<true/>
+	<key>HideTabNumber</key>
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>IRMemory</key>
 	<integer>4</integer>
+	<key>MaxVertically</key>
+	<false/>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
 			<key>ASCII Anti Aliased</key>
 			<true/>
+			<key>AWDS Pane Directory</key>
+			<string></string>
+			<key>AWDS Pane Option</key>
+			<string>No</string>
+			<key>AWDS Tab Directory</key>
+			<string></string>
+			<key>AWDS Tab Option</key>
+			<string>No</string>
+			<key>AWDS Window Directory</key>
+			<string></string>
+			<key>AWDS Window Option</key>
+			<string>No</string>
 			<key>Allow Title Reporting</key>
 			<true/>
 			<key>Ambiguous Double Width</key>
@@ -202,6 +232,21 @@
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
+			<key>Badge Color</key>
+			<dict>
+				<key>Alpha Component</key>
+				<real>0.5</real>
+				<key>Blue Component</key>
+				<real>0.0</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
+				<key>Green Component</key>
+				<real>0.14910027384757996</real>
+				<key>Red Component</key>
+				<real>1</real>
+			</dict>
+			<key>Blend</key>
+			<real>0.50427564538043479</real>
 			<key>Blink Allowed</key>
 			<true/>
 			<key>Blinking Cursor</key>
@@ -222,9 +267,11 @@
 			<key>Close Sessions On End</key>
 			<true/>
 			<key>Columns</key>
-			<integer>80</integer>
+			<integer>105</integer>
 			<key>Command</key>
 			<string></string>
+			<key>Cursor Boost</key>
+			<real>0.0</real>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -233,6 +280,19 @@
 				<real>0.73333334922790527</real>
 				<key>Red Component</key>
 				<real>0.73333334922790527</real>
+			</dict>
+			<key>Cursor Guide Color</key>
+			<dict>
+				<key>Alpha Component</key>
+				<real>0.25</real>
+				<key>Blue Component</key>
+				<real>1</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
+				<key>Green Component</key>
+				<real>0.92681378126144409</real>
+				<key>Red Component</key>
+				<real>0.70214027166366577</real>
 			</dict>
 			<key>Cursor Text Color</key>
 			<dict>
@@ -243,10 +303,16 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
+			<key>Cursor Type</key>
+			<integer>2</integer>
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
 			<string>No</string>
+			<key>Custom Tab Title</key>
+			<string></string>
+			<key>Custom Window Title</key>
+			<string></string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -268,10 +334,16 @@
 			</dict>
 			<key>Guid</key>
 			<string>E1D1C4B8-3A04-4982-9532-49CBEACA2924</string>
+			<key>Hide After Opening</key>
+			<false/>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
+			<key>Icon</key>
+			<integer>1</integer>
 			<key>Idle Code</key>
 			<integer>0</integer>
+			<key>Initial Use Transparency</key>
+			<true/>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -562,6 +634,21 @@
 					<string>[1;5F</string>
 				</dict>
 			</dict>
+			<key>Link Color</key>
+			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
+				<key>Blue Component</key>
+				<real>0.73422712087631226</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
+				<key>Green Component</key>
+				<real>0.35915297269821167</real>
+				<key>Red Component</key>
+				<real>0.0</real>
+			</dict>
+			<key>Minimum Contrast</key>
+			<real>0.0</real>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -572,6 +659,8 @@
 			<true/>
 			<key>Normal Font</key>
 			<string>Monaco 12</string>
+			<key>Open Toolbelt</key>
+			<false/>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -579,11 +668,15 @@
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
-			<integer>25</integer>
+			<integer>32</integer>
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
 			<integer>0</integer>
+			<key>Scrollback With Status Bar</key>
+			<true/>
+			<key>Scrollback in Alternate Screen</key>
+			<false/>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -602,18 +695,33 @@
 				<key>Red Component</key>
 				<real>0.70980000495910645</real>
 			</dict>
+			<key>Semantic History</key>
+			<dict>
+				<key>action</key>
+				<string>editor</string>
+				<key>editor</key>
+				<string>com.microsoft.VSCode</string>
+				<key>text</key>
+				<string></string>
+			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
 			<key>Shortcut</key>
 			<string></string>
 			<key>Silence Bell</key>
 			<false/>
+			<key>Smart Cursor Color</key>
+			<false/>
+			<key>Space</key>
+			<integer>0</integer>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
 			<array/>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
+			<key>Title Components</key>
+			<integer>516</integer>
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
@@ -622,6 +730,12 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Cursor Guide</key>
+			<false/>
+			<key>Use Custom Tab Title</key>
+			<false/>
+			<key>Use Custom Window Title</key>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
@@ -636,6 +750,10 @@
 			<string>/Users/ethansaxenian</string>
 		</dict>
 	</array>
+	<key>OpenTmuxWindowsIn</key>
+	<integer>0</integer>
+	<key>PerPaneBackgroundImage</key>
+	<true/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -674,16 +792,42 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
+	<false/>
 	<key>PromptOnQuit</key>
+	<false/>
+	<key>SeparateStatusBarsPerPane</key>
+	<false/>
+	<key>ShowFullScreenTabBar</key>
+	<true/>
+	<key>ShowNewOutputIndicator</key>
+	<true/>
+	<key>ShowPaneTitles</key>
 	<false/>
 	<key>SmartPlacement</key>
 	<true/>
 	<key>SoundForEsc</key>
 	<false/>
-	<key>TabStyleWithAutomaticOption</key>
+	<key>StatusBarPosition</key>
 	<integer>0</integer>
+	<key>SwitchPaneModifier</key>
+	<integer>4</integer>
+	<key>SwitchTabModifier</key>
+	<integer>5</integer>
+	<key>SwitchWindowModifier</key>
+	<integer>6</integer>
+	<key>TabStyleWithAutomaticOption</key>
+	<integer>5</integer>
+	<key>TabViewType</key>
+	<integer>0</integer>
+	<key>TabsHaveCloseButton</key>
+	<true/>
 	<key>ThreeFingerEmulates</key>
 	<true/>
+	<key>UseBorder</key>
+	<false/>
+	<key>UseVirtualKeyCodesForDetectingDigits</key>
+	<false/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WindowNumber</key>

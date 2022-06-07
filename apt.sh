@@ -2,7 +2,7 @@
 
 echo "Installing packages with apt..."
 sudo apt update
-sudo apt install -y firefox gcc gdb git htop make python3 python3-dev python3-pip python3-setuptools tldr tree vim zsh
+sudo apt install -y firefox gcc gdb git htop make python3 python3-dev python3-pip python3-setuptools tree vim zsh
 
 pip3 install thefuck --user
 
