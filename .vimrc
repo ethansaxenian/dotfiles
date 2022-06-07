@@ -4,7 +4,10 @@ set nocompatible
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-	Plug 'sheerun/vim-polyglot'
+    Plug 'bfrg/vim-cpp-modern'
+    Plug 'vim-python/python-syntax'
+    Plug 'pangloss/vim-javascript'
+    Plug 'MaxMEllon/vim-jsx-pretty'
 	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'flazz/vim-colorschemes'
     Plug 'scrooloose/nerdtree'
@@ -41,8 +44,6 @@ set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
-
-set re=2
 " }}}
 " UI {{{
 " Start scrolling four lines before the horizontal window border
@@ -132,8 +133,8 @@ syntax enable
 set nobackup
 set nowb
 
-" set directory for swap files
-set directory=~/.vim/swp//
+" turn off swap files
+set noswapfile
 
 " turn persistent undo on
 " means that you can undo even when you close a buffer/VIM
@@ -186,11 +187,11 @@ set statusline+=%f                            " file name
 set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%h%m%r%w\                     " flags
 set statusline+=%{FugitiveStatusline()}\      " git branch
-set statusline+=%#GitAdded#
+set statusline+=%#GitAddedSL#
 set statusline+=%{GitStatusA()}\              " number of lines added
-set statusline+=%#GitModified#
+set statusline+=%#GitModifiedSL#
 set statusline+=%{GitStatusM()}\              " number of lines modified
-set statusline+=%#GitRemoved#
+set statusline+=%#GitRemovedSL#
 set statusline+=%{GitStatusR()}\ \            " number of lines removed
 set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
@@ -326,6 +327,7 @@ endfunction
 " FILETYPES {{{
 " Python
 let g:python_highlight_operators = 0
+let g:python_highlight_all = 1
 
 augroup Python
     autocmd!
@@ -338,6 +340,10 @@ augroup Python
 augroup END
 
 " Javascript/Typescript
+
+" turn off yats.vim (enabled by default) which adds too many typescript keywords
+let g:yats_host_keyword = 0
+
 augroup Javascript
     autocmd!
     autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal foldmethod=syntax

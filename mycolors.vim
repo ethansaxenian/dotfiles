@@ -71,9 +71,9 @@ call s:h("LineNr", s:gutter_fg, s:gutter_bg, "")
 call s:h("CursorLineNr", s:fg, "", "")
 
 call s:h("DiffAdd", s:green, "", "")
-call s:h("DiffChange", s:orange, "", "")
+call s:h("DiffChange", s:blue, "", "")
 call s:h("DiffDelete", s:red, "", "")
-call s:h("DiffText", s:blue, "", "")
+call s:h("DiffText", s:orange, "", "")
 
 call s:h("IncSearch", s:bg, s:search, "")
 call s:h("Search", s:bg, s:search, "")
@@ -96,9 +96,9 @@ call s:h("SpellRare", s:orange, "", "")
 
 call s:h("StatusLineRed", s:red, s:cursor_line, "")
 call s:h("StatusLinePurple", s:purple, s:cursor_line, "")
-call s:h("GitAdded", s:green, s:cursor_line, "")
-call s:h("GitModified", s:blue, s:cursor_line, "")
-call s:h("GitRemoved", s:red, s:cursor_line, "")
+call s:h("GitAddedSL", s:green, s:cursor_line, "")
+call s:h("GitModifiedSL", s:blue, s:cursor_line, "")
+call s:h("GitRemovedSL", s:red, s:cursor_line, "")
 call s:h("StatusLineNC", s:comment_fg, s:cursor_line, "")
 call s:h("TabLine", s:comment_fg, s:cursor_line, "")
 call s:h("TabLineFill", s:comment_fg, s:cursor_line, "")
@@ -165,6 +165,17 @@ call s:h("Underlined", s:fg, "", "")
 call s:h("Ignore", s:fg, "", "")
 call s:h("Error", s:red, s:gutter_bg, "")
 call s:h("Todo", s:purple, "", "")
+" }}}
+" Plugins {{{
+" GitGutter
+call s:h("GitGutterAdd", s:green, s:gutter_bg, "")
+call s:h("GitGutterDelete", s:red, s:gutter_bg, "")
+call s:h("GitGutterChange", s:blue, s:gutter_bg, "")
+call s:h("GitGutterChangeDelete", s:red, s:gutter_bg, "")
+
+" Fugitive
+call s:h("diffAdded", s:green, "", "")
+call s:h("diffRemoved", s:red, "", "")
 " }}}
 " C Syntax {{{
 " goto break return continue asm
@@ -333,7 +344,7 @@ call s:h("jsDestructuringPropertyValue", s:blue, "", "")
 call s:h("jsDestructuringBlock", s:lightblue, "", "")
 call s:h("jsSpreadExpression", s:blue, "", "")
 
-call s:h("jsGlobalObjects", s:lightblue, "", "")
+call s:h("jsGlobalObjects", s:forestgreen, "", "")
 call s:h("jsGlobalNodeObjects", s:forestgreen, "", "")
 call s:h("jsBuiltins", s:yellow, "", "")
 
@@ -345,59 +356,7 @@ call s:h("jsxElement", s:fg, "", "")
 call s:h("jsxTagName", s:blue, "", "")
 " }}}
 " Typescript Syntax {{{
-call s:h("typescriptCastKeyword", s:purple, "", "")
-call s:h("typescriptInterfaceKeyword", s:darkblue, "", "")
-call s:h("typescriptPredefinedType", s:forestgreen, "", "")
-hi! link typescriptTypeReference typescriptPredefinedType
-hi! link typescriptInterfaceName typescriptPredefinedType
-call s:h("typescriptTypeQuery", s:darkblue, "", "")
-call s:h("typescriptAliasKeyword", s:darkblue, "", "")
-call s:h("typescriptAliasDeclaration", s:forestgreen, "", "")
-
-hi! link typescriptImport jsImport
-hi! link typescriptBraces jsFuncBraces
-hi! link typescriptString jsString
-hi! link typescriptBlock jsModuleKeyword
-hi! link typescriptBOM jsModuleKeyword
-hi! link typescriptArrayMethod jsFuncCall
-hi! link typescriptCall jsFuncArgs
-hi! link typescriptArrowFunc jsArrowFunction
-hi! link typescriptObjectLiteral jsDestructuringPropertyValue
-hi! link typescriptObjectLabel jsObjectKey
-hi! link typescriptBoolean jsBooleanTrue
-hi! link typescriptMathStaticMethod jsFuncCall
-hi! link typescriptDOMDocMethod jsFuncCall
-hi! link typescriptES6SetMethod jsFuncCall
-hi! link typescriptBOMNavigatorProp jsFuncCall
-hi! link typescriptBOMLocationMethod jsFuncCall
-hi! link typescriptBOMWindowProp jsGlobalObjects
-hi! link typescriptDOMDocProp typescriptBOMWindowProp
-hi! link typescriptURLUtilsProp typescriptBOMWindowProp
-hi! link typescriptDOMFormProp typescriptBOMWindowProp
-hi! link typescriptDOMStorageMethod jsObjectProp
-hi! link typescriptNodeGlobal jsGlobalObjects
-hi! link typescriptGlobal jsGlobalObjects
-hi! link typescriptVariable jsStorageClass
-hi! link typescriptVariableDeclaration jsVariableDef
-hi! link typescriptFuncCallArg jsFuncArgs
-hi! link typescriptParamImpl jsFuncArgs
-hi! link typescriptExport jsExport
-hi! link typescriptDefault jsExportDefault
-hi! link typescriptDestructureVariable jsDestructuringPropertyValue
-hi! link typescriptComment jsComment
-hi! link typescriptLineComment jsComment
-call s:h("typescriptStringMethod", s:lightblue, "", "")
-hi! link typescriptTemplateSB jsTemplateBraces
-hi! link typescriptTemplateSubstitution jsTemplateExpression
-hi! link typescriptParenExp jsxExpressionBlock
-call s:h("typescriptEndColons", s:white, "", "")
-hi! link typescriptNumber jsNumber
-hi! link typescriptNull jsNull
-hi! link typescriptConditionalParen jsIfElseBlock
-call s:h("typescriptArray", s:lightblue, "", "")
-hi! link typescriptTernary jsTernaryIf
-hi! link typescriptIndexExpr jsBracket
-hi! link typescriptOperator jsOperatorKeyword
+" TODO: find a good plugin
 " }}}
 " Css Syntax {{{
 call s:h("cssBraces", s:fg, "", "")
@@ -431,6 +390,7 @@ hi! link cssFunction cssColor
 hi! link cssPositioningAttr cssColor
 hi! link cssTransitionAttr cssColor
 hi! link cssAnimationAttr cssColor
+hi! link cssStringQ cssColor
 
 call s:h("cssBoxProp", s:lightblue, "", "")
 hi! link cssListProp cssBoxProp
@@ -470,23 +430,4 @@ call s:h("htmlH1", s:blue, "", "bold")
 call s:h("mkdListItem", s:blue, "", "")
 call s:h("mkdCodeDelimiter", s:orange, "", "")
 call s:h("mkdCode", s:orange, "", "")
-" }}}
-" Makefile Syntax {{{
-call s:h("makeTarget", s:yellow, "", "")
-call s:h("makeSpecTarget", s:yellow, "", "")
-call s:h("makeStatement", s:yellow, "", "")
-call s:h("makeCommands", s:fg, "", "")
-call s:h("makeComment", s:green, "", "")
-call s:h("makeIdent", s:lightblue, "", "")
-" }}}
-" Yaml Syntax {{{
-call s:h("yamlFlowString", s:orange, "", "")
-call s:h("yamlFlowStringDelimiter", s:orange, "", "")
-call s:h("yamlBlockMappingKey", s:blue, "", "")
-call s:h("yamlInteger", s:yellow, "", "")
-call s:h("yamlKeyValueDelimiter", s:fg, "", "")
-call s:h("yamlBlockCollectionItemStart", s:fg, "", "")
-call s:h("yamlComment", s:green, "", "")
-call s:h("yamlFlowIndicator", s:fg, "", "")
-call s:h("yamlPlainScalar", s:orange, "", "")
 " }}}

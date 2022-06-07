@@ -7,5 +7,5 @@ curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs https://raw.githubuserconte
 vim +PlugInstall +qall
 
 echo "Setting up .vim directories..."
-rm -rf $HOME/.vim/undo $HOME/.vim/swp
-mkdir $HOME/.vim/undo $HOME/.vim/swp
+rm -rf $HOME/.vim/undo
+mkdir $HOME/.vim/undo
