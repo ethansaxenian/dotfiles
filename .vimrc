@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'flazz/vim-colorschemes'
     Plug 'scrooloose/nerdtree'
+    Plug 'scrooloose/nerdcommenter'
     Plug 'airblade/vim-gitgutter'
     Plug 'tpope/vim-fugitive'
 
@@ -181,9 +182,9 @@ endfunction
 
 " set the status line
 set statusline=%#StatusLinePurple#			  " set highlighting
-set statusline+=%-2.2n\                       " buffer number
+set statusline+=%2.2n\                        " buffer number
 set statusline+=%#StatusLineRed#              " set highlighting
-set statusline+=%f                            " file name
+set statusline+=%.35F\                        " file name
 set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%h%m%r%w\                     " flags
 set statusline+=%{FugitiveStatusline()}\      " git branch
@@ -195,10 +196,10 @@ set statusline+=%#GitRemovedSL#
 set statusline+=%{GitStatusR()}\ \            " number of lines removed
 set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
-set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
+"set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
 set statusline+=%=\                           " indent to the right
 set statusline+=%#StatusLinePurple#           " set highlighting
-set statusline+=%(%l,%c%V%)\ \ %P			  " cursor position/offset
+set statusline+=%(%l/%L,%c%V%)\ \ %P\         " cursor position/offset
 
 set laststatus=2
 " }}}
@@ -368,4 +369,37 @@ augroup Misc
 
     autocmd BufRead,BufNewFile *.{py,js,jsx,ts,tsx,html,css} normal zR
 augroup END
+" }}}
+" PLUGINS {{{
+
+" NERDTree
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+nmap <leader>n :NERDTreeFocus<CR>
+
+let NERDTreeIgnore = ['\.git$[[dir]]', 'node_modules[[dir]]', '\.DS_Store', '\.idea[[dir]]', '__pycache__[[dir]]', 'build[[dir]]', 'venv$[[dir]]', '\.o$', '\.so$', '\.dSYM$']
+let NERDTreeWinPos = "right"
+let NERDTreeWinSize = 50
+
+" NERDCommenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" ctrl-/ toggles comments
+map <C-_> <plug>NERDCommenterToggle
+
+" GitGutter
+" show if fold contains changed text
+set foldtext=gitgutter#fold#foldtext()
 " }}}

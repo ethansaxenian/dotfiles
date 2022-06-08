@@ -85,9 +85,9 @@ alias v="vim"
 alias myip="curl http://ipecho.net/plain; echo"
 
 # opens the zsh config file for editing
-alias config="vim $HOME/.zshrc"
+alias config="vim $DOTFILES/.zshrc"
 
-alias vconfig="vim $HOME/.vimrc"
+alias vconfig="vim $DOTFILES/.vimrc"
 
 # reloads the terminal
 alias reload="source $HOME/.zshrc"
