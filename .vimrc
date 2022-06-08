@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-python/python-syntax'
     Plug 'pangloss/vim-javascript'
     Plug 'MaxMEllon/vim-jsx-pretty'
+    Plug 'leafgarland/typescript-vim'
 	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'flazz/vim-colorschemes'
     Plug 'scrooloose/nerdtree'
@@ -336,14 +337,16 @@ augroup Python
     autocmd BufRead,BufNewFile *.py setlocal tabstop=4
     autocmd BufRead,BufNewFile *.py setlocal shiftwidth=4
     autocmd BufRead,BufNewFile *.py setlocal softtabstop=4
-
-    autocmd BufRead,BufNewFile *.py nnoremap <buffer> <leader>/ 0i#<esc>
 augroup END
 
 " Javascript/Typescript
 
-" turn off yats.vim (enabled by default) which adds too many typescript keywords
+" turn off yats.vim (enabled by default) which adds too many typescript syntax items
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
 let g:yats_host_keyword = 0
+let g:typescript_ignore_browserwords = 0
 
 augroup Javascript
     autocmd!
@@ -351,8 +354,6 @@ augroup Javascript
     autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal tabstop=2
     autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal shiftwidth=2
     autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal softtabstop=2
-
-    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} nnoremap <buffer> <leader>/ 0i//<esc>
 augroup END
 
 " Misc

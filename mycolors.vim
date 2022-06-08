@@ -281,6 +281,8 @@ call s:h("pythonBuiltin", s:softpurple, "", "")
 call s:h("pythonExClass", s:softpurple, "", "")
 " }}}
 " Javascript Syntax {{{
+call s:h("javaScriptBlock", s:blue, "", "")
+
 call s:h("jsImport", s:purple, "", "")
 call s:h("jsExport", s:purple, "", "")
 call s:h("jsExportDefault", s:purple, "", "")
@@ -293,6 +295,7 @@ call s:h("jsString", s:orange, "", "")
 call s:h("jsTemplateString", s:orange, "", "")
 
 call s:h("jsComment", s:green, "", "")
+call s:h("javaScriptLineComment", s:green, "", "")
 
 call s:h("jsNumber", s:dullyellow, "", "")
 call s:h("jsFloat", s:dullyellow, "", "")
@@ -342,6 +345,7 @@ call s:h("jsStorageClass", s:darkblue, "", "")
 call s:h("jsVariableDef", s:blue, "", "")
 call s:h("jsDestructuringPropertyValue", s:blue, "", "")
 call s:h("jsDestructuringBlock", s:lightblue, "", "")
+call s:h("jsDestructuringArray", s:blue, "", "")
 call s:h("jsSpreadExpression", s:blue, "", "")
 
 call s:h("jsGlobalObjects", s:forestgreen, "", "")
@@ -356,7 +360,82 @@ call s:h("jsxElement", s:fg, "", "")
 call s:h("jsxTagName", s:blue, "", "")
 " }}}
 " Typescript Syntax {{{
-" TODO: find a good plugin
+call s:h("typescriptCommentTodo", s:bg, s:fg, "")
+call s:h("typescriptComment", s:green, "", "")
+call s:h("typescriptLineComment", s:green, "", "")
+
+call s:h("typescriptNumber", s:dullyellow, "", "")
+call s:h("typescriptFloat", s:dullyellow, "", "")
+
+call s:h("typescriptBrowserKeywords", s:lightblue, "", "")
+call s:h("typescriptDomMethods", s:yellow, "", "")
+
+
+" import export from as
+call s:h("typescriptSource", s:purple, "", "")
+" arguments this void
+call s:h("typescriptIdentifier", s:darkblue, "", "")
+" let var const type interface
+call s:h("typescriptStorageClass", s:darkblue, "", "")
+call s:h("typescriptTypeStorageClass", s:darkblue, "", "")
+" delete new instanceof typeof
+call s:h("typescriptOperator", s:darkblue, "", "")
+" true false
+call s:h("typescriptBoolean", s:darkblue, "", "")
+" null undefined
+call s:h("typescriptNull", s:darkblue, "", "")
+" alert confirm prompt status
+call s:h("typescriptMessage", s:yellow, "", "")
+" escape unescape all applets alinkColor bgColor fgColor linkColor vlinkColor xmlEncoding
+call s:h("typescriptDeprecated", s:lightblue, "", "")
+
+call s:h("typescriptVariableDef", s:blue, "", "")
+call s:h("typescriptDestructuringPropertyValue", s:blue, "", "")
+call s:h("typescriptDestructuringBlock", s:lightblue, "", "")
+call s:h("typescriptDestructuringArray", s:blue, "", "")
+
+" if else switch
+call s:h("typescriptConditional", s:purple, "", "")
+" do while for in of
+call s:h("typescriptRepeat", s:purple, "", "")
+" break continue yield await
+call s:h("typescriptBranch", s:purple, "", "")
+" case default async readonly
+call s:h("typescriptLabel", s:purple, "", "")
+" return with
+call s:h("typescriptStatement", s:purple, "", "")
+
+
+call s:h("typescriptGlobalObjects", s:forestgreen, "", "")
+" module exports global process __dirname __filename
+call s:h("typescriptGlobalNodeObjects", s:forestgreen, "", "")
+
+" try catch throw finally Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
+call s:h("typescriptExceptions", s:purple, "", "")
+
+call s:h("typescriptFunction", s:purple, "", "")
+
+call s:h("typescriptCssStyles", s:lightblue, "", "")
+
+call s:h("typescriptDotNotation", s:white, "", "")
+
+call s:h("typescriptFuncKeyword", s:darkblue, "", "")
+
+call s:h("typescriptBraces", s:white, "", "")
+call s:h("typescriptParens", s:white, "", "")
+call s:h("typescriptEndColons", s:white, "", "")
+call s:h("typescriptLogicSymbols", s:white, "", "")
+call s:h("typescriptOpSymbols", s:white, "", "")
+call s:h("typescriptArrowFunction", s:darkblue, "", "")
+
+call s:h("typescriptType", s:forestgreen, "", "")
+call s:h("typescriptTypeDef", s:forestgreen, "", "")
+call s:h("typescriptTypeCast", s:forestgreen, "", "")
+
+call s:h("typescriptStringS", s:orange, "", "")
+
+call s:h("ReactHooks", s:yellow, "", "")
+call s:h("Events", s:lightblue, "", "")
 " }}}
 " Css Syntax {{{
 call s:h("cssBraces", s:fg, "", "")
