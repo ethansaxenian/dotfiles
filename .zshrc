@@ -3,14 +3,18 @@ export EDITOR="vim"
 # Path to your dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
-export PIPENV_VENV_IN_PROJECT=1
-
 if [[ "$OSTYPE" =~ ^darwin ]]; then
+    export POETRY_VIRTUALENVS_IN_PROJECT=true
+    export POETRY_HOME=$HOME/.poetry
+
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+    export PATH="$POETRY_HOME/bin:$PATH"
 
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 # mac aliases {{{
@@ -35,7 +39,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
     alias vscode='open "/Applications/Visual Studio Code.app"'
-    alias pycharm='open "/Applications/PyCharm CE.app"'
+    alias charm='open -a "PyCharm.app"'
     alias chrome='open "/Applications/Google Chrome.app"'
     alias word='open "/Applications/Microsoft Word.app"'
     alias spotify='open "/Applications/Spotify.app"'
@@ -103,8 +107,6 @@ alias grep="grep --color=auto"
 alias m="make"
 alias mc="make clean"
 
-alias pth="echo $PATH | tr ':' '\n'"
-
 # Make shell handle commands containing a leading $
 alias "$"="$@"
 
@@ -115,6 +117,13 @@ alias py="python3"
 alias pip="pip3"
 alias venv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
+
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    # set up pyenv
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
 
 # }}}
 # ls {{{
@@ -179,6 +188,10 @@ alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
 
 # }}}
 # misc functions {{{
+
+path() {
+    echo $PATH | tr ':' '\n'
+}
 
 # Call from a local repo to open the repository on github/bitbucket in browser
 # Modified version of https://github.com/zeke/ghwd
@@ -394,6 +407,9 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 # partial completion suggestions
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/ethansaxenian/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 # }}}
 
 # remove uniques from $PATH

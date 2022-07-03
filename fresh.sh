@@ -12,6 +12,8 @@ if [[ $OSTYPE == darwin* ]]; then
   source $DOTFILES/brew.sh
 
   source $DOTFILES/npm.sh
+
+  source $DOTFILES/python.sh
 fi
 
 # install linux-specific things

@@ -197,7 +197,7 @@ set statusline+=%#GitRemovedSL#
 set statusline+=%{GitStatusR()}\ \            " number of lines removed
 set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
-"set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
+set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
 set statusline+=%=\                           " indent to the right
 set statusline+=%#StatusLinePurple#           " set highlighting
 set statusline+=%(%l/%L,%c%V%)\ \ %P\         " cursor position/offset
@@ -341,10 +341,10 @@ augroup END
 
 " Javascript/Typescript
 
-" turn off yats.vim (enabled by default) which adds too many typescript syntax items
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
+" turn off yats.vim (enabled by default) which adds too many typescript syntax items
 let g:yats_host_keyword = 0
 let g:typescript_ignore_browserwords = 0
 
