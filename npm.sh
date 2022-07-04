@@ -12,5 +12,5 @@ nvm alias arm stable
 nvm alias intel lts/fermium
 
 if test $(which npm); then
-  npm install --location=global spoof tldr
+  npm install --location=global spoof tldr trash-cli
 fi

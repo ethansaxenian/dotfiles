@@ -19,9 +19,6 @@ fi
 
 # mac aliases {{{
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    # Personal
-    alias projects="cd $HOME/Projects/"
-
     # Recursively delete `.DS_Store` files
     alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
@@ -99,16 +96,18 @@ alias reload="source $HOME/.zshrc"
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
-alias dotfiles="cd $DOTFILES"
-
 alias checksize="du -sch $HOME/* $HOME/.* | sort -hr"
 
 alias grep="grep --color=auto"
-alias m="make"
-alias mc="make clean"
 
 # Make shell handle commands containing a leading $
 alias "$"="$@"
+
+# use different theme for bat
+alias bat="bat --theme=Visual\ Studio\ Dark+"
+
+# colored help pages
+alias bathelp='bat --plain --language=help'
 
 # }}}
 # python {{{
@@ -175,6 +174,11 @@ function ginit(){
     git push -u origin main
 }
 
+# git diff with bat
+function batdiff() {
+    git diff --name-only --relative --diff-filter=d | xargs bat --diff
+}
+
 # }}}
 # npm {{{
 
@@ -189,13 +193,17 @@ alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
 # }}}
 # misc functions {{{
 
-path() {
+function help() {
+    "$@" --help 2>&1 | bathelp
+}
+
+function path() {
     echo $PATH | tr ':' '\n'
 }
 
 # Call from a local repo to open the repository on github/bitbucket in browser
 # Modified version of https://github.com/zeke/ghwd
-repo() {
+function repo() {
 	# Figure out github repo base URL
 	local base_url
 	base_url=$(git config --get remote.origin.url)
@@ -305,17 +313,6 @@ function lscolors {
     done
 }
 
-# colorized manpages
-function man() {
-    env \
-        LESS_TERMCAP_md=$'\e[1;36m' \
-        LESS_TERMCAP_me=$'\e[0m' \
-        LESS_TERMCAP_se=$'\e[0m' \
-        LESS_TERMCAP_so=$'\e[1;40;91m' \
-        LESS_TERMCAP_ue=$'\e[0m' \
-        LESS_TERMCAP_us=$'\e[1;32m' \
-            man "$@"
-}
 
 function battery_status() {
     if test ! "$(uname)" = "Darwin"
@@ -416,3 +413,9 @@ HEROKU_AC_ZSH_SETUP_PATH=/Users/ethansaxenian/Library/Caches/heroku/autocomplete
 typeset -aU path
 
 eval $(thefuck --alias)
+
+# colored manpages with bat
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# z
+. /opt/homebrew/etc/profile.d/z.sh
