@@ -14,6 +14,7 @@ brew 'pyenv'
 brew 'readline'
 brew 'sqlite3'
 brew 'tcl-tk'
+brew 'texlive'
 brew 'thefuck'
 brew 'tree'
 brew 'vim'
@@ -24,7 +25,6 @@ brew 'zsh'
 brew 'zsh-syntax-highlighting'
 
 # Apps
-cask 'bitwarden'
 cask 'github'
 cask 'google-chrome'
 cask 'iterm2'
@@ -35,3 +35,4 @@ cask 'visual-studio-code'
 cask 'zoom'
 
 mas install 497799835 # Xcode
+mas install 1352778147 # Bitwarden

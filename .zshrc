@@ -418,4 +418,4 @@ eval $(thefuck --alias)
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # z
-. /opt/homebrew/etc/profile.d/z.sh
+source /opt/homebrew/etc/profile.d/z.sh
