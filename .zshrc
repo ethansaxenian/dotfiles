@@ -117,12 +117,10 @@ alias pip="pip3"
 alias venv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
 
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-    # set up pyenv
-    export PYENV_ROOT="$HOME/.pyenv"
-    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-fi
+# set up pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # }}}
 # ls {{{
@@ -257,9 +255,9 @@ function repo() {
 # open a react native project in xcode
 function xcode() {
     if [[ "$#" < 1 ]]; then
-        open -a Xcode ios/$(basename "$PWD").xcworkspace
+        open -a Xcode ios/
     else
-        open -a Xcode $1/ios/$(basename "$1").xcworkspace
+        open -a Xcode $1/ios/
     fi
 }
 

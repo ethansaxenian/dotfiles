@@ -5,11 +5,11 @@ echo "Installing nvm, node, and npm packages..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | zsh
 source $HOME/.nvm/nvm.sh
 
-nvm install lts/fermium
 nvm install stable
 nvm use stable
-nvm alias arm stable
-nvm alias intel lts/fermium
+
+# use a bold blue for colors
+nvm set-colors Bmgre
 
 if test $(which npm); then
   npm install --location=global spoof tldr trash-cli
