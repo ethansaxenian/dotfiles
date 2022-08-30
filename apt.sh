@@ -2,7 +2,7 @@
 
 echo "Installing packages with apt..."
 sudo apt update
-sudo apt install -y bat firefox gcc gdb git htop make terminator tree vim zsh
+sudo apt install -y bat firefox gcc gdb git htop make spice-vdagent spice-webdavd terminator tree vim zsh
 
 # pyenv environment - https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-devwh
