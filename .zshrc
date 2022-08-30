@@ -4,11 +4,7 @@ export EDITOR="vim"
 export DOTFILES=$HOME/.dotfiles
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    export POETRY_VIRTUALENVS_IN_PROJECT=true
-    export POETRY_HOME=$HOME/.poetry
-
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-    export PATH="$POETRY_HOME/bin:$PATH"
 
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -111,6 +107,9 @@ alias bathelp='bat --plain --language=help'
 
 # }}}
 # python {{{
+export POETRY_VIRTUALENVS_IN_PROJECT=true
+export POETRY_HOME=$HOME/.poetry
+export PATH="$POETRY_HOME/bin:$PATH"
 
 alias py="python3"
 alias pip="pip3"
@@ -402,9 +401,6 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 # partial completion suggestions
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
-
-# heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/Users/ethansaxenian/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 # }}}
 
 # remove uniques from $PATH
@@ -416,4 +412,6 @@ eval $(thefuck --alias)
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # z
-source /opt/homebrew/etc/profile.d/z.sh
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    source /opt/homebrew/etc/profile.d/z.sh
+fi
