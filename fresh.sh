@@ -12,8 +12,6 @@ if [[ $OSTYPE == darwin* ]]; then
   source $DOTFILES/brew.sh
 
   source $DOTFILES/npm.sh
-
-  source $DOTFILES/python.sh
 fi
 
 # install linux-specific things
@@ -29,6 +27,8 @@ if [[ $OSTYPE == linux* ]]; then
   rm -rf $HOME/.config/terminator/config
   ln -s $DOTFILES/terminator/config $HOME/.config/terminator/config
 fi
+
+source $DOTFILES/python.sh
 
 source $DOTFILES/vim.sh
 

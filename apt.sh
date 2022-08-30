@@ -14,3 +14,5 @@ echo "Installing vscode..."
 curl -L https://aka.ms/linux-arm64-deb --output code_arm64.deb
 sudo apt install -y ./code_arm64.deb
 rm code_arm64.deb
+
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
