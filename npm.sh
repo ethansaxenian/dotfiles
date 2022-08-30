@@ -12,5 +12,5 @@ nvm use stable
 nvm set-colors Bmgre
 
 if test $(which npm); then
-  npm install --location=global spoof tldr trash-cli
+  npm install --location=global @bitwarden/cli spoof tldr trash-cli
 fi
