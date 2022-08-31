@@ -2,10 +2,9 @@ echo "Switching shell to zsh..."
 chsh -s $(which zsh)
 
 echo "Syncing dotfiles repo..."
-cd $DOTFILES
-git init .
-git remote add origin https://github.com/ethansaxenian/dotfiles.git
-git pull --allow-unrelated-histories
+cd $HOME
+rm -rf $DOTFILES
+git clone https://github.com/ethansaxenian/dotfiles.git $DOTFILES
 
 echo "Configuring terminator..."
 rm -rf $HOME/.config/terminator/config
