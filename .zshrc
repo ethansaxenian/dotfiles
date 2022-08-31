@@ -5,12 +5,8 @@ export DOTFILES=$HOME/.dotfiles
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+elif [[ "$OSTYPE" =~ linux* ]]; then
+    export LOCAL=$HOME/.local
 fi
 
 # mac aliases {{{
@@ -67,8 +63,6 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     alias aptl="apt list --installed"
 
     alias c="clear"
-
-    alias my-malloc="LD_PRELOAD=$HOME/Documents/my-malloc/my-malloc.so"
 fi
 # }}}
 # misc aliases {{{
@@ -107,6 +101,7 @@ alias bathelp='bat --plain --language=help'
 
 # }}}
 # python {{{
+
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 export POETRY_HOME=$HOME/.poetry
 export PATH="$POETRY_HOME/bin:$PATH"
@@ -178,6 +173,10 @@ function batdiff() {
 
 # }}}
 # npm {{{
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias n="npm"
 alias ni="npm install"
@@ -406,12 +405,17 @@ zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 # remove uniques from $PATH
 typeset -aU path
 
-eval $(thefuck --alias)
-
 # colored manpages with bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-# z
+
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    source /opt/homebrew/etc/profile.d/z.sh
+    Z_PREFIX=$(brew --prefix)/etc/profile.d
+    ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
+elif [[ "$OSTYPE" =~ linux* ]]; then
+    Z_PREFIX=$LOCAL/z
+    ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$LOCAL/zsh-syntax-highlighting
 fi
+
+source $Z_PREFIX/z.sh
+source $ZSH_SYNTAX_HIGHLIGHTING_PREFIX/zsh-syntax-highlighting.zsh

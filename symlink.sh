@@ -22,3 +22,7 @@ ln -s $DOTFILES/mycolors.vim $HOME/.vim/colors/mycolors.vim
 echo "Symlinking .vimrc..."
 rm -rf $HOME/.vimrc
 ln -s $DOTFILES/.vimrc $HOME/.vimrc
+
+echo "Symlinking .tldrrc..."
+rm -rf $HOME/.tldrrc
+ln -s $DOTFILES/.tldrrc $HOME/.tldrrc

@@ -10,24 +10,20 @@ if [[ $OSTYPE == darwin* ]]; then
   xcode-select --install
 
   source $DOTFILES/brew.sh
-
-  source $DOTFILES/npm.sh
 fi
 
 # install linux-specific things
 if [[ $OSTYPE == linux* ]]; then
   echo "Starting linux setup..."
 
+  export LOCAL=$HOME/.local
+
   source $DOTFILES/apt.sh
 
-  echo "Switching shell to zsh..."
-  chsh -s $(which zsh)
-
-  # set terminator settings
-  rm -rf $HOME/.config/terminator/config
-  mkdir -p $HOME/.config/terminator
-  ln -s $DOTFILES/terminator_config $HOME/.config/terminator/config
+  source $DOTFILES/ubuntu.sh
 fi
+
+source $DOTFILES/npm.sh
 
 source $DOTFILES/python.sh
 
@@ -42,5 +38,5 @@ source $HOME/.zshrc
 
 if [[ $OSTYPE == darwin* ]]; then
   # Set macOS preferences - we will run this last because this will reload the shell
-  source $DOTFILES/.macos
+  source $DOTFILES/macos.sh
 fi
