@@ -5,8 +5,6 @@ export DOTFILES=$HOME/.dotfiles
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-elif [[ "$OSTYPE" =~ linux* ]]; then
-    export LOCAL=$HOME/.local
 fi
 
 # mac aliases {{{
@@ -413,8 +411,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     Z_PREFIX=$(brew --prefix)/etc/profile.d
     ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
 elif [[ "$OSTYPE" =~ linux* ]]; then
-    Z_PREFIX=$LOCAL/z
-    ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$LOCAL/zsh-syntax-highlighting
+    Z_PREFIX=$HOME/.local/z
+    ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$HOME/.local/zsh-syntax-highlighting
 fi
 
 source $Z_PREFIX/z.sh

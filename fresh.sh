@@ -16,8 +16,6 @@ fi
 if [[ $OSTYPE == linux* ]]; then
   echo "Starting linux setup..."
 
-  export LOCAL=$HOME/.local
-
   source $DOTFILES/apt.sh
 
   source $DOTFILES/ubuntu.sh
