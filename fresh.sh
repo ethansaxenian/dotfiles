@@ -25,7 +25,8 @@ if [[ $OSTYPE == linux* ]]; then
 
   # set terminator settings
   rm -rf $HOME/.config/terminator/config
-  ln -s $DOTFILES/terminator/config $HOME/.config/terminator/config
+  mkdir -p $HOME/.config/terminator
+  ln -s $DOTFILES/terminator_config $HOME/.config/terminator/config
 fi
 
 source $DOTFILES/python.sh
