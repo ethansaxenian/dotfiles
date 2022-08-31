@@ -13,6 +13,7 @@ ln -s $DOTFILES/terminator_config $HOME/.config/terminator/config
 
 echo "Installing z..."
 git clone https://github.com/rupa/z.git $HOME/.local/z
+cp $HOME/.local/z/z.1 /usr/local/share/man/man1/
 
 echo "Installing zsh-syntax-highlighting..."
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.local/zsh-syntax-highlighting

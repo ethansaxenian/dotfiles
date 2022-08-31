@@ -5,6 +5,9 @@ export DOTFILES=$HOME/.dotfiles
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+    BAT=bat
+elif [[ "$OSTYPE" =~ linux* ]]; then
+    BAT=batcat
 fi
 
 # mac aliases {{{
@@ -92,10 +95,10 @@ alias grep="grep --color=auto"
 alias "$"="$@"
 
 # use different theme for bat
-alias bat="bat --theme=Visual\ Studio\ Dark+"
+alias bat="$BAT --theme=Visual\ Studio\ Dark+"
 
 # colored help pages
-alias bathelp='bat --plain --language=help'
+alias bathelp="$BAT --plain --language=help"
 
 # }}}
 # python {{{
@@ -166,7 +169,7 @@ function ginit(){
 
 # git diff with bat
 function batdiff() {
-    git diff --name-only --relative --diff-filter=d | xargs bat --diff
+    git diff --name-only --relative --diff-filter=d | xargs $BAT --diff
 }
 
 # }}}
@@ -404,7 +407,7 @@ zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 typeset -aU path
 
 # colored manpages with bat
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANPAGER="sh -c 'col -bx | $BAT -l man -p'"
 
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
