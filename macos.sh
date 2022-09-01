@@ -8,10 +8,10 @@ sudo -v
 osascript -e 'tell application "System Preferences" to quit'
 
 # Set computer name (as done via System Preferences → Sharing)
-sudo scutil --set ComputerName "Anonymous"
-sudo scutil --set HostName "Anonymous"
-sudo scutil --set LocalHostName "Anonymous"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Anonymous"
+sudo scutil --set ComputerName "Anonymous iPhone"
+sudo scutil --set HostName "Anonymous iPhone"
+sudo scutil --set LocalHostName "Anonymous iPhone"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Anonymous iPhone"
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
