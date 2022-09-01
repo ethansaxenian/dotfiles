@@ -15,7 +15,7 @@
 		<string>echo /Users/ethansaxenian/Projects/Python/fraction.py</string>
 	</array>
 	<key>CopySelection</key>
-	<false/>
+	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>E1D1C4B8-3A04-4982-9532-49CBEACA2924</string>
 	<key>DimBackgroundWindows</key>
@@ -822,7 +822,7 @@
 			<key>Normal Font</key>
 			<string>Monaco 12</string>
 			<key>Open Password Manager Automatically</key>
-			<true/>
+			<false/>
 			<key>Open Toolbelt</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -1233,6 +1233,8 @@
 	<false/>
 	<key>WindowNumber</key>
 	<false/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
