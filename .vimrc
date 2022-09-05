@@ -133,10 +133,10 @@ syntax enable
 " BACKUPS {{{
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
 set nobackup
-set nowb
+set nowritebackup
 
-" turn off swap files
-set noswapfile
+" swap file directory
+set directory=~/.vim/swp//
 
 " turn persistent undo on
 " means that you can undo even when you close a buffer/VIM
