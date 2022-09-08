@@ -356,12 +356,11 @@ function tre() {
 
 # }}}
 # prompt {{{
+PROMPT="%B%F{red}%.%f%b %# "
+
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    SSH_USER_HOST='%n@%m'
+    PROMPT="%B%F{red}%n@%m %~%f%b %# "
 fi
-
-PROMPT="%B%F{red}$SSH_USER_HOST%~%f%b %# "
-
 
 # shows branch name on right if applicable
 autoload -Uz vcs_info
