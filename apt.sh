@@ -2,7 +2,7 @@
 
 echo "Installing packages with apt..."
 sudo apt update
-sudo apt install -y bat firefox gcc gdb git htop make neofetch spice-vdagent spice-webdavd terminator tree vim zsh
+sudo apt install -y bat firefox gcc gdb git htop make neofetch openssh-server spice-vdagent spice-webdavd terminator tree vim zsh
 
 echo "Installing vscode..."
 curl -L https://aka.ms/linux-arm64-deb --output code_arm64.deb
