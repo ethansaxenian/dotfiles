@@ -6,7 +6,7 @@ export DOTFILES=$HOME/.dotfiles
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
     BAT=bat
-elif [[ "$OSTYPE" =~ linux* ]]; then
+elif [[ "$OSTYPE" =~ ^linux ]]; then
     BAT=batcat
 fi
 
@@ -103,9 +103,12 @@ alias bathelp="$BAT --plain --language=help"
 # }}}
 # python {{{
 
-export POETRY_VIRTUALENVS_IN_PROJECT=true
-export POETRY_HOME=$HOME/.poetry
-export PATH="$POETRY_HOME/bin:$PATH"
+if test $(command -v poetry); then
+    echo "poetry"
+    export POETRY_VIRTUALENVS_IN_PROJECT=true
+    export POETRY_HOME=$HOME/.poetry
+    export PATH="$POETRY_HOME/bin:$PATH"
+fi
 
 alias py="python3"
 alias pip="pip3"
@@ -113,9 +116,12 @@ alias venv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
 
 # set up pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if test $(command -v pyenv); then
+    echo "pyenv"
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
 
 # }}}
 # ls {{{
@@ -315,7 +321,6 @@ function battery_status() {
     if test ! "$(uname)" = "Darwin"
         then
         printf ""
-        exit 0
     fi
 
     battstat=$(pmset -g batt)
@@ -440,7 +445,7 @@ export MANPAGER="sh -c 'col -bx | $BAT -l man -p'"
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     Z_PREFIX=$(brew --prefix)/etc/profile.d
     ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
-elif [[ "$OSTYPE" =~ linux* ]]; then
+elif [[ "$OSTYPE" =~ ^linux ]]; then
     Z_PREFIX=$HOME/.local/z
     ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$HOME/.local/zsh-syntax-highlighting
 fi

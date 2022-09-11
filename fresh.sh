@@ -3,7 +3,7 @@
 export DOTFILES=$HOME/.dotfiles
 
 # install mac-specific things
-if [[ $OSTYPE == darwin* ]]; then
+if [[ $OSTYPE == ^darwin ]]; then
   echo "Starting mac setup..."
 
   echo "Installing Xcode command line tools..."
@@ -13,7 +13,7 @@ if [[ $OSTYPE == darwin* ]]; then
 fi
 
 # install linux-specific things
-if [[ $OSTYPE == linux* ]]; then
+if [[ $OSTYPE == ^linux ]]; then
   echo "Starting linux setup..."
 
   source $DOTFILES/apt.sh
@@ -34,7 +34,7 @@ source $DOTFILES/ssh.sh
 # reload zsh config
 source $HOME/.zshrc
 
-if [[ $OSTYPE == darwin* ]]; then
+if [[ $OSTYPE =~ ^darwin ]]; then
   # Set macOS preferences - we will run this last because this will reload the shell
   source $DOTFILES/macos.sh
 fi

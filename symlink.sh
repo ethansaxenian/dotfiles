@@ -13,16 +13,6 @@ echo "Symlinking .gitconfig..."
 rm -rf $HOME/.gitconfig
 ln -s $DOTFILES/.gitconfig $HOME/.gitconfig
 
-echo "Symlinking vim colors..."
-# add custom colorscheme
-rm -rf $HOME/.vim/colors
-mkdir -p $HOME/.vim/colors
-ln -s $DOTFILES/mycolors.vim $HOME/.vim/colors/mycolors.vim
-
-echo "Symlinking .vimrc..."
-rm -rf $HOME/.vimrc
-ln -s $DOTFILES/.vimrc $HOME/.vimrc
-
 echo "Symlinking .tldrrc..."
 rm -rf $HOME/.tldrrc
 ln -s $DOTFILES/.tldrrc $HOME/.tldrrc
@@ -32,7 +22,7 @@ rm -rf $HOME/.config/neofetch/config.conf
 mkdir -p $HOME/.config/neofetch
 ln -s $DOTFILES/neofetch.config $HOME/.config/neofetch/config.conf
 
-if [[ "$OSTYPE" =~ linux* ]]; then
+if [[ "$OSTYPE" =~ ^linux ]]; then
   echo "Configuring terminator..."
   rm -rf $HOME/.config/terminator/config
   mkdir -p $HOME/.config/terminator

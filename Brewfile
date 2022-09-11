@@ -2,6 +2,7 @@
 tap 'homebrew/cask'
 
 # Binaries
+brew 'authy'
 brew 'bat'
 brew 'coreutils'
 brew 'htop'
