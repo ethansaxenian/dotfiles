@@ -104,7 +104,6 @@ alias bathelp="$BAT --plain --language=help"
 # python {{{
 
 if test $(command -v poetry); then
-    echo "poetry"
     export POETRY_VIRTUALENVS_IN_PROJECT=true
     export POETRY_HOME=$HOME/.poetry
     export PATH="$POETRY_HOME/bin:$PATH"
@@ -117,7 +116,6 @@ alias activate="source .venv/bin/activate"
 
 # set up pyenv
 if test $(command -v pyenv); then
-    echo "pyenv"
     export PYENV_ROOT="$HOME/.pyenv"
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
@@ -318,37 +316,36 @@ function lscolors {
 
 
 function battery_status() {
-    if test ! "$(uname)" = "Darwin"
+    if test "$(uname)" = "Darwin"
         then
-        printf ""
+
+        battstat=$(pmset -g batt)
+        time_left=$(echo $battstat |
+            tail -1 |
+            cut -f2 |
+            awk -F"; " '{print $3}' |
+            cut -d' ' -f1
+        )
+
+        if [[ $(pmset -g ac) == *"No adapter attached."* ]]
+        then
+            emoji='🔋'
+        else
+            emoji='🔌'
+        fi
+
+        if [[ $time_left == *"(no"* || $time_left == *"not"* ]]
+        then
+            time_left='⌛️'
+        fi
+
+        if [[ $time_left == *"0:00"* ]]
+        then
+            time_left='⚡️'
+        fi
+
+        printf "\033[1;92m$emoji  $time_left\n\033[0m"
     fi
-
-    battstat=$(pmset -g batt)
-    time_left=$(echo $battstat |
-        tail -1 |
-        cut -f2 |
-        awk -F"; " '{print $3}' |
-        cut -d' ' -f1
-    )
-
-    if [[ $(pmset -g ac) == *"No adapter attached."* ]]
-    then
-        emoji='🔋'
-    else
-        emoji='🔌'
-    fi
-
-    if [[ $time_left == *"(no"* || $time_left == *"not"* ]]
-    then
-        time_left='⌛️'
-    fi
-
-    if [[ $time_left == *"0:00"* ]]
-    then
-        time_left='⚡️'
-    fi
-
-    printf "\033[1;92m$emoji  $time_left\n\033[0m"
 }
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
