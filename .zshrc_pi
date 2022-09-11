@@ -183,7 +183,7 @@ function tre() {
 
 # }}}
 # prompt {{{
-PROMPT="%B%F{green}%n{red}@%m %~%f%b %# "
+PROMPT="%B%F{green}%n%f%b%B%F{red}@%m %~%f%b %# "
 
 # shows branch name on right if applicable
 autoload -Uz vcs_info
