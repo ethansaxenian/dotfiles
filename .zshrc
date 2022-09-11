@@ -1,3 +1,5 @@
+# env variables {{{
+
 export EDITOR="vim"
 
 # Path to your dotfiles.
@@ -5,11 +7,15 @@ export DOTFILES=$HOME/.dotfiles
 
 if [[ $OSTYPE =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-    BAT=bat
+    export BAT=bat
 elif [[ $OSTYPE =~ ^linux ]]; then
-    BAT=batcat
+    export BAT=batcat
 fi
 
+# colored manpages with bat
+export MANPAGER="sh -c 'col -bx | $BAT --theme=Monokai\ Extended -l man -p'"
+
+# }}}
 # mac aliases {{{
 if [[ $OSTYPE =~ ^darwin ]]; then
     # Recursively delete `.DS_Store` files
@@ -438,10 +444,6 @@ alias ssh="colorssh"
 
 # remove uniques from $PATH
 typeset -aU path
-
-# colored manpages with bat
-export MANPAGER="sh -c 'col -bx | $BAT --theme=Monokai\ Extended -l man -p'"
-
 
 if [[ $OSTYPE =~ ^darwin ]]; then
     Z_PREFIX=$(brew --prefix)/etc/profile.d
