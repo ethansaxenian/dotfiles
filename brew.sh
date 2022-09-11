@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Check for Homebrew and install if we don't have it
-if test ! $(which brew); then
+if test ! $(command -v brew); then
   echo "Installing homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 

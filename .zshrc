@@ -3,15 +3,15 @@ export EDITOR="vim"
 # Path to your dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
-if [[ "$OSTYPE" =~ ^darwin ]]; then
+if [[ $OSTYPE =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
     BAT=bat
-elif [[ "$OSTYPE" =~ ^linux ]]; then
+elif [[ $OSTYPE =~ ^linux ]]; then
     BAT=batcat
 fi
 
 # mac aliases {{{
-if [[ "$OSTYPE" =~ ^darwin ]]; then
+if [[ $OSTYPE =~ ^darwin ]]; then
     # Recursively delete `.DS_Store` files
     alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
@@ -54,7 +54,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 fi
 # }}}
 # linux aliases {{{
-if [[ "$OSTYPE" =~ ^linux ]]; then
+if [[ $OSTYPE =~ ^linux ]]; then
     alias halt="sudo halt -p"
     alias reboot="sudo reboot"
 
@@ -111,7 +111,7 @@ fi
 
 alias py="python3"
 alias pip="pip3"
-alias venv="python3 -m venv .venv"
+alias makevenv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
 
 # set up pyenv
@@ -225,7 +225,7 @@ function repo() {
 	# Validate that this folder is a git folder
 	if ! git branch 2>/dev/null 1>&2 ; then
 		echo "Not a git repo!"
-		exit $?
+		return $?
 	fi
 
 	# Find current directory relative to .git parent
@@ -397,6 +397,10 @@ setopt CORRECT_ALL
 
 # }}}
 # completion {{{
+if test $(command -v bw); then
+    eval "$(bw completion --shell zsh); compdef _bw bw;"
+fi
+
 autoload -Uz compinit && compinit
 # case insensitive path-completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
@@ -439,10 +443,10 @@ typeset -aU path
 export MANPAGER="sh -c 'col -bx | $BAT -l man -p'"
 
 
-if [[ "$OSTYPE" =~ ^darwin ]]; then
+if [[ $OSTYPE =~ ^darwin ]]; then
     Z_PREFIX=$(brew --prefix)/etc/profile.d
     ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
-elif [[ "$OSTYPE" =~ ^linux ]]; then
+elif [[ $OSTYPE =~ ^linux ]]; then
     Z_PREFIX=$HOME/.local/z
     ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$HOME/.local/zsh-syntax-highlighting
 fi
