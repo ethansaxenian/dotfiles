@@ -1,7 +1,6 @@
 [user]
     name = Ethan Saxenian
     email = ethansaxenian@gmail.com
-    email = esaxenian@middlebury.edu
 [init]
     defaultBranch = main
 [color]
@@ -14,3 +13,5 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[credential]
+	helper = osxkeychain
