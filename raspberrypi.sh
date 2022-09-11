@@ -25,13 +25,16 @@ rm -rf $HOME/.config/neofetch/config.conf
 mkdir -p $HOME/.config/neofetch
 ln -s $DOTFILES/neofetch.config $HOME/.config/neofetch/config.conf
 
-rm -rf $HOME/.zshrc
-ln -s $DOTFILES/.zshrc_pi $HOME/.zshrc
-
 # vim
 source $DOTFILES/vim.sh
 
+# ssh
+source $DOTFILES/ssh.sh
 
+
+# zsh
+rm -rf $HOME/.zshrc
+ln -s $DOTFILES/.zshrc_pi $HOME/.zshrc
 
 chsh -s $(which zsh)
 
