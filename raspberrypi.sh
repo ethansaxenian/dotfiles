@@ -40,3 +40,9 @@ ln -s $DOTFILES/.zshrc_pi $HOME/.zshrc
 
 # vim
 source $DOTFILES/vim.sh
+
+
+
+chsh -s $(which zsh)
+
+source $HOME/.zshrc
