@@ -2,8 +2,10 @@
 
 echo "Installing nvm, node, and npm packages..."
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | zsh
-source $HOME/.nvm/nvm.sh
+if test ! $(command -v nvm); then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | zsh
+    source $HOME/.nvm/nvm.sh
+fi
 
 nvm install stable
 nvm use stable
@@ -11,6 +13,6 @@ nvm use stable
 # use a bold blue for colors
 nvm set-colors Bmgre
 
-if test $(which npm); then
+if test $(command -v npm); then
   npm install --location=global @bitwarden/cli tldr
 fi

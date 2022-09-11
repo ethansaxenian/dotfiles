@@ -22,7 +22,7 @@ rm -rf $HOME/.config/neofetch/config.conf
 mkdir -p $HOME/.config/neofetch
 ln -s $DOTFILES/neofetch.config $HOME/.config/neofetch/config.conf
 
-if [[ "$OSTYPE" =~ ^linux ]]; then
+if [[ $OSTYPE =~ ^linux ]]; then
   echo "Configuring terminator..."
   rm -rf $HOME/.config/terminator/config
   mkdir -p $HOME/.config/terminator
