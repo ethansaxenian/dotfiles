@@ -7,13 +7,14 @@ export PATH="$HOME/.local/bin:$PATH"
 
 BAT=batcat
 
+# aliases {{{
+
 alias aptu="sudo apt update && sudo apt upgrade"
 alias apti="sudo apt install"
 alias aptr="sudo apt remove"
 alias aptl="apt list --installed"
 
 alias c="clear"
-# aliases {{{
 
 # enable aliases to be sudo'ed
 alias sudo="sudo "
@@ -50,23 +51,10 @@ alias bathelp="$BAT --plain --language=help"
 # }}}
 # python {{{
 
-if test $(which poetry); then
-  export POETRY_VIRTUALENVS_IN_PROJECT=true
-  export POETRY_HOME=$HOME/.poetry
-  export PATH="$POETRY_HOME/bin:$PATH"
-fi
-
 alias py="python3"
 alias pip="pip3"
 alias venv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
-
-# set up pyenv
-if test $(which pyenv); then
-  export PYENV_ROOT="$HOME/.pyenv"
-  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-fi
 
 # }}}
 # ls {{{

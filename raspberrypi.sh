@@ -12,19 +12,9 @@ cp $HOME/.local/z/z.1 /usr/local/share/man/man1/
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.local/zsh-syntax-highlighting
 
 # python
-sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-devwh
-
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-
-pyenv install 3.9.13
-pyenv global 3.9.13
-
 pip3 install tldr
 
 # symlinks
-rm -rf $HOME/.zshrc
-ln -s $DOTFILES/.zshrc $HOME/.zshrc
-
 rm -rf $HOME/.gitignore
 ln -s $DOTFILES/.gitignore $HOME/.gitignore
 
