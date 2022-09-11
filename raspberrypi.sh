@@ -6,7 +6,7 @@ sudo apt install -y bat gcc gdb git htop make neofetch net-tools nmap openssh-se
 
 # z
 git clone https://github.com/rupa/z.git $HOME/.local/z
-cp $HOME/.local/z/z.1 /usr/local/share/man/man1/
+cp $HOME/.local/z/z.1 /usr/local/share/man/man1/ --parents
 
 # zsh-syntax highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.local/zsh-syntax-highlighting
