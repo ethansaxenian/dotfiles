@@ -1,3 +1,5 @@
+# env variables {{{
+
 export EDITOR="vim"
 
 # Path to your dotfiles.
@@ -5,8 +7,12 @@ export DOTFILES=$HOME/.dotfiles
 
 export PATH="$HOME/.local/bin:$PATH"
 
-BAT=batcat
+export BAT=batcat
 
+# colored manpages with bat
+export MANPAGER="sh -c 'col -bx | $BAT -l man -p'"
+
+# }}}
 # aliases {{{
 
 alias aptu="sudo apt update && sudo apt upgrade"
@@ -231,9 +237,6 @@ zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 
 # remove uniques from $PATH
 typeset -aU path
-
-# colored manpages with bat
-export MANPAGER="sh -c 'col -bx | $BAT -l man -p'"
 
 source $HOME/.local/z/z.sh
 source $HOME/.local/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
