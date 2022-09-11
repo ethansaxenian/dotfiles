@@ -440,7 +440,7 @@ alias ssh="colorssh"
 typeset -aU path
 
 # colored manpages with bat
-export MANPAGER="sh -c 'col -bx | $BAT -l man -p'"
+export MANPAGER="sh -c 'col -bx | $BAT --theme=Monokai\ Extended -l man -p'"
 
 
 if [[ $OSTYPE =~ ^darwin ]]; then
