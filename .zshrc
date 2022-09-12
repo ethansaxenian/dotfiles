@@ -416,7 +416,7 @@ zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 # ssh {{{
 # prompt displays more info if connected via ssh
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    PROMPT="%B%F{red}%n@%m %~%f%b %# "
+    PROMPT="%B%F{green}%n@%m%f%b %B%F{red}%~%f%b %# "
 fi
 
 # change iterm profile when using ssh
