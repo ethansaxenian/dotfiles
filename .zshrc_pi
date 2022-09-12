@@ -7,16 +7,17 @@ export DOTFILES=$HOME/.dotfiles
 
 export PATH="$HOME/.local/bin:$PATH"
 
-export BAT=batcat
-
 # colored manpages with bat
-export MANPAGER="sh -c 'col -bx | $BAT -l man -p'"
+export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
 
 export TLDR_COLOR_NAME="magenta bold"
 export TLDR_COLOR_DESCRIPTION="white"
 export TLDR_COLOR_EXAMPLE="green"
 export TLDR_COLOR_COMMAND="red bold"
 export TLDR_COLOR_PARAMETER="cyan"
+
+BAT="batcat --theme=TwoDark -m .zshrc_pi:zsh"
+
 # }}}
 # aliases {{{
 
@@ -29,6 +30,9 @@ alias c="clear"
 
 # enable aliases to be sudo'ed
 alias sudo="sudo "
+
+# enable aliases to be xargs'ed
+alias xargs="xargs "
 
 alias v="vim"
 
@@ -54,12 +58,14 @@ alias grep="grep --color=auto -E"
 alias "$"="$@"
 
 # use different theme for bat
-alias bat="$BAT --theme=TwoDark"
+alias bat=$BAT
 
 # colored help pages
 alias bathelp="$BAT --plain --language=help"
 
+# display units in mib
 alias neofetch="neofetch --memory_unit 'mib'"
+
 # }}}
 # python {{{
 
@@ -120,7 +126,7 @@ function ginit(){
 
 # git diff with bat
 function batdiff() {
-    git diff --name-only --relative --diff-filter=d | xargs $BAT --diff
+    git diff --name-only --relative --diff-filter=d | xargs bat
 }
 
 # }}}
