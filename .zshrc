@@ -95,7 +95,7 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 
 alias checksize="du -sch $HOME/* $HOME/.* | sort -hr"
 
-alias grep="grep --color=auto"
+alias grep="grep --color=auto -E"
 
 # Make shell handle commands containing a leading $
 alias "$"="$@"

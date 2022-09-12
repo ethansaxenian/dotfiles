@@ -37,7 +37,14 @@
       "exampleDescription": "green, bgBlack",
       "exampleCode": "green, bgBlack",
       "exampleToken": "green, bold, bgBlack"
+    },
+    "custom": {
+      "commandName": "magenta, bold",
+      "mainDescription": "",
+      "exampleDescription": "green",
+      "exampleCode": "red, bold",
+      "exampleToken": "cyan"
     }
   },
-  "theme": "base16"
+  "theme": "custom"
 }
