@@ -12,6 +12,11 @@ export BAT=batcat
 # colored manpages with bat
 export MANPAGER="sh -c 'col -bx | $BAT -l man -p'"
 
+export TLDR_COLOR_NAME="magenta bold"
+export TLDR_COLOR_DESCRIPTION="white"
+export TLDR_COLOR_EXAMPLE="green"
+export TLDR_COLOR_COMMAND="red bold"
+export TLDR_COLOR_PARAMETER="cyan"
 # }}}
 # aliases {{{
 
@@ -49,7 +54,7 @@ alias grep="grep --color=auto -E"
 alias "$"="$@"
 
 # use different theme for bat
-alias bat="$BAT --theme=Visual\ Studio\ Dark+"
+alias bat="$BAT --theme=TwoDark"
 
 # colored help pages
 alias bathelp="$BAT --plain --language=help"
