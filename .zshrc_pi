@@ -59,6 +59,7 @@ alias bat="$BAT --theme=TwoDark"
 # colored help pages
 alias bathelp="$BAT --plain --language=help"
 
+alias neofetch="neofetch --memory_unit 'mib'"
 # }}}
 # python {{{
 
