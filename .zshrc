@@ -7,13 +7,10 @@ export DOTFILES=$HOME/.dotfiles
 
 if [[ $OSTYPE =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-    export BAT=bat
-elif [[ $OSTYPE =~ ^linux ]]; then
-    export BAT=batcat
 fi
 
 # colored manpages with bat
-export MANPAGER="sh -c 'col -bx | $BAT --theme=Monokai\ Extended -l man -p'"
+export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=Monokai\ Extended'"
 
 # }}}
 # mac aliases {{{
@@ -100,11 +97,8 @@ alias grep="grep --color=auto -E"
 # Make shell handle commands containing a leading $
 alias "$"="$@"
 
-# use different theme for bat
-alias bat="$BAT --theme=Visual\ Studio\ Dark+"
-
 # colored help pages
-alias bathelp="$BAT --plain --language=help"
+alias bathelp="bat --plain --language=help"
 
 # }}}
 # python {{{
@@ -179,7 +173,7 @@ function ginit(){
 
 # git diff with bat
 function batdiff() {
-    git diff --name-only --relative --diff-filter=d | xargs $BAT --diff
+    git diff --name-only --relative --diff-filter=d | xargs bat --diff --diff-context=4
 }
 
 # }}}

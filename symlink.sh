@@ -22,6 +22,11 @@ rm -rf $HOME/.config/neofetch/config.conf
 mkdir -p $HOME/.config/neofetch
 ln -s $DOTFILES/neofetch.config $HOME/.config/neofetch/config.conf
 
+echo "Symlinking bat config..."
+rm -rf $HOME/.config/bat/config
+mkdir -p $HOME/.config/bat
+ln -s $DOTFILES/bat.config $HOME/.config/bat/config
+
 if [[ $OSTYPE =~ ^linux ]]; then
   echo "Configuring terminator..."
   rm -rf $HOME/.config/terminator/config
