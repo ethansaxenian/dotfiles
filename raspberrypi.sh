@@ -4,6 +4,7 @@
 sudo apt update
 sudo apt install -y bat gcc gdb git htop make neofetch net-tools nmap openssh-server python3 python3-pip tree vim zsh
 
+sudo ln -s /usr/bin/batcat /usr/bin/bat
 # z
 git clone https://github.com/rupa/z.git $HOME/.local/z
 cp $HOME/.local/z/z.1 /usr/local/share/man/man1/ --parents
