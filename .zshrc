@@ -103,9 +103,9 @@ alias bathelp="bat --plain --language=help"
 # }}}
 # python {{{
 
-if test $(command -v poetry); then
-    export POETRY_VIRTUALENVS_IN_PROJECT=true
-    export POETRY_HOME=$HOME/.poetry
+export POETRY_VIRTUALENVS_IN_PROJECT=true
+export POETRY_HOME=$HOME/.poetry
+if test -d $POETRY_HOME; then
     export PATH="$POETRY_HOME/bin:$PATH"
 fi
 
@@ -115,9 +115,12 @@ alias makevenv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
 
 # set up pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+if test -d $PYENV_ROOT; then
+    export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+
 if test $(command -v pyenv); then
-    export PYENV_ROOT="$HOME/.pyenv"
-    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
 
