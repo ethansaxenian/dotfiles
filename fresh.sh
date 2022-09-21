@@ -13,7 +13,7 @@ if [[ $OSTYPE == ^darwin ]]; then
 fi
 
 # install linux-specific things
-if [[ $OSTYPE == ^linux ]]; then
+if [[ $OSTYPE =~ ^linux ]]; then
   echo "Starting linux setup..."
 
   source $DOTFILES/apt.sh

@@ -13,7 +13,7 @@ if [[ $OSTYPE == ^darwin ]]; then
   ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 fi
 
-if [[ $OSTYPE == ^linux ]]; then
+if [[ $OSTYPE =~ ^linux ]]; then
   ssh-add ~/.ssh/id_ed25519
 fi
 
