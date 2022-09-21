@@ -31,18 +31,8 @@ if [[ $OSTYPE =~ ^darwin ]]; then
     alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
     alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
-    alias vscode='open "/Applications/Visual Studio Code.app"'
     alias charm='open -a "PyCharm.app"'
-    alias chrome='open "/Applications/Google Chrome.app"'
-    alias word='open "/Applications/Microsoft Word.app"'
-    alias spotify='open "/Applications/Spotify.app"'
-    alias github='open "/Applications/GitHub Desktop.app"'
-    alias facetime='open "/System/Applications/FaceTime.app"'
-    alias messages='open "/System/Applications/Messages.app"'
     alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
-    alias zoom='open "/Applications/zoom.us.app"'
-    alias bitwarden='open "/Applications/Bitwarden.app"'
-    alias utm='open "/Applications/UTM.app"'
 
     alias brewup="brew update && brew upgrade && brew cleanup"
     alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
@@ -64,6 +54,7 @@ if [[ $OSTYPE =~ ^linux ]]; then
     alias aptu="sudo apt update && sudo apt upgrade"
     alias apti="sudo apt install"
     alias aptr="sudo apt remove"
+    alias aptar="sudo apt autoremove"
     alias aptl="apt list --installed"
 
     alias c="clear"
@@ -99,6 +90,12 @@ alias "$"="$@"
 
 # colored help pages
 alias bathelp="bat --plain --language=help"
+
+# disable autocorrect for certain commands
+no_autocorrect=('cp' 'mv')
+for c in $no_autocorrect; do
+    alias "$c"="nocorrect $c -iv"
+done
 
 # }}}
 # python {{{
@@ -403,6 +400,8 @@ setopt CORRECT_ALL
 if test $(command -v bw); then
     eval "$(bw completion --shell zsh); compdef _bw bw;"
 fi
+
+fpath+=~/.zfunc
 
 autoload -Uz compinit && compinit
 # case insensitive path-completion

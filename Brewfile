@@ -1,6 +1,14 @@
 # https://github.com/driesvints/dotfiles/blob/main/Brewfile
 tap 'homebrew/cask'
 
+# https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+brew 'openssl'
+brew 'readline'
+brew 'sqlite3'
+brew 'xz'
+brew 'zlib'
+brew 'tcl-tk'
+
 # Binaries
 brew 'authy'
 brew 'bat'
@@ -10,8 +18,8 @@ brew 'gcc'
 brew 'git'
 brew 'make'
 brew 'neofetch'
-brew 'openssl'
 brew 'pyenv'
+brew 'shpotify'
 brew 'texlive'
 brew 'tree'
 brew 'vim'
@@ -19,6 +27,7 @@ brew 'zsh'
 brew 'zsh-syntax-highlighting'
 
 # Apps
+cask 'firefox'
 cask 'github'
 cask 'google-chrome'
 cask 'iterm2'

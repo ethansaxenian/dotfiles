@@ -6,6 +6,8 @@
 	<true/>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>Command</key>
+	<string></string>
 	<key>Coprocess MRU</key>
 	<array>
 		<string>vim /Users/ethansaxenian/.dotfiles/mycolors.vim</string>
@@ -2126,6 +2128,8 @@
 	</array>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
+	<key>OpenBookmark</key>
+	<false/>
 	<key>OpenNoWindowsAtStartup</key>
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
@@ -2217,7 +2221,7 @@
 	<key>URLHandlersByGuid</key>
 	<dict>
 		<key>ssh</key>
-		<string>AB54FE16-1BC0-4022-A9EF-7C3CBD97F37C</string>
+		<string>55692037-C552-45F7-AC6C-88CFA6A53E64</string>
 	</dict>
 	<key>UseBorder</key>
 	<false/>
