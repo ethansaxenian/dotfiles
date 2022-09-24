@@ -94,7 +94,7 @@ alias bathelp="bat --plain --language=help"
 # disable autocorrect for certain commands
 no_autocorrect=('cp' 'mv')
 for c in $no_autocorrect; do
-    alias "$c"="nocorrect $c -iv"
+    alias "$c"="nocorrect $c"
 done
 
 # }}}
@@ -201,6 +201,12 @@ function help() {
 function path() {
     echo $PATH | tr ':' '\n'
 }
+
+# search for regex in $PATH
+function findpath() {
+    tr ':' '\n' <<< "$PATH" | xargs -I % find % -name "$1"
+}
+
 
 # Call from a local repo to open the repository on github/bitbucket in browser
 # Modified version of https://github.com/zeke/ghwd
