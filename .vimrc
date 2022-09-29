@@ -17,6 +17,7 @@ plug#begin('~/.vim/plugged')
     Plug 'scrooloose/nerdcommenter'
     Plug 'airblade/vim-gitgutter'
     Plug 'tpope/vim-fugitive'
+    Plug 'junegunn/fzf'
 
 plug#end()
 
@@ -405,4 +406,7 @@ map <C-_> <plug>NERDCommenterToggle
 # GitGutter
 # show if fold contains changed text
 set foldtext=gitgutter#fold#foldtext()
+
+# FZF
+map <leader>f :FZF<CR>
 # }}}

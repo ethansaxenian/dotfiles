@@ -97,6 +97,21 @@ for c in $no_autocorrect; do
     alias "$c"="nocorrect $c"
 done
 
+
+# }}}
+# fzf {{{
+
+export FZF_DEFAULT_OPTS='--reverse --border'
+FZF_RG_OPTIONS='--files --follow --no-ignore-vcs --hidden -g "!{node_modules,.git,.idea,__pycache__,Library}"'
+export FZF_DEFAULT_COMMAND="rg $FZF_RG_OPTIONS"
+export FZF_CTRL_T_COMMAND="rg --files --hidden --null | xargs -0 dirname | uniq"
+
+# open file with vim
+alias vf='vim $(fzf --preview "bat --style=numbers --color=always {}")'
+
+# cd after fzf
+alias cf='cd $(rg --files --hidden --null | xargs -0 dirname | uniq | fzf --preview "tree -C {}")'
+
 # }}}
 # python {{{
 
