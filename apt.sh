@@ -2,7 +2,7 @@
 
 echo "Installing packages with apt..."
 sudo apt update
-sudo apt install -y bat firefox gcc gdb git htop make neofetch net-tools nmap openssh-server spice-vdagent spice-webdavd terminator tree vim zsh
+sudo apt install -y bat firefox fzf gcc gdb git htop make neofetch net-tools nmap openssh-server spice-vdagent spice-webdavd terminator tree vim zoxide zsh
 
 if test ! $(command -v bat); then
     sudo ln -s /usr/bin/batcat /usr/bin/bat

@@ -10,9 +10,9 @@ brew 'zlib'
 brew 'tcl-tk'
 
 # Binaries
-brew 'authy'
 brew 'bat'
 brew 'coreutils'
+brew 'fzf'
 brew 'htop'
 brew 'gcc'
 brew 'git'
@@ -20,16 +20,18 @@ brew 'make'
 brew 'mas'
 brew 'neofetch'
 brew 'netcat'
+brew 'nmap'
 brew 'pyenv'
 brew 'shpotify'
 brew 'texlive'
 brew 'tree'
 brew 'vim'
-brew 'z'
+brew 'zoxide'
 brew 'zsh'
 brew 'zsh-syntax-highlighting'
 
 # Apps
+cask 'authy'
 cask 'firefox'
 cask 'google-chrome'
 cask 'iterm2'
@@ -41,5 +43,5 @@ cask 'utm'
 cask 'visual-studio-code'
 cask 'zoom'
 
-mas install 497799835 # Xcode
-mas install 1352778147 # Bitwarden
+mas 'Xcode', id: 497799835
+mas 'Bitwarden', id: 1352778147

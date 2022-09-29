@@ -359,7 +359,7 @@ function battery_status() {
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
 function tre() {
-	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRN;
+	tree -aC -I '.git|node_modules' --dirsfirst "$@" | less -FRN;
 }
 
 # }}}
@@ -409,6 +409,10 @@ fi
 
 fpath+=~/.zfunc
 
+if test $(command -v brew); then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
 autoload -Uz compinit && compinit
 # case insensitive path-completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
@@ -444,16 +448,18 @@ compdef _ssh tabc=ssh
 alias ssh="colorssh"
 # }}}
 
-# remove uniques from $PATH
+# remove uniques from $PATH and $FPATH
 typeset -aU path
+typeset -aU fpath
 
 if [[ $OSTYPE =~ ^darwin ]]; then
-    Z_PREFIX=$(brew --prefix)/etc/profile.d
     ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
 elif [[ $OSTYPE =~ ^linux ]]; then
-    Z_PREFIX=$HOME/.local/z
     ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$HOME/.local/zsh-syntax-highlighting
 fi
 
-source $Z_PREFIX/z.sh
 source $ZSH_SYNTAX_HIGHLIGHTING_PREFIX/zsh-syntax-highlighting.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(zoxide init zsh)"
