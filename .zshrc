@@ -139,6 +139,11 @@ function f() {
     fi
 }
 
+# fzf in $PATH
+function fp() {
+    tr ':' '\n' <<< "$PATH" | xargs -I % find % -type f 2>/dev/null | fzf
+}
+
 # }}}
 # python {{{
 
@@ -155,7 +160,7 @@ alias activate="source .venv/bin/activate"
 
 # set up pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-if test -d $PYENV_ROOT; then
+if test -d "$PYENV_ROOT/bin"; then
     export PATH="$PYENV_ROOT/bin:$PATH"
 fi
 
@@ -242,11 +247,6 @@ function help() {
 
 function path() {
     echo $PATH | tr ':' '\n'
-}
-
-# search for regex in $PATH
-function findpath() {
-    tr ':' '\n' <<< "$PATH" | xargs -I % find % -name "$1"
 }
 
 
