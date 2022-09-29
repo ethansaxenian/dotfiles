@@ -61,8 +61,55 @@ alias bat="bat --theme=TwoDark -m .zshrc_pi:zsh"
 # colored help pages
 alias bathelp="bat --plain --language=help"
 
-# display units in mib
+# display units in mib bc pi doesn't have much memory :(
 alias neofetch="neofetch --memory_unit 'mib'"
+
+# }}}
+# fzf {{{
+
+export FZF_DEFAULT_OPTS='--reverse --border --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
+
+RG_IGNORES="!{node_modules,.git,.idea,__pycache__,Library,.venv,ios,android,.android,.cocoapods}"
+export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '$RG_IGNORES'"
+export FZF_CTRL_T_COMMAND="rg --files -g '$RG_IGNORES' --sort path --null | xargs -0 dirname | uniq"
+
+function f() {
+    cmd=$1
+
+    # if no arguments provided, just do fzf
+    if [[ -z $cmd ]]; then
+        fzf
+    else
+        # specify commands to search directories
+        if [[ $cmd =~ "cd|code|charm" ]]; then
+            dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
+
+            if [[ -z $dir ]]; then
+                return 1
+            fi
+
+            if [[ $cmd == "charm" ]]; then
+                open -a "PyCharm.app" $dir
+            else
+                $cmd $dir
+            fi
+        else
+            # otherwise normal fzf with bat preview
+            file=$(fzf --preview "bat --style=numbers --color=always {}")
+
+            if [[ -z $file ]]; then
+                return 1
+            fi
+
+            $cmd $file
+        fi
+    fi
+}
+
+# fzf in $PATH
+function fp() {
+    tr ':' '\n' <<< "$PATH" | xargs -I % find % -type f 2>/dev/null | fzf
+}
 
 # }}}
 # python {{{
@@ -248,5 +295,8 @@ zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 # remove uniques from $PATH
 typeset -aU path
 
-source $HOME/.local/z/z.sh
 source $HOME/.local/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(zoxide init zsh)"
