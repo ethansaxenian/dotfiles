@@ -128,7 +128,7 @@ function f() {
             fi
         else
             # otherwise normal fzf with bat preview
-            file=$(fzf --preview "bat --style=numbers --color=always {}")
+            file=$(rg "$HOME" --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES" | fzf --preview "bat --style=numbers --color=always {}")
 
             if [[ -z $file ]]; then
                 return 1
