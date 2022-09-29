@@ -97,20 +97,47 @@ for c in $no_autocorrect; do
     alias "$c"="nocorrect $c"
 done
 
-
 # }}}
 # fzf {{{
 
-export FZF_DEFAULT_OPTS='--reverse --border'
-FZF_RG_OPTIONS='--files --follow --no-ignore-vcs --hidden -g "!{node_modules,.git,.idea,__pycache__,Library}"'
-export FZF_DEFAULT_COMMAND="rg $FZF_RG_OPTIONS"
-export FZF_CTRL_T_COMMAND="rg --files --hidden --null | xargs -0 dirname | uniq"
+export FZF_DEFAULT_OPTS='--reverse --border --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
 
-# open file with vim
-alias vf='vim $(fzf --preview "bat --style=numbers --color=always {}")'
+RG_IGNORES="!{node_modules,.git,.idea,__pycache__,Library,.venv,ios,android,.android,.cocoapods}"
+export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '$RG_IGNORES'"
+export FZF_CTRL_T_COMMAND="rg --files -g '$RG_IGNORES' --sort path --null | xargs -0 dirname | uniq"
 
-# cd after fzf
-alias cf='cd $(rg --files --hidden --null | xargs -0 dirname | uniq | fzf --preview "tree -C {}")'
+function f() {
+    cmd=$1
+
+    # if no arguments provided, just do fzf
+    if [[ -z $cmd ]]; then
+        fzf
+    else
+        # specify commands to search directories
+        if [[ $cmd =~ "cd|code|charm" ]]; then
+            dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
+
+            if [[ -z $dir ]]; then
+                return 1
+            fi
+
+            if [[ $cmd == "charm" ]]; then
+                open -a "PyCharm.app" $dir
+            else
+                $cmd $dir
+            fi
+        else
+            # otherwise normal fzf with bat preview
+            file=$(fzf --preview "bat --style=numbers --color=always {}")
+
+            if [[ -z $file ]]; then
+                return 1
+            fi
+
+            $cmd $file
+        fi
+    fi
+}
 
 # }}}
 # python {{{
