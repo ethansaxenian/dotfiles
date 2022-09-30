@@ -162,6 +162,10 @@ function fp() {
 
 # use fzf and the spotify api to search for a song, then play it with shpotify (https://github.com/hnarayanan/shpotify)
 function spot() {
+    if test ! $(command -v spotify); then
+        return 1
+    fi
+
     spot_exe="$DOTFILES/scripts/spot"
 
     if [[ -z "$1" ]]; then
