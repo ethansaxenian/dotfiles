@@ -9,6 +9,10 @@ if [[ $OSTYPE =~ ^darwin ]]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 fi
 
+if test -d "$HOME/.deta/bin"; then
+    export PATH="$HOME/.deta/bin:$PATH"
+fi
+
 # colored manpages with bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=Monokai\ Extended'"
 
@@ -106,42 +110,75 @@ RG_IGNORES="!{node_modules,.git,.idea,__pycache__,Library,.venv,ios,android,.and
 export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '$RG_IGNORES'"
 export FZF_CTRL_T_COMMAND="rg --files -g '$RG_IGNORES' --sort path --null | xargs -0 dirname | uniq"
 
+# Use rg instead of the default find command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  rg --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES"
+}
+
+# Use rg to generate the list for directory completion
+_fzf_compgen_dir() {
+  rg --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u
+}
+
 function f() {
-    cmd=$1
+    cmd="$1"
 
     # if no arguments provided, just do fzf
-    if [[ -z $cmd ]]; then
+    if [[ -z "$cmd" ]]; then
         fzf
     else
         # specify commands to search directories
-        if [[ $cmd =~ "cd|code|charm" ]]; then
+        if [[ "$cmd" =~ "cd|code|charm" ]]; then
             dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
 
-            if [[ -z $dir ]]; then
+            if [[ -z "$dir" ]]; then
                 return 1
             fi
 
-            if [[ $cmd == "charm" ]]; then
-                open -a "PyCharm.app" $dir
+            if [[ "$cmd" == "charm" ]]; then
+                open -a "PyCharm.app" "$dir"
             else
-                $cmd $dir
+                "$cmd" "$dir"
             fi
         else
             # otherwise normal fzf with bat preview
             file=$(rg "$HOME" --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES" | fzf --preview "bat --style=numbers --color=always {}")
 
-            if [[ -z $file ]]; then
+            if [[ -z "$file" ]]; then
                 return 1
             fi
 
-            $cmd $file
+            "$cmd" "$file"
         fi
     fi
 }
 
 # fzf in $PATH
 function fp() {
-    tr ':' '\n' <<< "$PATH" | xargs -I % find % -type f 2>/dev/null | fzf
+    tr ':' '\n' <<< "$PATH" | xargs -I % find -L % -type f 2>/dev/null | fzf
+}
+
+# use fzf and the spotify api to search for a song, then play it with shpotify (https://github.com/hnarayanan/shpotify)
+function spot() {
+    spot_exe="$DOTFILES/scripts/spot"
+
+    if [[ -z "$1" ]]; then
+        # 'search' mode
+        track_details=$("$spot_exe" "" | fzf --header="Search for a song" --bind "change:reload:$spot_exe '{q}'")
+    else
+        # filter mode
+        track_details=$("$spot_exe" $1 | fzf --header="Filter results for '$1'")
+    fi
+
+    if [[ -z "$track_details" ]]; then
+        return 1
+    fi
+
+    lines=$(echo "$track_details" | tr "-" "\n")
+    spotify_uri=$(echo "$lines" | tail -1 | sed 's/^ *//;s/ *$//')
+    spotify play uri "spotify:track:$spotify_uri"
 }
 
 # }}}
