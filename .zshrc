@@ -168,6 +168,10 @@ function spot() {
 
     spot_exe="$DOTFILES/scripts/spot"
 
+    if [[ ! -a "$HOME/.shpotify.cfg" ]]; then
+        return 1
+    fi
+
     if [[ -z "$1" ]]; then
         # 'search' mode
         track_details=$("$spot_exe" "" | fzf --header="Search for a song" --bind "change:reload:$spot_exe '{q}'")
