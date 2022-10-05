@@ -166,10 +166,23 @@ function fp() {
 }
 
 function fman() {
-    manpages=$(manpath | tr ':' '\n' | xargs -I % find -L % -type f 2>/dev/null)
-    mans=$(echo "$manpages" | sed -E 's/(\/|\.[1-7]$)/ /g' | awk 'NF{ print $NF }' | sort -u)
+    # get all files in manpath
+    manpath_files=$(manpath | tr ':' '\n' | xargs -I % find -L % -type f 2>/dev/null)
+    # strip path prefixes
+    file_names=$(echo "$manpath_files" | sed -E 's/\// /g' | awk 'NF{ print $NF }')
+    # strip all file extensions that don't designate a man section
+    mans=$(echo "$file_names" | sed -E 's/\.(3(cc|x|tcl|tiff|G|pcap(\.in)?)|[1n](tcl)?|1m)(\.gz)?$//' | sort -u)
+    # use fzf to get the desired page
     page=$(echo "$mans" | fzf --exact)
-    man "$page"
+    # extract the section
+    section=$(echo "$page" | grep -oE "\.([1-9]|3pm)$" | sed 's/\.//')
+
+    if test -n "$section"; then
+        # use man with the correct section if necessary
+        echo "$page" | sed -E 's/\.([1-9]|3pm)$//' | xargs man "$section"
+    else
+        man "$page"
+    fi
 }
 
 # use fzf and the spotify api to search for a song, then play it with shpotify (https://github.com/hnarayanan/shpotify)
