@@ -171,7 +171,7 @@ function fman() {
     # strip path prefixes
     file_names=$(echo "$manpath_files" | sed -E 's/\// /g' | awk 'NF{ print $NF }')
     # strip all file extensions that don't designate a man section
-    mans=$(echo "$file_names" | sed -E 's/\.(3(cc|x|tcl|tiff|G|pcap(\.in)?)|[1n](tcl)?|1m)(\.gz)?$//' | sort -u)
+    mans=$(echo "$file_names" | sed -E 's/\.(3(cc|x|tcl|tiff|G|pcap(\.in)?)|[1n](tcl)?|1m|gz)$//' | sort -u)
     # use fzf to get the desired page
     page=$(echo "$mans" | fzf --exact)
     # extract the section
