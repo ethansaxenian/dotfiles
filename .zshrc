@@ -166,7 +166,7 @@ function fp() {
 }
 
 function fman() {
-    manpages=$(tr ':' '\n' <<< "$MANPATH" | xargs -I % find -L % -type f 2>/dev/null)
+    manpages=$(tr ':' '\n' <<< $MANPATH | xargs -I % find -L % -type f 2>/dev/null)
     mans=$(echo "$manpages" | sed -E 's/(\/|\.[1-7]$)/ /g' | awk 'NF{ print $NF }' | sort -u)
     page=$(echo "$mans" | fzf --exact)
     man "$page"
