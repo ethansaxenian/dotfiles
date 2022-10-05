@@ -38,16 +38,21 @@ if [[ $OSTYPE =~ ^darwin ]]; then
     alias charm='open -a "PyCharm.app"'
     alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
 
-    alias brewup="brew update && brew upgrade && brew cleanup"
-    alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
     alias sysup='sudo softwareupdate -i -a'
 
     # change architecture
     alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
     alias arm="env /usr/bin/arch -arm64 /bin/zsh"
 
-    # start linux VM
+    # start ubuntu VM
     alias startvm='open "utm://start?name=Ubuntu"'
+
+    # homebrew
+    alias brews="brew search"
+    alias brewi="brew install"
+    alias brewr="brew uninstall"
+    alias brewup="brew update && brew upgrade && brew cleanup && brew autoremove"
+
 fi
 # }}}
 # linux aliases {{{
@@ -160,6 +165,13 @@ function fp() {
     tr ':' '\n' <<< "$PATH" | xargs -I % find -L % -type f 2>/dev/null | fzf
 }
 
+function fman() {
+    manpages=$(tr ':' '\n' <<< "$MANPATH" | xargs -I % find -L % -type f 2>/dev/null)
+    mans=$(echo $manpages | sed -E 's/(\/|\.[1-7]$)/ /g' | awk 'NF{ print $NF }' | sort -u)
+    page=$(echo $mans | fzf --exact)
+    man $page
+}
+
 # use fzf and the spotify api to search for a song, then play it with shpotify (https://github.com/hnarayanan/shpotify)
 function spot() {
     if test ! $(command -v spotify); then
@@ -192,16 +204,23 @@ function spot() {
 # }}}
 # python {{{
 
+alias py="python3"
+alias pip="pip3"
+alias makevenv="python3 -m venv .venv"
+alias activate="source .venv/bin/activate"
+
+# poetry aliases
+alias poei="poetry install"
+alias poea="poetry add"
+alias poer="poetry remove"
+alias poes="poetry shell"
+
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 export POETRY_HOME=$HOME/.poetry
 if test -d $POETRY_HOME; then
     export PATH="$POETRY_HOME/bin:$PATH"
 fi
 
-alias py="python3"
-alias pip="pip3"
-alias makevenv="python3 -m venv .venv"
-alias activate="source .venv/bin/activate"
 
 # set up pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -282,6 +301,7 @@ alias nig="npm install --location=global"
 alias nu="npm uninstall"
 alias ns="npm start"
 alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
+alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
 
 # }}}
 # misc functions {{{
