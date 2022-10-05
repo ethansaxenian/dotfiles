@@ -64,6 +64,12 @@ alias bathelp="bat --plain --language=help"
 # display units in mib bc pi doesn't have much memory :(
 alias neofetch="neofetch --memory_unit 'mib'"
 
+# disable autocorrect for certain commands
+no_autocorrect=('cp' 'mv')
+for c in $no_autocorrect; do
+    alias "$c"="nocorrect $c"
+done
+
 # }}}
 # fzf {{{
 
@@ -73,35 +79,47 @@ RG_IGNORES="!{node_modules,.git,.idea,__pycache__,Library,.venv,ios,android,.and
 export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '$RG_IGNORES'"
 export FZF_CTRL_T_COMMAND="rg --files -g '$RG_IGNORES' --sort path --null | xargs -0 dirname | uniq"
 
+# Use rg instead of the default find command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  rg --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES"
+}
+
+# Use rg to generate the list for directory completion
+_fzf_compgen_dir() {
+  rg --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u
+}
+
 function f() {
-    cmd=$1
+    cmd="$1"
 
     # if no arguments provided, just do fzf
-    if [[ -z $cmd ]]; then
+    if [[ -z "$cmd" ]]; then
         fzf
     else
         # specify commands to search directories
-        if [[ $cmd =~ "cd|code|charm" ]]; then
+        if [[ "$cmd" =~ "cd|code|charm" ]]; then
             dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
 
-            if [[ -z $dir ]]; then
+            if [[ -z "$dir" ]]; then
                 return 1
             fi
 
-            if [[ $cmd == "charm" ]]; then
-                open -a "PyCharm.app" $dir
+            if [[ "$cmd" == "charm" ]]; then
+                open -a "PyCharm.app" "$dir"
             else
-                $cmd $dir
+                "$cmd" "$dir"
             fi
         else
             # otherwise normal fzf with bat preview
             file=$(rg "$HOME" --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES" | fzf --preview "bat --style=numbers --color=always {}")
 
-            if [[ -z $file ]]; then
+            if [[ -z "$file" ]]; then
                 return 1
             fi
 
-            $cmd $file
+            "$cmd" "$file"
         fi
     fi
 }
@@ -109,6 +127,13 @@ function f() {
 # fzf in $PATH
 function fp() {
     tr ':' '\n' <<< "$PATH" | xargs -I % find % -type f 2>/dev/null | fzf
+}
+
+function fman() {
+    manpages=$(tr ':' '\n' <<< "$MANPATH" | xargs -I % find -L % -type f 2>/dev/null)
+    mans=$(echo "$manpages" | sed -E 's/(\/|\.[1-7]$)/ /g' | awk 'NF{ print $NF }' | sort -u)
+    page=$(echo "$mans" | fzf --exact)
+    man "$page"
 }
 
 # }}}
