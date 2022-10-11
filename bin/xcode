@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+# open a react native project in xcode
+
+if [[ "$#" < 1 ]]; then
+  open -a Xcode ios/
+else
+  open -a Xcode $1/ios/
+fi

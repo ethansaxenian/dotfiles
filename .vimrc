@@ -150,13 +150,11 @@ catch
 endtry
 # }}}
 # TABS/SPACES {{{
-# Be smart when using tabs ;)
-set softtabstop=4
 
-# 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
+# 1 tab == 2 spaces by default
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
 
 # insert spaces whenever tab is pressed
 set expandtab

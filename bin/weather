@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+city="$1"
+
+if [ -z "$city" ]; then
+  city="Middlebury"
+fi
+
+eval "curl http://wttr.in/${city}"

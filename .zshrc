@@ -6,11 +6,11 @@ export EDITOR="vim"
 export DOTFILES=$HOME/.dotfiles
 
 if [[ $OSTYPE =~ ^darwin ]]; then
-    export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 fi
 
 if test -d "$HOME/.deta/bin"; then
-    export PATH="$HOME/.deta/bin:$PATH"
+  export PATH="$HOME/.deta/bin:$PATH"
 fi
 
 # colored manpages with bat
@@ -19,54 +19,54 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=Monokai\ Extended'"
 # }}}
 # mac aliases {{{
 if [[ $OSTYPE =~ ^darwin ]]; then
-    # Recursively delete `.DS_Store` files
-    alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+  # Recursively delete `.DS_Store` files
+  alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
-    # Empty the Trash on all mounted volumes and the main HDD.
-    # Also, clear Apple’s System Logs to improve shell startup speed.
-    # Finally, clear download history from quarantine. https://mths.be/bum
-    alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+  # Empty the Trash on all mounted volumes and the main HDD.
+  # Also, clear Apple’s System Logs to improve shell startup speed.
+  # Finally, clear download history from quarantine. https://mths.be/bum
+  alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
-    # Show/hide hidden files in Finder
-    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+  # Show/hide hidden files in Finder
+  alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+  alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
-    # Hide/show all desktop icons (useful when presenting)
-    alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-    alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+  # Hide/show all desktop icons (useful when presenting)
+  alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+  alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
-    alias charm='open -a "PyCharm.app"'
-    alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
+  alias charm='open -a "PyCharm.app"'
+  alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
 
-    alias sysup='sudo softwareupdate -i -a'
+  alias sysup='sudo softwareupdate -i -a'
 
-    # change architecture
-    alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
-    alias arm="env /usr/bin/arch -arm64 /bin/zsh"
+  # change architecture
+  alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
+  alias arm="env /usr/bin/arch -arm64 /bin/zsh"
 
-    # start ubuntu VM
-    alias startvm='open "utm://start?name=Ubuntu"'
+  # start ubuntu VM
+  alias startvm='open "utm://start?name=Ubuntu"'
 
-    # homebrew
-    alias brews="brew search"
-    alias brewi="brew install"
-    alias brewr="brew uninstall"
-    alias brewup="brew update && brew upgrade && brew cleanup && brew autoremove"
+  # homebrew
+  alias brews="brew search"
+  alias brewi="brew install"
+  alias brewr="brew uninstall"
+  alias brewup="brew update && brew upgrade && brew cleanup && brew autoremove"
 
 fi
 # }}}
 # linux aliases {{{
-if [[ $OSTYPE =~ ^linux ]]; then
-    alias halt="sudo halt -p"
-    alias reboot="sudo reboot"
+if [[ "$OSTYPE" =~ ^linux ]]; then
+  alias halt="sudo halt -p"
+  alias reboot="sudo reboot"
 
-    alias aptu="sudo apt update && sudo apt upgrade"
-    alias apti="sudo apt install"
-    alias aptr="sudo apt remove"
-    alias aptar="sudo apt autoremove"
-    alias aptl="apt list --installed"
+  alias aptu="sudo apt update && sudo apt upgrade"
+  alias apti="sudo apt install"
+  alias aptr="sudo apt remove"
+  alias aptar="sudo apt autoremove"
+  alias aptl="apt list --installed"
 
-    alias c="clear"
+  alias c="clear"
 fi
 # }}}
 # misc aliases {{{
@@ -103,7 +103,7 @@ alias bathelp="bat --plain --language=help"
 # disable autocorrect for certain commands
 no_autocorrect=('cp' 'mv')
 for c in $no_autocorrect; do
-    alias "$c"="nocorrect $c"
+  alias "$c"="nocorrect $c"
 done
 
 # }}}
@@ -128,90 +128,61 @@ _fzf_compgen_dir() {
 }
 
 function f() {
-    cmd="$1"
+  cmd="$1"
 
-    # if no arguments provided, just do fzf
-    if [[ -z "$cmd" ]]; then
-        fzf
+  # if no arguments provided, just do fzf
+  if [[ -z "$cmd" ]]; then
+    fzf
+  else
+    # specify commands to search directories
+    if [[ "$cmd" =~ "cd|code|charm" ]]; then
+      dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
+
+      if [[ -z "$dir" ]]; then
+        return 1
+      fi
+
+      if [[ "$cmd" == "charm" ]]; then
+        open -a "PyCharm.app" "$dir"
+      else
+        "$cmd" "$dir"
+      fi
     else
-        # specify commands to search directories
-        if [[ "$cmd" =~ "cd|code|charm" ]]; then
-            dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
+      # otherwise normal fzf with bat preview
+      file=$(rg "$HOME" --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES" | fzf --preview "bat --style=numbers --color=always {}")
 
-            if [[ -z "$dir" ]]; then
-                return 1
-            fi
+      if [[ -z "$file" ]]; then
+        return 1
+      fi
 
-            if [[ "$cmd" == "charm" ]]; then
-                open -a "PyCharm.app" "$dir"
-            else
-                "$cmd" "$dir"
-            fi
-        else
-            # otherwise normal fzf with bat preview
-            file=$(rg "$HOME" --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES" | fzf --preview "bat --style=numbers --color=always {}")
-
-            if [[ -z "$file" ]]; then
-                return 1
-            fi
-
-            "$cmd" "$file"
-        fi
+      "$cmd" "$file"
     fi
+  fi
 }
 
 # fzf in $PATH
 function fp() {
-    tr ':' '\n' <<< "$PATH" | xargs -I % find -L % -type f 2>/dev/null | fzf
+  tr ':' '\n' <<< "$PATH" | xargs -I % find -L % -type f 2>/dev/null | fzf
 }
 
 function fman() {
-    # get all files in manpath
-    manpath_files=$(manpath | tr ':' '\n' | xargs -I % find -L % -type f 2>/dev/null)
-    # strip path prefixes
-    file_names=$(echo "$manpath_files" | sed -E 's/\// /g' | awk 'NF{ print $NF }')
-    # strip all file extensions that don't designate a man section
-    mans=$(echo "$file_names" | sed -E 's/\.(3(cc|x|tcl|tiff|G|pcap(\.in)?)|[1n](tcl)?|1m|gz)$//' | sort -u)
-    # use fzf to get the desired page
-    page=$(echo "$mans" | fzf --exact)
-    # extract the section
-    section=$(echo "$page" | grep -oE "\.([1-9]|3pm)$" | sed 's/\.//')
+  # get all files in manpath
+  manpath_files=$(manpath | tr ':' '\n' | xargs -I % find -L % -type f 2>/dev/null)
+  # strip path prefixes
+  file_names=$(echo "$manpath_files" | sed -E 's/\// /g' | awk 'NF{ print $NF }')
+  # strip all file extensions that don't designate a man section
+  mans=$(echo "$file_names" | sed -E 's/\.(3(cc|x|tcl|tiff|G|pcap(\.in)?)|[1n](tcl)?|1m|gz)$//' | sort -u)
+  # use fzf to get the desired page
+  page=$(echo "$mans" | fzf --exact)
+  # extract the section
+  section=$(echo "$page" | grep -oE "\.([1-9]|3pm)$" | sed 's/\.//')
 
-    if test -n "$section"; then
-        # use man with the correct section if necessary
-        echo "$page" | sed -E 's/\.([1-9]|3pm)$//' | xargs man "$section"
-    else
-        man "$page"
-    fi
-}
-
-# use fzf and the spotify api to search for a song, then play it with shpotify (https://github.com/hnarayanan/shpotify)
-function spot() {
-    if test ! $(command -v spotify); then
-        return 1
-    fi
-
-    spot_exe="$DOTFILES/scripts/spot"
-
-    if [[ ! -a "$HOME/.shpotify.cfg" ]]; then
-        return 1
-    fi
-
-    if [[ -z "$1" ]]; then
-        # 'search' mode
-        track_details=$("$spot_exe" "" | fzf --header="Search for a song" --bind "change:reload:$spot_exe '{q}'")
-    else
-        # filter mode
-        track_details=$("$spot_exe" $1 | fzf --header="Filter results for '$1'")
-    fi
-
-    if [[ -z "$track_details" ]]; then
-        return 1
-    fi
-
-    lines=$(echo "$track_details" | tr "-" "\n")
-    spotify_uri=$(echo "$lines" | tail -1 | sed 's/^ *//;s/ *$//')
-    spotify play uri "spotify:track:$spotify_uri"
+  if test -n "$section"; then
+    # use man with the correct section if necessary
+    echo "$page" | sed -E 's/\.([1-9]|3pm)$//' | xargs man "$section"
+  else
+    man "$page"
+  fi
 }
 
 # }}}
@@ -231,18 +202,18 @@ alias poes="poetry shell"
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 export POETRY_HOME=$HOME/.poetry
 if test -d $POETRY_HOME; then
-    export PATH="$POETRY_HOME/bin:$PATH"
+  export PATH="$POETRY_HOME/bin:$PATH"
 fi
 
 
 # set up pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 if test -d "$PYENV_ROOT/bin"; then
-    export PATH="$PYENV_ROOT/bin:$PATH"
+  export PATH="$PYENV_ROOT/bin:$PATH"
 fi
 
 if test $(command -v pyenv); then
-    eval "$(pyenv init -)"
+  eval "$(pyenv init -)"
 fi
 
 # }}}
@@ -277,27 +248,27 @@ alias gstl="git stash list"
 alias gstp="git stash pop"
 
 function acp(){
-    git add -A
-    git commit -m "$1"
-    git push
+  git add -A
+  git commit -m "$1"
+  git push
 }
 
 function gcob {
-    git checkout -b "$1"
-    git push -u origin "$1"
+  git checkout -b "$1"
+  git push -u origin "$1"
 }
 
 function ginit(){
-    git init
-    git remote add origin "$1"
-    git add -A
-    git commit -m "initial commit"
-    git push -u origin main
+  git init
+  git remote add origin "$1"
+  git add -A
+  git commit -m "initial commit"
+  git push -u origin main
 }
 
 # git diff with bat
 function batdiff() {
-    git diff --name-only --relative --diff-filter=d | xargs bat --diff --diff-context=4
+  git diff --name-only --relative --diff-filter=d | xargs bat --diff --diff-context=4
 }
 
 # }}}
@@ -320,166 +291,51 @@ alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm
 # misc functions {{{
 
 function help() {
-    "$@" --help 2>&1 | bathelp
+  "$@" --help 2>&1 | bathelp
 }
 
 function path() {
-    echo $PATH | tr ':' '\n'
-}
-
-
-# Call from a local repo to open the repository on github/bitbucket in browser
-# Modified version of https://github.com/zeke/ghwd
-function repo() {
-	# Figure out github repo base URL
-	local base_url
-	base_url=$(git config --get remote.origin.url)
-	base_url=${base_url%\.git} # remove .git from end of string
-
-	# Fix git@github.com: URLs
-	base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
-
-	# Fix git://github.com URLS
-	base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
-
-	# Fix git@bitbucket.org: URLs
-	base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
-
-	# Fix git@gitlab.com: URLs
-	base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
-
-	# Validate that this folder is a git folder
-	if ! git branch 2>/dev/null 1>&2 ; then
-		echo "Not a git repo!"
-		return $?
-	fi
-
-	# Find current directory relative to .git parent
-	full_path=$(pwd)
-	git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
-	relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
-
-	# If filename argument is present, append it
-	if [ "$1" ]; then
-		relative_path="$relative_path/$1"
-	fi
-
-	# Figure out current git branch
-	# git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-	git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
-
-	# Remove cruft from branchname
-	branch=${git_where#refs\/heads\/}
-	branch=${branch#remotes\/origin\/}
-
-	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
-	url="$base_url/$tree/$branch$relative_path"
-
-
-	echo "Calling $(type open) for $url"
-
-	open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
-}
-
-# open a react native project in xcode
-function xcode() {
-    if [[ "$#" < 1 ]]; then
-        open -a Xcode ios/
-    else
-        open -a Xcode $1/ios/
-    fi
+  echo $PATH | tr ':' '\n'
 }
 
 function mkcd() {
-    mkdir -p "$1" && cd "$1";
+  mkdir -p "$1" && cd "$1";
 }
 
 # can do "up" or "up x"
 function up {
-    if [[ "$#" < 1 ]] ; then
-        cd ..
-    else
-        CDSTR=""
-        for i in {1..$1} ; do
-            CDSTR="../$CDSTR"
-        done
-        cd $CDSTR
-    fi
+  if [[ "$#" < 1 ]] ; then
+    cd ..
+  else
+    CDSTR=""
+    for i in {1..$1} ; do
+      CDSTR="../$CDSTR"
+    done
+    cd $CDSTR
+  fi
 }
 
 # Determine size of a file or total size of a directory
 function fs() {
-    if du -b /dev/null > /dev/null 2>&1; then
-        local arg=-sbh;
-    else
-        local arg=-sh;
-    fi
-    if [[ -n "$@" ]]; then
-        du $arg -- "$@";
-    else
-        du $arg .[^.]* ./* | sort -hr
-    fi;
+  if du -b /dev/null > /dev/null 2>&1; then
+    local arg=-sbh;
+  else
+    local arg=-sh;
+  fi
+  if [[ -n "$@" ]]; then
+    du $arg -- "$@";
+  else
+    du $arg .[^.]* ./* | sort -hr
+  fi;
 }
 
-function weather() {
-    city="$1"
-
-    if [ -z "$city" ]; then
-        city="Middlebury"
-    fi
-
-    eval "curl http://wttr.in/${city}"
-}
-
-# display a list of supported colors
-function lscolors {
-    ((cols = $COLUMNS - 4))
-    s=$(printf %${cols}s)
-    for i in {000..$(tput colors)}; do
-        echo -e $i $(tput setaf $i; tput setab $i)${s// /=}$(tput op);
-    done
-}
-
-
-function battery_status() {
-    if test "$(uname)" = "Darwin"
-        then
-
-        battstat=$(pmset -g batt)
-        time_left=$(echo $battstat |
-            tail -1 |
-            cut -f2 |
-            awk -F"; " '{print $3}' |
-            cut -d' ' -f1
-        )
-
-        if [[ $(pmset -g ac) == *"No adapter attached."* ]]
-        then
-            emoji='🔋'
-        else
-            emoji='🔌'
-        fi
-
-        if [[ $time_left == *"(no"* || $time_left == *"not"* ]]
-        then
-            time_left='⌛️'
-        fi
-
-        if [[ $time_left == *"0:00"* ]]
-        then
-            time_left='⚡️'
-        fi
-
-        printf "\033[1;92m$emoji  $time_left\n\033[0m"
-    fi
-}
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
 function tre() {
-	tree -aC -I '.git|node_modules' --dirsfirst "$@" | less -FRN;
+  tree -aC -I '.git|node_modules' --dirsfirst "$@" | less -FRN;
 }
 
 # }}}
@@ -524,7 +380,7 @@ setopt CORRECT_ALL
 # }}}
 # completion {{{
 if test $(command -v bw); then
-    eval "$(bw completion --shell zsh); compdef _bw bw;"
+  eval "$(bw completion --shell zsh); compdef _bw bw;"
 fi
 
 fpath+=~/.zfunc
@@ -542,40 +398,43 @@ zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 # ssh {{{
 # prompt displays more info if connected via ssh
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    PROMPT="%B%F{magenta}%n@%m%f%b %B%F{red}%~%f%b %# "
+  PROMPT="%B%F{magenta}%n@%m%f%b %B%F{red}%~%f%b %# "
 fi
 
 # change iterm profile when using ssh
 function tabc() {
-    NAME=$1; if [ -z "$NAME" ]; then NAME="Ethan"; fi
-    echo -e "\033]50;SetProfile=$NAME\a"
+  NAME=$1; if [ -z "$NAME" ]; then NAME="Ethan"; fi
+  echo -e "\033]50;SetProfile=$NAME\a"
 }
 
 function tab-reset() {
-    NAME="Ethan"
-    echo -e "\033]50;SetProfile=$NAME\a"
+  NAME="Ethan"
+  echo -e "\033]50;SetProfile=$NAME\a"
 }
 
 function colorssh() {
-    if [[ -n "$ITERM_SESSION_ID" ]]; then
-        trap "tab-reset" INT EXIT
-        tabc SSH
-    fi
-    ssh $*
+  if [[ -n "$ITERM_SESSION_ID" ]]; then
+    trap "tab-reset" INT EXIT
+    tabc SSH
+  fi
+  ssh $*
 }
 compdef _ssh tabc=ssh
 
 alias ssh="colorssh"
 # }}}
 
+# add my own executables to $PATH
+export PATH="$DOTFILES/bin:$PATH"
+
 # remove uniques from $PATH and $FPATH
 typeset -aU path
 typeset -aU fpath
 
 if [[ $OSTYPE =~ ^darwin ]]; then
-    ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
+  ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
 elif [[ $OSTYPE =~ ^linux ]]; then
-    ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$HOME/.local/zsh-syntax-highlighting
+  ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$HOME/.local/zsh-syntax-highlighting
 fi
 
 source $ZSH_SYNTAX_HIGHLIGHTING_PREFIX/zsh-syntax-highlighting.zsh
