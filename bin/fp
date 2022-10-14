@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+# uses fzf to search for executables in $PATH
+
+query="$1"
+
+tr ':' '\n' <<< "$PATH" | xargs -I % find -L % -type f 2>/dev/null | fzf --query="$query"

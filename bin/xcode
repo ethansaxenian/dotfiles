@@ -5,5 +5,5 @@
 if [[ "$#" < 1 ]]; then
   open -a Xcode ios/
 else
-  open -a Xcode $1/ios/
+  open -a Xcode "${1}"/ios/
 fi

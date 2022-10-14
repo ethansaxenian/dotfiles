@@ -127,63 +127,8 @@ _fzf_compgen_dir() {
   rg --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u
 }
 
-function f() {
-  cmd="$1"
-
-  # if no arguments provided, just do fzf
-  if [[ -z "$cmd" ]]; then
-    fzf
-  else
-    # specify commands to search directories
-    if [[ "$cmd" =~ "cd|code|charm" ]]; then
-      dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
-
-      if [[ -z "$dir" ]]; then
-        return 1
-      fi
-
-      if [[ "$cmd" == "charm" ]]; then
-        open -a "PyCharm.app" "$dir"
-      else
-        "$cmd" "$dir"
-      fi
-    else
-      # otherwise normal fzf with bat preview
-      file=$(rg "$HOME" --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES" | fzf --preview "bat --style=numbers --color=always {}")
-
-      if [[ -z "$file" ]]; then
-        return 1
-      fi
-
-      "$cmd" "$file"
-    fi
-  fi
-}
-
-# fzf in $PATH
-function fp() {
-  tr ':' '\n' <<< "$PATH" | xargs -I % find -L % -type f 2>/dev/null | fzf
-}
-
-function fman() {
-  # get all files in manpath
-  manpath_files=$(manpath | tr ':' '\n' | xargs -I % find -L % -type f 2>/dev/null)
-  # strip path prefixes
-  file_names=$(echo "$manpath_files" | sed -E 's/\// /g' | awk 'NF{ print $NF }')
-  # strip all file extensions that don't designate a man section
-  mans=$(echo "$file_names" | sed -E 's/\.(3(cc|x|tcl|tiff|G|pcap(\.in)?)|[1n](tcl)?|1m|gz)$//' | sort -u)
-  # use fzf to get the desired page
-  page=$(echo "$mans" | fzf --exact)
-  # extract the section
-  section=$(echo "$page" | grep -oE "\.([1-9]|3pm)$" | sed 's/\.//')
-
-  if test -n "$section"; then
-    # use man with the correct section if necessary
-    echo "$page" | sed -E 's/\.([1-9]|3pm)$//' | xargs man "$section"
-  else
-    man "$page"
-  fi
-}
+# load f into current shell in case cd is needed
+alias f="source $DOTFILES/bin/f"
 
 # }}}
 # python {{{
@@ -248,17 +193,32 @@ alias gstl="git stash list"
 alias gstp="git stash pop"
 
 function acp(){
+  if [[ -z "$1" ]]; then
+    echo "No commit message, aborting..."
+    exit 1
+  fi
+
   git add -A
   git commit -m "$1"
   git push
 }
 
 function gcob {
+  if [[ -z "$1" ]]; then
+    echo "No branch name, aborting..."
+    exit 1
+  fi
+
   git checkout -b "$1"
   git push -u origin "$1"
 }
 
-function ginit(){
+function ginit() {
+  if [[ -z "$1" ]]; then
+    echo "No origin url, aborting..."
+    exit 1
+  fi
+
   git init
   git remote add origin "$1"
   git add -A

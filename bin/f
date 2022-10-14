@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+# fzf utility
+
+cmd="$1"
+
+# specify commands to search directories
+dir_commands=('cd' 'code' 'charm')
+
+# if no arguments provided, just do fzf
+if [[ -z "$cmd" ]]; then
+  fzf
+else
+  if (($dir_commands[(Ie)$cmd])); then
+    dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
+
+    if [[ -z "$dir" ]]; then
+      return 1
+    fi
+
+    if [[ "$cmd" == "charm" ]]; then
+      open -a "PyCharm.app" "$dir"
+    else
+      "$cmd" "$dir"
+    fi
+  else
+    # otherwise normal fzf with bat preview for files
+    file=$(rg "$HOME" --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES" | fzf --preview "bat --style=numbers --color=always {}")
+
+    if [[ -z "$file" ]]; then
+      return 1
+    fi
+
+    "$cmd" "$file"
+  fi
+fi

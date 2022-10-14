@@ -93,7 +93,7 @@ else
   # there's gotta be a better way to do this...
   if [[ "$suppress_fzf" == "no-fzf" ]]; then
     # this output will go into the original fzf from the call with no args
-    echo $spotify_results
+    echo "$spotify_results"
   else
     # if originally called with args, run fzf normally
     track_details=$(echo "$spotify_results" | fzf --header="Filter results for '$query'")
