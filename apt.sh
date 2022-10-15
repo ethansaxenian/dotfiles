@@ -5,12 +5,12 @@ sudo apt update
 sudo apt install -y bat firefox fzf gcc gdb git htop make neofetch net-tools nmap openssh-server ripgrep spice-vdagent spice-webdavd terminator tree vim zoxide zsh
 
 if test ! $(command -v bat); then
-    sudo ln -s /usr/bin/batcat /usr/bin/bat
+  sudo ln -s /usr/bin/batcat /usr/bin/bat
 fi
 
 if test ! $(command -v code); then
-    echo "Installing vscode..."
-    curl -L https://aka.ms/linux-arm64-deb --output code_arm64.deb
-    sudo apt install -y ./code_arm64.deb
-    rm code_arm64.deb
+  echo "Installing vscode..."
+  curl -L https://aka.ms/linux-arm64-deb --output code_arm64.deb
+  sudo apt install -y ./code_arm64.deb
+  rm code_arm64.deb
 fi

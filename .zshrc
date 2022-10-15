@@ -74,10 +74,11 @@ fi
 # enable aliases to be sudo'ed
 alias sudo="sudo "
 
-alias v="vim"
+alias v="$EDITOR"
 
 # displays ip address
 alias myip="curl http://ipecho.net/plain; echo"
+alias localip="ipconfig getifaddr en0"
 
 # opens the zsh config file for editing
 alias config="vim $DOTFILES/.zshrc"
@@ -100,11 +101,11 @@ alias "$"="$@"
 # colored help pages
 alias bathelp="bat --plain --language=help"
 
-# disable autocorrect for certain commands
-no_autocorrect=('cp' 'mv')
-for c in $no_autocorrect; do
-  alias "$c"="nocorrect $c"
-done
+# defaults for common commands
+alias cp="nocorrect cp -iv"
+alias mv="nocorrect mv -iv"
+alias rm="rm -Iv"
+alias mkd="mkdir -pv"
 
 # }}}
 # fzf {{{
@@ -255,7 +256,7 @@ function help() {
 }
 
 function path() {
-  echo $PATH | tr ':' '\n'
+  echo "$PATH" | tr ':' '\n'
 }
 
 function mkcd() {
@@ -334,8 +335,8 @@ setopt HIST_FIND_NO_DUPS
 # removes blank lines from history
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
-setopt CORRECT
-setopt CORRECT_ALL
+# setopt CORRECT
+# setopt CORRECT_ALL
 
 # }}}
 # completion {{{
@@ -397,8 +398,11 @@ elif [[ $OSTYPE =~ ^linux ]]; then
   ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$HOME/.local/zsh-syntax-highlighting
 fi
 
+# setup syntax highlighting
 source $ZSH_SYNTAX_HIGHLIGHTING_PREFIX/zsh-syntax-highlighting.zsh
 
+# setup fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# setup z
 eval "$(zoxide init zsh)"

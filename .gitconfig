@@ -1,15 +1,15 @@
 [user]
-    name = Ethan Saxenian
-    email = ethansaxenian@gmail.com
+  name = Ethan Saxenian
+  email = ethansaxenian@gmail.com
 [init]
-    defaultBranch = main
+  defaultBranch = main
 [color]
-    ui = auto
+  ui = auto
 [core]
-    editor = vim
-    excludesfile = ~/.gitignore
+  editor = vim
+  excludesfile = ~/.gitignore
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true

@@ -6,18 +6,18 @@ set nocompatible
 # Plugins
 plug#begin('~/.vim/plugged')
 
-    Plug 'bfrg/vim-cpp-modern'
-    Plug 'vim-python/python-syntax'
-    Plug 'pangloss/vim-javascript'
-    Plug 'MaxMEllon/vim-jsx-pretty'
-    Plug 'leafgarland/typescript-vim'
+  Plug 'bfrg/vim-cpp-modern'
+  Plug 'vim-python/python-syntax'
+  Plug 'pangloss/vim-javascript'
+  Plug 'MaxMEllon/vim-jsx-pretty'
+  Plug 'leafgarland/typescript-vim'
 	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'flazz/vim-colorschemes'
-    Plug 'scrooloose/nerdtree'
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'airblade/vim-gitgutter'
-    Plug 'tpope/vim-fugitive'
-    Plug 'junegunn/fzf'
+  Plug 'scrooloose/nerdtree'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'tpope/vim-fugitive'
+  Plug 'junegunn/fzf'
 
 plug#end()
 
@@ -144,8 +144,8 @@ set directory=~/.vim/swp//
 # turn persistent undo on
 # means that you can undo even when you close a buffer/VIM
 try
-    set undodir=~/.vim/undo//
-    set undofile
+  set undodir=~/.vim/undo//
+  set undofile
 catch
 endtry
 # }}}
@@ -164,22 +164,22 @@ set si # Smart indent
 # }}}
 # STATUS LINE {{{
 def g:SyntaxItem(): string
-	return synIDattr(synID(line("."), col("."), 1), "name")
+  return synIDattr(synID(line("."), col("."), 1), "name")
 enddef
 
 def g:GitStatusA(): string
-    var [a,_,_] = g:GitGutterGetHunkSummary()
-    return printf('+%d', a)
+  var [a,_,_] = g:GitGutterGetHunkSummary()
+  return printf('+%d', a)
 enddef
 
 def g:GitStatusM(): string
-    var [_,m,_] = g:GitGutterGetHunkSummary()
-    return printf('~%d', m)
+  var [_,m,_] = g:GitGutterGetHunkSummary()
+  return printf('~%d', m)
 enddef
 
 def g:GitStatusR(): string
-    var [_,_,r] = g:GitGutterGetHunkSummary()
-    return printf('-%d', r)
+  var [_,_,r] = g:GitGutterGetHunkSummary()
+  return printf('-%d', r)
 enddef
 
 # set the status line
@@ -311,12 +311,12 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 # FUNCTIONS {{{
 # toggle between number and relativenumber
 def g:ToggleNumber()
-    if (&relativenumber == true)
-        set norelativenumber
-        set number
-    else
-        set relativenumber
-    endif
+  if (&relativenumber == true)
+    set norelativenumber
+    set number
+  else
+    set relativenumber
+  endif
 enddef
 
 # Trim extra whitespace
@@ -333,11 +333,11 @@ g:python_highlight_operators = 0
 g:python_highlight_all = 1
 
 augroup Python
-    autocmd!
-    autocmd BufRead,BufNewFile *.py setlocal foldmethod=indent
-    autocmd BufRead,BufNewFile *.py setlocal tabstop=4
-    autocmd BufRead,BufNewFile *.py setlocal shiftwidth=4
-    autocmd BufRead,BufNewFile *.py setlocal softtabstop=4
+  autocmd!
+  autocmd BufRead,BufNewFile *.py setlocal foldmethod=indent
+  autocmd BufRead,BufNewFile *.py setlocal tabstop=4
+  autocmd BufRead,BufNewFile *.py setlocal shiftwidth=4
+  autocmd BufRead,BufNewFile *.py setlocal softtabstop=4
 augroup END
 
 # Javascript/Typescript
@@ -350,26 +350,26 @@ g:yats_host_keyword = 0
 g:typescript_ignore_browserwords = 0
 
 augroup Javascript
-    autocmd!
-    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal foldmethod=syntax
-    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal tabstop=2
-    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal shiftwidth=2
-    autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal softtabstop=2
+  autocmd!
+  autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal foldmethod=syntax
+  autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal tabstop=2
+  autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal shiftwidth=2
+  autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal softtabstop=2
 augroup END
 
 # Misc
 augroup Misc
-    autocmd!
-    autocmd BufRead,BufNewFile *.{html,css} setlocal foldmethod=syntax
-    autocmd BufRead,BufNewFile *.{html,css} setlocal tabstop=2
-    autocmd BufRead,BufNewFile *.{html,css} setlocal shiftwidth=2
-    autocmd BufRead,BufNewFile *.{html,css} setlocal softtabstop=2
+  autocmd!
+  autocmd BufRead,BufNewFile *.{html,css} setlocal foldmethod=syntax
+  autocmd BufRead,BufNewFile *.{html,css} setlocal tabstop=2
+  autocmd BufRead,BufNewFile *.{html,css} setlocal shiftwidth=2
+  autocmd BufRead,BufNewFile *.{html,css} setlocal softtabstop=2
 
-    autocmd FileType make setlocal noexpandtab
+  autocmd FileType make setlocal noexpandtab
 
-    autocmd BufRead,BufNewFile *.asm set filetype=asm
+  autocmd BufRead,BufNewFile *.asm set filetype=asm
 
-    autocmd BufRead,BufNewFile *.{py,js,jsx,ts,tsx,html,css} normal zR
+  autocmd BufRead,BufNewFile *.{py,js,jsx,ts,tsx,html,css} normal zR
 augroup END
 # }}}
 # PLUGINS {{{

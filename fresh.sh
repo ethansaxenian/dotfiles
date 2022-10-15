@@ -31,6 +31,8 @@ source $DOTFILES/symlink.sh
 
 source $DOTFILES/ssh.sh
 
+$(brew --prefix)/opt/fzf/install
+
 # reload zsh config
 source $HOME/.zshrc
 
