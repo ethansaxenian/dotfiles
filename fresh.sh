@@ -9,27 +9,27 @@ if [[ $OSTYPE == ^darwin ]]; then
   echo "Installing Xcode command line tools..."
   xcode-select --install
 
-  source $DOTFILES/brew.sh
+  source $DOTFILES/scripts/brew.sh
 fi
 
 # install linux-specific things
 if [[ $OSTYPE =~ ^linux ]]; then
   echo "Starting linux setup..."
 
-  source $DOTFILES/apt.sh
+  source $DOTFILES/scripts/apt.sh
 
-  source $DOTFILES/ubuntu.sh
+  source $DOTFILES/scripts/ubuntu.sh
 fi
 
-source $DOTFILES/npm.sh
+source $DOTFILES/scripts/npm.sh
 
-source $DOTFILES/python.sh
+source $DOTFILES/scripts/python.sh
 
-source $DOTFILES/vim.sh
+source $DOTFILES/scripts/vim.sh
 
-source $DOTFILES/symlink.sh
+source $DOTFILES/scripts/symlink.sh
 
-source $DOTFILES/ssh.sh
+source $DOTFILES/scripts/ssh.sh
 
 $(brew --prefix)/opt/fzf/install
 
@@ -38,5 +38,5 @@ source $HOME/.zshrc
 
 if [[ $OSTYPE =~ ^darwin ]]; then
   # Set macOS preferences - we will run this last because this will reload the shell
-  source $DOTFILES/macos.sh
+  source $DOTFILES/scripts/macos.sh
 fi
