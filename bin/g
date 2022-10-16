@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+# git status/add/diff all in one command
+# tab: stage/unstage a file
+# Ctrl-a: stage all files
+# Ctrl-r: unstage all files
+# enter: view full-screen diff
+
+git rev-parse --is-inside-git-dir >/dev/null || return 1
+
+
+git_add="echo {} | sed -E 's/([MAD] | [MAD]|\?\?|AM) //' | xargs -I % git add %"
+
+git_status="git -c color.status=always status -sbu"
+
+eval "$git_status" | fzf --no-sort --tiebreak=index --ansi --header-lines=1 \
+  --preview="_git-diff {}" \
+  --bind="enter:execute:_git-diff {} | less -R" \
+  --bind="tab:execute(_git-stage-toggle {})+reload($git_status)" \
+  --bind="ctrl-a:execute(git add -A)+reload($git_status)" \
+  --bind="ctrl-r:execute(git reset -q .)+reload($git_status)"

@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+# a helper function for the g utility
+# toggles the staged status of a file
+
+filename=$(echo "$1" | sed -E 's/([MAD] | [MAD]|\?\?|AM) //')
+
+if [[ "$1" =~ "^[MAD]" ]]; then;
+  git reset -q -- "$filename"
+else
+  git add "$filename"
+fi

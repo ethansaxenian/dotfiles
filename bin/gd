@@ -1,9 +1,0 @@
-#!/usr/bin/env zsh
-
-# git diff browser powered by fzf
-
-git rev-parse --is-inside-git-dir >/dev/null || return 1
-
-view_git_diff="echo {} | sed 's/.*] *//' | xargs -I % git diff --color=always %"
-
-eval "git diff --name-status | sed -E 's/^([[:alnum:]]+)[[:space:]]+(.*)$/[\1]\t\2/' $@" | expand -t 8 | fzf --preview="$view_git_diff" --bind "enter:execute:$view_git_diff | less -R"

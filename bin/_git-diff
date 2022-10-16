@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+# a helper function for the g utility
+# modifies arguments to git diff based on status of file
+
+filename=$(echo "$1" | sed -E 's/([MAD] | [MAD]|\?\?|AM) //')
+
+_status=$(git status -s -- "$filename" | head -c 2)
+
+case "$_status" in
+  '??')             git diff --color=always --no-index -- /dev/null "$filename" ;;
+  'M '|'A '|'D ')   git diff --color=always --staged -- "$filename" ;;
+  ' M'|' D'|'AM')   git diff --color=always -- "$filename" ;;
+  *)                git diff --color=always -- "$filename" ;;
+esac
