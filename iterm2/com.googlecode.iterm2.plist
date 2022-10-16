@@ -214,6 +214,10 @@
 	<true/>
 	<key>IRMemory</key>
 	<integer>4</integer>
+	<key>LeftCommand</key>
+	<integer>7</integer>
+	<key>LeftOption</key>
+	<integer>2</integer>
 	<key>MaxVertically</key>
 	<false/>
 	<key>New Bookmarks</key>
@@ -224,7 +228,7 @@
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
-			<string>No</string>
+			<string>Recycle</string>
 			<key>AWDS Tab Directory</key>
 			<string></string>
 			<key>AWDS Tab Option</key>
@@ -486,7 +490,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>No</string>
+			<string>Advanced</string>
 			<key>Custom Tab Title</key>
 			<string></string>
 			<key>Custom Window Title</key>
@@ -2182,6 +2186,8 @@
 	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
+	<key>RightOption</key>
+	<integer>3</integer>
 	<key>SeparateStatusBarsPerPane</key>
 	<false/>
 	<key>SerializeOpeningMultipleFullScreenWindows</key>
