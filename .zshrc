@@ -98,9 +98,6 @@ alias grep="grep --color=auto -E"
 # Make shell handle commands containing a leading $
 alias "$"="$@"
 
-# colored help pages
-alias bathelp="bat --plain --language=help"
-
 # defaults for common commands
 alias cp="nocorrect cp -iv"
 alias mv="nocorrect mv -iv"
@@ -110,11 +107,14 @@ alias mkd="mkdir -pv"
 # }}}
 # fzf {{{
 
-export FZF_DEFAULT_OPTS='--reverse --border --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
+export FZF_DEFAULT_OPTS='--reverse --border --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef --bind="?:toggle-preview,ctrl-l:preview-up,ctrl-h:preview-down,ctrl-w:toggle-preview-wrap"'
 
 RG_IGNORES="!{node_modules,.git,.idea,__pycache__,Library,.venv,ios,android,.android,.cocoapods}"
 export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '$RG_IGNORES'"
 export FZF_CTRL_T_COMMAND="rg --files -g '$RG_IGNORES' --sort path --null | xargs -0 dirname | uniq"
+
+# Options to fzf command
+export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS --height=100%"
 
 # Use rg instead of the default find command for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
@@ -126,6 +126,23 @@ _fzf_compgen_path() {
 # Use rg to generate the list for directory completion
 _fzf_compgen_dir() {
   rg --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u
+}
+
+# (EXPERIMENTAL) Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    export|unset)       fzf "$@" --preview "eval 'echo \$'{}" ;;
+    unalias)            fzf "$@" --preview 'echo $(alias {})' ;;
+    ssh)                fzf "$@" --preview 'dig {}' ;;
+    cd)                 fzf "$@" --preview "tree -C {}" ;;
+    vim|v|code|charm)   fzf "$@" --preview "bat --style=numbers --color=always {}" ;;
+    *)                  fzf "$@" ;;
+  esac
 }
 
 # load f into current shell in case cd is needed
@@ -147,13 +164,14 @@ alias poes="poetry shell"
 
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 export POETRY_HOME=$HOME/.poetry
+
 if test -d $POETRY_HOME; then
   export PATH="$POETRY_HOME/bin:$PATH"
 fi
 
-
 # set up pyenv
 export PYENV_ROOT="$HOME/.pyenv"
+
 if test -d "$PYENV_ROOT/bin"; then
   export PATH="$PYENV_ROOT/bin:$PATH"
 fi
@@ -183,7 +201,6 @@ alias gco="git checkout"
 alias gd="git diff --color | sed 's/^\([^-+ ]*\)[-+ ]/\\1/' | less -rFX"
 alias gf="git fetch"
 alias gl="git pull --prune"
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias grst="git reset ."
 alias gp="git push"
 alias gpu="git push -u origin"
@@ -192,45 +209,6 @@ alias gst="git stash -u"
 alias gstd="git stash drop"
 alias gstl="git stash list"
 alias gstp="git stash pop"
-
-function acp(){
-  if [[ -z "$1" ]]; then
-    echo "No commit message, aborting..."
-    exit 1
-  fi
-
-  git add -A
-  git commit -m "$1"
-  git push
-}
-
-function gcob {
-  if [[ -z "$1" ]]; then
-    echo "No branch name, aborting..."
-    exit 1
-  fi
-
-  git checkout -b "$1"
-  git push -u origin "$1"
-}
-
-function ginit() {
-  if [[ -z "$1" ]]; then
-    echo "No origin url, aborting..."
-    exit 1
-  fi
-
-  git init
-  git remote add origin "$1"
-  git add -A
-  git commit -m "initial commit"
-  git push -u origin main
-}
-
-# git diff with bat
-function batdiff() {
-  git diff --name-only --relative --diff-filter=d | xargs bat --diff --diff-context=4
-}
 
 # }}}
 # npm {{{
@@ -249,15 +227,7 @@ alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
 alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
 
 # }}}
-# misc functions {{{
-
-function help() {
-  "$@" --help 2>&1 | bathelp
-}
-
-function path() {
-  echo "$PATH" | tr ':' '\n'
-}
+# functions {{{
 
 function mkcd() {
   mkdir -p "$1" && cd "$1";
@@ -274,29 +244,6 @@ function up {
     done
     cd $CDSTR
   fi
-}
-
-# Determine size of a file or total size of a directory
-function fs() {
-  if du -b /dev/null > /dev/null 2>&1; then
-    local arg=-sbh;
-  else
-    local arg=-sh;
-  fi
-  if [[ -n "$@" ]]; then
-    du $arg -- "$@";
-  else
-    du $arg .[^.]* ./* | sort -hr
-  fi;
-}
-
-
-# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
-# the `.git` directory, listing directories first. The output gets piped into
-# `less` with options to preserve color and line numbers, unless the output is
-# small enough for one screen.
-function tre() {
-  tree -aC -I '.git|node_modules' --dirsfirst "$@" | less -FRN;
 }
 
 # }}}
@@ -335,8 +282,8 @@ setopt HIST_FIND_NO_DUPS
 # removes blank lines from history
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
-# setopt CORRECT
-# setopt CORRECT_ALL
+setopt CORRECT
+setopt CORRECT_ALL
 
 # }}}
 # completion {{{
@@ -344,7 +291,7 @@ if test $(command -v bw); then
   eval "$(bw completion --shell zsh); compdef _bw bw;"
 fi
 
-fpath+=~/.zfunc
+fpath+="$HOME"/.zfunc
 
 if test $(command -v brew); then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -395,14 +342,14 @@ typeset -aU fpath
 if [[ $OSTYPE =~ ^darwin ]]; then
   ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
 elif [[ $OSTYPE =~ ^linux ]]; then
-  ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$HOME/.local/zsh-syntax-highlighting
+  ZSH_SYNTAX_HIGHLIGHTING_PREFIX="$HOME"/.local/zsh-syntax-highlighting
 fi
 
 # setup syntax highlighting
-source $ZSH_SYNTAX_HIGHLIGHTING_PREFIX/zsh-syntax-highlighting.zsh
+source "$ZSH_SYNTAX_HIGHLIGHTING_PREFIX"/zsh-syntax-highlighting.zsh
 
 # setup fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f "$HOME"/.fzf.zsh ] && source "$HOME"/.fzf.zsh
 
 # setup z
 eval "$(zoxide init zsh)"

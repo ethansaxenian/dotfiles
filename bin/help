@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+# use bat to colorize help
+
+"$@" --help 2>&1 | bat --plain --language=help

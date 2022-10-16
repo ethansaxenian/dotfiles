@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+# git commit browser powered by fzf
+
+git rev-parse --is-inside-git-dir || return 1
+
+_viewGitLogLine="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always %'"
+
+git log --graph --color=always --format="%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" "$@" |
+fzf --no-sort --reverse --tiebreak=index --no-multi --ansi --preview="$_viewGitLogLine" --bind "enter:execute:$_viewGitLogLine | less -R"

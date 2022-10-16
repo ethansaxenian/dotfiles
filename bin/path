@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+# prints $PATH nicely
+
+echo "$PATH" | tr ':' '\n'

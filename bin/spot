@@ -60,7 +60,7 @@ function playSong() {
   track_details="$1"
 
   if [[ -z "$track_details" ]]; then
-    return 1
+    return
   fi
 
   lines=$(echo "$track_details" | tr "-" "\n")
@@ -80,7 +80,7 @@ if [[ -z "$query" ]]; then
   # 'search' mode
 
   # if no args, call this script again with args, but suppress fzf
-  track_details=$(return 1 | fzf --header="Search for a song" --no-info --bind "change:reload:$DOTFILES/bin/spot {q} no-fzf")
+  track_details=$(return | fzf --header="Search for a song" --no-info --bind "change:reload:$DOTFILES/bin/spot {q} no-fzf")
 
   playSong "$track_details"
 

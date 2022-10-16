@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+# creates a new branch and pushes to remote
+
+if [[ -z "$1" ]]; then
+  echo "No branch name, aborting..."
+  exit 1
+fi
+
+git checkout -b "$1"
+git push -u origin "$1"
