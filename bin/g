@@ -1,17 +1,24 @@
 #!/usr/bin/env zsh
 
 # git status/add/diff all in one command
+
+# enter: view full-screen diff
 # tab: stage/unstage a file
 # Ctrl-a: stage all files
 # Ctrl-r: unstage all files
-# enter: view full-screen diff
+# Ctrl-c: start a commit
+# Ctrl-b: switch from batdiff to regular diff
+# TODO: Ctrl-d?: delete changes
+# TODO: Ctrl-s: stash?
+
 
 git rev-parse --is-inside-git-dir >/dev/null || return 1
 
-git_status="git -c color.status=always status -sbu"
+git_status="git -c color.status=always status -sbu | sed -E 's/(.+[ MAD\?]+.+) (.*)/[\1] \2/g'"
 
 eval "$git_status" | fzf --no-sort --tiebreak=index --ansi --header-lines=1 \
-  --preview="_git-diff {}" \
+  --preview="echo {} | sed -E 's/.*] //' | xargs bat --diff --diff-context=4 --color=always" \
+  --bind="ctrl-b:preview(_git-diff {})" \
   --bind="enter:execute:_git-diff {} | less -R" \
   --bind="tab:execute(_git-stage-toggle {})+reload($git_status)" \
   --bind="ctrl-a:execute(git add -A)+reload($git_status)" \

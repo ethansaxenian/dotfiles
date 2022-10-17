@@ -3,9 +3,9 @@
 # a helper function for the g utility
 # toggles the staged status of a file
 
-filename=$(echo "$1" | sed -E 's/([MAD] | [MAD]|\?\?|AM) //')
+filename=$(echo "$1" | sed -E 's/.*] //')
 
-if [[ "$1" =~ "^[MAD]" ]]; then;
+if [[ "$1" =~ "^\[[MAD]" ]]; then;
   git restore --staged -- "$filename"
 else
   git add "$filename"

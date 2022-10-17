@@ -3,7 +3,7 @@
 # a helper function for the g utility
 # modifies arguments to git diff based on status of file
 
-filename=$(echo "$1" | sed -E 's/([MAD] | [MAD]|\?\?|AM) //')
+filename=$(echo "$1" | sed -E 's/.*] //')
 
 _status=$(git status -s -- "$filename" | head -c 2)
 
