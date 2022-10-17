@@ -22,6 +22,7 @@ export TLDR_COLOR_PARAMETER="cyan"
 alias aptu="sudo apt update && sudo apt upgrade"
 alias apti="sudo apt install"
 alias aptr="sudo apt remove"
+alias aptar="sudo apt autoremove"
 alias aptl="apt list --installed"
 
 alias c="clear"
@@ -32,7 +33,7 @@ alias sudo="sudo "
 # enable aliases to be xargs'ed
 alias xargs="xargs "
 
-alias v="vim"
+alias v="$EDITOR"
 
 # displays ip address
 alias myip="curl http://ipecho.net/plain; echo"
@@ -58,96 +59,60 @@ alias "$"="$@"
 # use different theme for bat
 alias bat="bat --theme=TwoDark -m .zshrc_pi:zsh"
 
-# colored help pages
-alias bathelp="bat --plain --language=help"
-
 # display units in mib bc pi doesn't have much memory :(
 alias neofetch="neofetch --memory_unit 'mib'"
 
-# disable autocorrect for certain commands
-no_autocorrect=('cp' 'mv')
-for c in $no_autocorrect; do
-    alias "$c"="nocorrect $c"
-done
+# defaults for common commands
+alias cp="nocorrect cp -iv"
+alias mv="nocorrect mv -iv"
+alias rm="rm -Iv"
+alias mkd="mkdir -pv"
 
 # }}}
 # fzf {{{
 
-export FZF_DEFAULT_OPTS='--reverse --border --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
+export FZF_DEFAULT_OPTS='--reverse --border --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef --bind="?:toggle-preview,alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap,ctrl-s:toggle-sort"'
 
-RG_IGNORES="!{node_modules,.git,.idea,__pycache__,Library,.venv,ios,android,.android,.cocoapods}"
-export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '$RG_IGNORES'"
-export FZF_CTRL_T_COMMAND="rg --files -g '$RG_IGNORES' --sort path --null | xargs -0 dirname | uniq"
+FD_EXCLUDES="{node_modules,.git,.idea,__pycache__,Library,.venv,venv,ios,android,.android,.cocoapods}"
+FD_OPTIONS="--no-ignore --hidden --follow --strip-cwd-prefix -E '$FD_EXCLUDES'"
+export FZF_DEFAULT_COMMAND="fd --type file $FD_OPTIONS"
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_ALT_C_COMMAND="fd --type directory $FD_OPTIONS"
 
-# Use rg instead of the default find command for listing path candidates.
+# Options to fzf command
+export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS --height=100%"
+
+# Use fd instead of the default find command for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 _fzf_compgen_path() {
-  rg --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES"
+  eval "fd $1 --type file $FD_OPTIONS"
 }
 
-# Use rg to generate the list for directory completion
+# Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  rg --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u
+  eval "fd $1 --type directory $FD_OPTIONS"
 }
 
-function f() {
-    cmd="$1"
+# (EXPERIMENTAL) Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
 
-    # if no arguments provided, just do fzf
-    if [[ -z "$cmd" ]]; then
-        fzf
-    else
-        # specify commands to search directories
-        if [[ "$cmd" =~ "cd|code|charm" ]]; then
-            dir=$(rg "$HOME" --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u | fzf --preview "tree -C {}")
-
-            if [[ -z "$dir" ]]; then
-                return 1
-            fi
-
-            if [[ "$cmd" == "charm" ]]; then
-                open -a "PyCharm.app" "$dir"
-            else
-                "$cmd" "$dir"
-            fi
-        else
-            # otherwise normal fzf with bat preview
-            file=$(rg "$HOME" --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES" | fzf --preview "bat --style=numbers --color=always {}")
-
-            if [[ -z "$file" ]]; then
-                return 1
-            fi
-
-            "$cmd" "$file"
-        fi
-    fi
+  case "$command" in
+    export|unset)       fzf "$@" --preview "eval 'echo \$'{}" ;;
+    unalias)            fzf "$@" --preview 'echo $(alias {})' ;;
+    ssh)                fzf "$@" --preview 'dig {}' ;;
+    cd)                 fzf "$@" --preview "tree -C {}" ;;
+    vim|v|code|charm)   fzf "$@" --preview "bat --style=numbers --color=always {}" ;;
+    *)                  fzf "$@" ;;
+  esac
 }
 
-# fzf in $PATH
-function fp() {
-    tr ':' '\n' <<< "$PATH" | xargs -I % find % -type f 2>/dev/null | fzf
-}
-
-function fman() {
-    # get all files in manpath
-    manpath_files=$(manpath | tr ':' '\n' | xargs -I % find -L % -type f 2>/dev/null)
-    # strip path prefixes
-    file_names=$(echo "$manpath_files" | sed -E 's/\// /g' | awk 'NF{ print $NF }')
-    # strip all file extensions that don't designate a man section
-    mans=$(echo "$file_names" | sed -E 's/\.(3(cc|x|tcl|tiff|G|pcap(\.in)?)|[1n](tcl)?|1m|gz)$//' | sort -u)
-    # use fzf to get the desired page
-    page=$(echo "$mans" | fzf --exact)
-    # extract the section
-    section=$(echo "$page" | grep -oE "\.([1-9]|3pm)$" | sed 's/\.//')
-
-    if test -n "$section"; then
-        # use man with the correct section if necessary
-        echo "$page" | sed -E 's/\.([1-9]|3pm)$//' | xargs man "$section"
-    else
-        man "$page"
-    fi
-}
+# load f into current shell in case cd is needed
+alias f="source $DOTFILES/bin/f"
 
 # }}}
 # python {{{
@@ -178,7 +143,6 @@ alias gco="git checkout"
 alias gd="git diff --color | sed 's/^\([^-+ ]*\)[-+ ]/\\1/' | less -RFX"
 alias gf="git fetch"
 alias gl="git pull --prune"
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias grst="git reset ."
 alias gp="git push"
 alias gpu="git push -u origin"
@@ -188,40 +152,8 @@ alias gstd="git stash drop"
 alias gstl="git stash list"
 alias gstp="git stash pop"
 
-function acp(){
-    git add -A
-    git commit -m "$1"
-    git push
-}
-
-function gcob {
-    git checkout -b "$1"
-    git push -u origin "$1"
-}
-
-function ginit(){
-    git init
-    git remote add origin "$1"
-    git add -A
-    git commit -m "initial commit"
-    git push -u origin main
-}
-
-# git diff with bat
-function batdiff() {
-    git diff --name-only --relative --diff-filter=d | xargs bat
-}
-
 # }}}
-# misc functions {{{
-
-function help() {
-    "$@" --help 2>&1 | bathelp
-}
-
-function path() {
-    echo $PATH | tr ':' '\n'
-}
+# functions {{{
 
 function mkcd() {
     mkdir -p "$1" && cd "$1";
@@ -238,48 +170,6 @@ function up {
         done
         cd $CDSTR
     fi
-}
-
-# Determine size of a file or total size of a directory
-function fs() {
-    if du -b /dev/null > /dev/null 2>&1; then
-        local arg=-sbh;
-    else
-        local arg=-sh;
-    fi
-    if [[ -n "$@" ]]; then
-        du $arg -- "$@";
-    else
-        du $arg .[^.]* ./* | sort -hr
-    fi;
-}
-
-function weather() {
-    city="$1"
-
-    if [ -z "$city" ]; then
-        city="Middlebury"
-    fi
-
-    eval "curl http://wttr.in/${city}"
-}
-
-# display a list of supported colors
-function lscolors {
-    ((cols = $COLUMNS - 4))
-    s=$(printf %${cols}s)
-    for i in {000..$(tput colors)}; do
-        echo -e $i $(tput setaf $i; tput setab $i)${s// /=}$(tput op);
-    done
-}
-
-
-# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
-# the `.git` directory, listing directories first. The output gets piped into
-# `less` with options to preserve color and line numbers, unless the output is
-# small enough for one screen.
-function tre() {
-	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRN;
 }
 
 # }}}

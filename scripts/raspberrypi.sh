@@ -2,9 +2,10 @@
 
 # apt
 sudo apt update
-sudo apt install -y bat fzf gcc gdb git htop make neofetch net-tools nmap openssh-server python3 python3-pip ripgrep tree vim zoxide zsh
+sudo apt install -y bat fd-find fzf gcc gdb git htop make neofetch net-tools nmap openssh-server python3 python3-pip tree vim zoxide zsh
 
 sudo ln -s /usr/bin/batcat /usr/bin/bat
+sudo ln -s /usr/bin/fdfind /usr/bin/fd
 
 # zsh-syntax highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.local/zsh-syntax-highlighting
