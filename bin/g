@@ -17,10 +17,10 @@ git rev-parse --is-inside-git-dir >/dev/null || return 1
 git_status="git -c color.status=always status -sbu | sed -E 's/(.+[ MAD\?]+.+) (.*)/[\1] \2/g'"
 
 eval "$git_status" | fzf --no-sort --tiebreak=index --ansi --header-lines=1 \
-  --preview="echo {} | sed -E 's/.*] //' | xargs bat --diff --diff-context=4 --color=always" \
-  --bind="ctrl-b:preview(_git-diff {})" \
+  --preview="_git-diff {}" \
+  --bind="ctrl-/:preview(echo {} | sed -E 's/.*] //' | xargs bat --diff --diff-context=4 --color=always)" \
   --bind="enter:execute:_git-diff {} | less -R" \
-  --bind="tab:execute(_git-stage-toggle {})+reload($git_status)" \
-  --bind="ctrl-a:execute(git add -A)+reload($git_status)" \
-  --bind="ctrl-r:execute(git reset -q .)+reload($git_status)" \
-  --bind="ctrl-c:accept+execute(git commit)"
+  --bind="tab:execute-silent(_git-stage-toggle {})+reload($git_status)" \
+  --bind="ctrl-a:execute-silent(git add -A)+reload($git_status)" \
+  --bind="ctrl-r:execute-silent(git restore --staged .)+reload($git_status)" \
+  --bind="ctrl-c:execute(git commit)+execute:exit(0)"
