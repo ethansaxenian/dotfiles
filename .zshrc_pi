@@ -220,6 +220,9 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 # }}}
 
+# add my own executables to $PATH
+export PATH="$DOTFILES/bin:$PATH"
+
 # remove uniques from $PATH
 typeset -aU path
 
