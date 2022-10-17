@@ -23,4 +23,4 @@ eval "$git_status" | fzf --no-sort --tiebreak=index --ansi --header-lines=1 \
   --bind="tab:execute-silent(_git-stage-toggle {})+reload($git_status)" \
   --bind="ctrl-a:execute-silent(git add -A)+reload($git_status)" \
   --bind="ctrl-r:execute-silent(git restore --staged .)+reload($git_status)" \
-  --bind="ctrl-c:execute(git commit)+execute:exit(0)"
+  --bind="ctrl-c:accept+execute(git commit)"
