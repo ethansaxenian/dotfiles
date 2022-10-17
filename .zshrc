@@ -109,23 +109,25 @@ alias mkd="mkdir -pv"
 
 export FZF_DEFAULT_OPTS='--reverse --border --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef --bind="?:toggle-preview,alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap,ctrl-s:toggle-sort"'
 
-RG_IGNORES="!{node_modules,.git,.idea,__pycache__,Library,.venv,ios,android,.android,.cocoapods}"
-export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '$RG_IGNORES'"
-export FZF_CTRL_T_COMMAND="rg --files -g '$RG_IGNORES' --sort path --null | xargs -0 dirname | uniq"
+FD_EXCLUDES="{node_modules,.git,.idea,__pycache__,Library,.venv,venv,ios,android,.android,.cocoapods}"
+FD_OPTIONS="--no-ignore --hidden --follow --strip-cwd-prefix -E '$FD_EXCLUDES'"
+export FZF_DEFAULT_COMMAND="fd --type file $FD_OPTIONS"
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_ALT_C_COMMAND="fd --type directory $FD_OPTIONS"
 
 # Options to fzf command
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS --height=100%"
 
-# Use rg instead of the default find command for listing path candidates.
+# Use fd instead of the default find command for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 _fzf_compgen_path() {
-  rg --files --follow --no-ignore-vcs --hidden -g "$RG_IGNORES"
+  eval "fd $1 --type file $FD_OPTIONS"
 }
 
-# Use rg to generate the list for directory completion
+# Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  rg --files -g "$RG_IGNORES" --hidden --null | xargs -0 dirname | sort -u
+  eval "fd $1 --type directory $FD_OPTIONS"
 }
 
 # (EXPERIMENTAL) Advanced customization of fzf options via _fzf_comprun function
