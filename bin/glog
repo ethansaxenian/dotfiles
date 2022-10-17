@@ -6,5 +6,5 @@ git rev-parse --is-inside-git-dir >/dev/null || return 1
 
 view_git_log_line="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always %'"
 
-git log --graph --color=always --format="%C(auto)%h%d %s %C(bold black)%cr <%an>" "$@" |
+git log --graph --color=always --format="%C(bold red)%h%C(auto)%d %s %C(green)(%cr) %C(bold blue)<%an>" "$@" |
 fzf --no-sort --reverse --tiebreak=index --no-multi --ansi --preview="$view_git_log_line" --bind "enter:execute:$view_git_log_line | less -R"

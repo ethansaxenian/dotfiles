@@ -10,19 +10,23 @@
 # ctrl-b: switch from batdiff to regular diff
 # alt-d: discard untracked changes
 # alt-s: stash all
+# ctrl-e: open in $EDITOR
 
 
 git rev-parse --is-inside-git-dir >/dev/null || return 1
 
-git_status="git -c color.status=always status -sbu"
+git_status="(
+  git -c color.status=always status -sbu
+  git ls-files | grep -vxFf <(git status -s | grep '^[^?]' | cut -c4-; echo :) | sed 's/^/   /'
+)"
 
-eval "$git_status" | fzf --no-sort --tiebreak=index --ansi --header-lines=1 \
-  --preview="_git-diff {2}" \
-  --bind="ctrl-/:preview(echo {2} | xargs bat --diff --diff-context=4 --color=always)" \
-  --bind="enter:execute:_git-diff {2} | less -R" \
-  --bind="tab:execute-silent(_git-stage-toggle {2})+reload($git_status)" \
+eval "$git_status" | fzf --no-sort --tiebreak=index --ansi --header-lines=1 --nth -1 \
+  --preview="_git-diff {-1}" \
+  --bind="enter:execute:_git-diff {-1} | less -R" \
+  --bind="tab:execute-silent(_git-stage-toggle {-1})+reload($git_status)" \
   --bind="ctrl-a:execute-silent(git add -A)+reload($git_status)" \
   --bind="ctrl-r:execute-silent(git restore --staged .)+reload($git_status)" \
   --bind="ctrl-c:accept+execute(git commit)" \
-  --bind="alt-d:execute-silent(git restore {2})+reload($git_status)" \
-  --bind="alt-s:execute-silent(git stash -u)+accept"
+  --bind="alt-d:execute-silent(git restore {-1})+reload($git_status)" \
+  --bind="alt-s:execute-silent(git stash -u)+accept" \
+  --bind="ctrl-e:execute($EDITOR {-1})+reload($git_status)"
