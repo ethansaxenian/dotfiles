@@ -67,52 +67,6 @@ alias rm="rm -Iv"
 alias mkd="mkdir -pv"
 
 # }}}
-# fzf {{{
-
-export FZF_DEFAULT_OPTS='--reverse --border --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef --bind="?:toggle-preview,alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap,ctrl-s:toggle-sort"'
-
-FD_EXCLUDES="{node_modules,.git,.idea,__pycache__,Library,.venv,venv,ios,android,.android,.cocoapods}"
-FD_OPTIONS="--no-ignore --hidden --follow --strip-cwd-prefix -E '$FD_EXCLUDES'"
-export FZF_DEFAULT_COMMAND="fd --type file $FD_OPTIONS"
-export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
-export FZF_ALT_C_COMMAND="fd --type directory $FD_OPTIONS"
-
-# Options to fzf command
-export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS --height=100%"
-
-# Use fd instead of the default find command for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  eval "fd $1 --type file $FD_OPTIONS"
-}
-
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-  eval "fd $1 --type directory $FD_OPTIONS"
-}
-
-# (EXPERIMENTAL) Advanced customization of fzf options via _fzf_comprun function
-# - The first argument to the function is the name of the command.
-# - You should make sure to pass the rest of the arguments to fzf.
-_fzf_comprun() {
-  local command=$1
-  shift
-
-  case "$command" in
-    export|unset)       fzf "$@" --preview "eval 'echo \$'{}" ;;
-    unalias)            fzf "$@" --preview 'echo $(alias {})' ;;
-    ssh)                fzf "$@" --preview 'dig {}' ;;
-    cd)                 fzf "$@" --preview "tree -C {}" ;;
-    vim|v|code|charm)   fzf "$@" --preview "bat --style=numbers --color=always {}" ;;
-    *)                  fzf "$@" ;;
-  esac
-}
-
-# load f into current shell in case cd is needed
-alias f="source $DOTFILES/bin/f"
-
-# }}}
 # python {{{
 
 alias py="python3"
