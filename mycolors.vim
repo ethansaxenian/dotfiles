@@ -104,8 +104,8 @@ call s:h("TabLine", s:comment_fg, s:cursor_line, "")
 call s:h("TabLineFill", s:comment_fg, s:cursor_line, "")
 call s:h("TabLineSel", s:fg, s:bg, "")
 
-call s:h("Visual", "", s:selection, "")
-call s:h("VisualNOS", "", s:selection, "")
+call s:h("Visual", "", s:selection, "reverse")
+call s:h("VisualNOS", "", s:selection, "reverse")
 
 call s:h("ColorColumn", "", s:color_col, "")
 call s:h("Conceal", s:fg, "", "")
