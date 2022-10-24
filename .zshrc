@@ -272,12 +272,12 @@ git_color() {
   else
     output_styles="white"
   fi
-  output_styles="%F{$output_styles}($1)%f"
+  output_styles="%F{$output_styles}$1%f"
 
   echo "$output_styles"
 }
 RPROMPT='$(git_color ${vcs_info_msg_0_})'
-zstyle ':vcs_info:git:*' formats '%b'
+zstyle ':vcs_info:git:*' formats '(%b)'
 zstyle ':vcs_info:*' enable git
 
 # }}}
