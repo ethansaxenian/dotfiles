@@ -30,13 +30,11 @@ alias c="clear"
 # enable aliases to be sudo'ed
 alias sudo="sudo "
 
-# enable aliases to be xargs'ed
-alias xargs="xargs "
-
 alias v="$EDITOR"
 
 # displays ip address
 alias myip="curl http://ipecho.net/plain; echo"
+alias localip="ipconfig getifaddr en0"
 
 # opens the zsh config file for editing
 alias config="vim $DOTFILES/.zshrc_pi"
@@ -119,13 +117,13 @@ alias f="source $DOTFILES/bin/f"
 
 alias py="python3"
 alias pip="pip3"
-alias venv="python3 -m venv .venv"
+alias makevenv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
 
 # }}}
 # ls {{{
 
-eval `dircolors $DOTFILES/LS_COLORS`
+eval $(dircolors $DOTFILES/LS_COLORS)
 alias ls="ls --color=auto -Fh"
 alias la="ls -A"
 alias ll="ls -l"
@@ -156,20 +154,20 @@ alias gstp="git stash pop"
 # functions {{{
 
 function mkcd() {
-    mkdir -p "$1" && cd "$1";
+  mkdir -p "$1" && cd "$1";
 }
 
 # can do "up" or "up x"
 function up {
-    if [[ "$#" < 1 ]] ; then
-        cd ..
-    else
-        CDSTR=""
-        for i in {1..$1} ; do
-            CDSTR="../$CDSTR"
-        done
-        cd $CDSTR
-    fi
+  if [[ "$#" < 1 ]] ; then
+    cd ..
+  else
+    CDSTR=""
+    for i in {1..$1} ; do
+      CDSTR="../$CDSTR"
+    done
+    cd $CDSTR
+  fi
 }
 
 # }}}
@@ -181,8 +179,27 @@ autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-RPROMPT=\$vcs_info_msg_0_
-zstyle ':vcs_info:git:*' formats '%F{green}(%b)%f'
+git_color() {
+  local git_status="$(git status 2> /dev/null)"
+  local output_styles=""
+
+  if [[ $git_status =~ "nothing to commit, working tree clean" ]]; then
+    output_styles="green"
+  elif [[ $git_status =~ "nothing added to commit but untracked files present" ]]; then
+    output_styles="red"
+  elif [[ $git_status =~ "no changes added to commit" ]]; then
+    output_styles="red"
+  elif [[ $git_status =~ "Changes to be committed" ]]; then
+    output_styles="cyan"
+  else
+    output_styles="white"
+  fi
+  output_styles="%F{$output_styles}$1%f"
+
+  echo "$output_styles"
+}
+RPROMPT='$(git_color ${vcs_info_msg_0_})'
+zstyle ':vcs_info:git:*' formats '(%b)'
 zstyle ':vcs_info:*' enable git
 
 # }}}
@@ -228,6 +245,6 @@ typeset -aU path
 
 source $HOME/.local/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 
 eval "$(zoxide init zsh)"

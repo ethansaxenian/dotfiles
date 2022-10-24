@@ -24,11 +24,15 @@ rm -rf $HOME/.config/neofetch/config.conf
 mkdir -p $HOME/.config/neofetch
 ln -s $DOTFILES/neofetch.config $HOME/.config/neofetch/config.conf
 
+rm -rf $HOME/.config/bat/config
+mkdir -p $HOME/.config/bat
+ln -s $DOTFILES/bat.config $HOME/.config/bat/config
+
 # vim
-source $DOTFILES/vim.sh
+source $DOTFILES/scripts/vim.sh
 
 # ssh
-source $DOTFILES/ssh.sh
+source $DOTFILES/scripts/ssh.sh
 
 
 # zsh
