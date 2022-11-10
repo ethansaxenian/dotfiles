@@ -253,6 +253,12 @@ function up {
 # prompt {{{
 PROMPT="%B%F{red}%.%f%b %# "
 
+# prompt displays more info if connected via ssh
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  PROMPT="%B%F{magenta}%n@%m%f%b %B%F{red}%~%f%b %# "
+fi
+
+
 # shows branch name on right if applicable
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
@@ -324,34 +330,6 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 # partial completion suggestions
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
-# }}}
-# ssh {{{
-# prompt displays more info if connected via ssh
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  PROMPT="%B%F{magenta}%n@%m%f%b %B%F{red}%~%f%b %# "
-fi
-
-# change iterm profile when using ssh
-function tabc() {
-  NAME=$1; if [ -z "$NAME" ]; then NAME="Ethan"; fi
-  echo -e "\033]50;SetProfile=$NAME\a"
-}
-
-function tab-reset() {
-  NAME="Ethan"
-  echo -e "\033]50;SetProfile=$NAME\a"
-}
-
-function colorssh() {
-  if [[ -n "$ITERM_SESSION_ID" ]]; then
-    trap "tab-reset" INT EXIT
-    tabc SSH
-  fi
-  ssh $*
-}
-compdef _ssh tabc=ssh
-
-alias ssh="colorssh"
 # }}}
 
 # add my own executables to $PATH

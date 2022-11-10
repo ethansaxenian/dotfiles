@@ -96,7 +96,7 @@ else
     echo "$spotify_results"
   else
     # if originally called with args, run fzf normally
-    track_details=$(echo "$spotify_results" | fzf --header="Filter results for '$query'")
+    track_details=$(echo "$spotify_results" | fzf --nth=..-2 --header="Filter results for '$query'")
 
     playSong "$track_details"
   fi
