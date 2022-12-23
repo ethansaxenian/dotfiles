@@ -47,3 +47,4 @@ cask 'zoom'
 
 mas 'Xcode', id: 497799835
 mas 'Bitwarden', id: 1352778147
+mas 'Raivo OTP', id: 1498497896

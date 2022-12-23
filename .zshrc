@@ -330,6 +330,18 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 # partial completion suggestions
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
+
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+}
+compctl -K _pip_completion pip3
+# pip zsh completion end
 # }}}
 
 # add my own executables to $PATH
@@ -349,7 +361,11 @@ fi
 source "$ZSH_SYNTAX_HIGHLIGHTING_PREFIX"/zsh-syntax-highlighting.zsh
 
 # setup fzf
-[ -f "$HOME"/.fzf.zsh ] && source "$HOME"/.fzf.zsh
+if [ -f "$HOME"/.fzf.zsh ]; then
+  source "$HOME"/.fzf.zsh
+elif test $(command -v fzf); then
+  $(brew --prefix)/opt/fzf/install
+fi
 
 # setup z
 eval "$(zoxide init zsh)"
