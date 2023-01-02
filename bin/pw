@@ -7,6 +7,11 @@ if ! test $(command -v bw); then
   exit 1
 fi
 
+object="$1"
+if test -z "$object"; then
+  object=password
+fi
+
 # unlock the vault if nexessary
 if [[ -z "$BW_SESSION" ]]; then
   BW_SESSION=$(bw unlock --raw)
@@ -22,4 +27,4 @@ if test -z "$login"; then
   return
 fi
 
-bw get password "$login" --session "$BW_SESSION" | pbcopy | echo "$login password copied to clipboard"
+bw get "$object" "$login" --session "$BW_SESSION" | pbcopy | echo "$login $object copied to clipboard"

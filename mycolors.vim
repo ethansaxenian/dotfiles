@@ -251,6 +251,7 @@ call s:h("pythonDecoratorName", s:dullyellow, "", "")
 call s:h("pythonDottedName", s:dullyellow, "", "")
 
 call s:h("pythonComment", s:comment_fg, "", "")
+call s:h("pythonRun", s:comment_fg, "", "")
 call s:h("pythonTodo", s:bg, s:fg, "")
 call s:h("pythonTripleQuotes", s:green, "", "")
 

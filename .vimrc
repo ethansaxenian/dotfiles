@@ -11,8 +11,8 @@ plug#begin('~/.vim/plugged')
   Plug 'pangloss/vim-javascript'
   Plug 'MaxMEllon/vim-jsx-pretty'
   Plug 'leafgarland/typescript-vim'
-	Plug 'sonph/onehalf', { 'rtp': 'vim' }
-	Plug 'flazz/vim-colorschemes'
+  Plug 'sonph/onehalf', { 'rtp': 'vim' }
+  Plug 'flazz/vim-colorschemes'
   Plug 'scrooloose/nerdtree'
   Plug 'scrooloose/nerdcommenter'
   Plug 'airblade/vim-gitgutter'
@@ -35,8 +35,9 @@ set undolevels=1000
 set autoread
 
 # Enable file type detection
-filetype plugin on
-filetype indent on
+filetype plugin indent on
+
+set autoindent
 
 # enable mouse in all modes
 set mouse=a
@@ -88,6 +89,9 @@ set showmatch
 # How many tenths of a second to blink when matching brackets
 set mat=2
 
+# match < and >
+set matchpairs+=<:>
+
 # No annoying sound on errors
 set noerrorbells
 set novisualbell
@@ -107,6 +111,8 @@ set number
 set showcmd
 
 set foldmethod=marker
+
+set splitbelow splitright
 # }}}
 # SEARCHING {{{
 # Ignore case when searching
@@ -123,7 +129,6 @@ set hlsearch
 set incsearch
 # }}}
 # COLORS {{{
-set t_Co=256
 set termguicolors
 
 colorscheme mycolors
@@ -219,16 +224,9 @@ inoremap jk <esc>
 # Press ,, to jump back to the last cursor position.
 nnoremap <leader><leader> ``
 
-# Exit insert mode after creating a new line above or below the current line.
-nnoremap o o<esc>
-nnoremap O O<esc>
-
 # Center the cursor vertically when moving to the next word during a search.
 nnoremap n nzz
 nnoremap N Nzz
-
-# Yank from cursor to the end of line.
-nnoremap Y y$
 
 # move vertically by visual line
 nnoremap j gj
@@ -239,10 +237,6 @@ nnoremap H ^
 vnoremap H ^
 nnoremap L $
 vnoremap L $
-
-# $/0 doesn't do anything
-nnoremap $ <nop>
-nnoremap ^ <nop>
 
 # quick reload
 noremap <leader>r :source ~/.vimrc<cr> :e<cr> :nohl<cr>
@@ -258,18 +252,6 @@ map <up> <nop>
 map <down> <nop>
 map <left> <nop>
 map <right> <nop>
-
-# d/c don't copy text: _ is the blackhole buffer
-noremap d "_d
-noremap dd "_dd
-noremap c "_c
-noremap cc "_cc
-
-# use H and L with c and d
-nnoremap cH "_c^
-nnoremap cL "_c$
-nnoremap dH "_d^
-nnoremap dL "_d$
 
 # indent visually selected blocks
 vnoremap < <gv
@@ -307,6 +289,17 @@ map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/<cr>
 
 # Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+# insert a shebang
+map <leader>sb i#!/usr/bin/env
+
+# insert matching parentheses/quotes
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap < <><left>
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
 # }}}
 # FUNCTIONS {{{
 # toggle between number and relativenumber
@@ -340,7 +333,7 @@ augroup Python
   autocmd BufRead,BufNewFile *.py setlocal softtabstop=4
 augroup END
 
-# Javascript/Typescript
+# JavaScript/TypeScript
 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
@@ -349,7 +342,7 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 g:yats_host_keyword = 0
 g:typescript_ignore_browserwords = 0
 
-augroup Javascript
+augroup JavaScript
   autocmd!
   autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal foldmethod=syntax
   autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal tabstop=2
