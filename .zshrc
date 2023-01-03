@@ -363,7 +363,7 @@ source "$ZSH_SYNTAX_HIGHLIGHTING_PREFIX"/zsh-syntax-highlighting.zsh
 # setup fzf
 if [ -f "$HOME"/.fzf.zsh ]; then
   source "$HOME"/.fzf.zsh
-elif test $(command -v fzf); then
+elif test $(command -v fzf) && $(command -v brew); then
   $(brew --prefix)/opt/fzf/install
 fi
 

@@ -18,6 +18,7 @@ plug#begin('~/.vim/plugged')
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   Plug 'junegunn/fzf'
+  Plug 'fatih/vim-go'
 
 plug#end()
 
@@ -36,8 +37,6 @@ set autoread
 
 # Enable file type detection
 filetype plugin indent on
-
-set autoindent
 
 # enable mouse in all modes
 set mouse=a
@@ -164,8 +163,8 @@ set softtabstop=2
 # insert spaces whenever tab is pressed
 set expandtab
 
-set ai # Auto indent
-set si # Smart indent
+set autoindent # Auto indent
+set smartindent # Smart indent
 # }}}
 # STATUS LINE {{{
 def g:SyntaxItem(): string
@@ -239,13 +238,13 @@ nnoremap L $
 vnoremap L $
 
 # quick reload
-noremap <leader>r :source ~/.vimrc<cr> :e<cr> :nohl<cr>
+noremap <leader>r :source $HOME/.vimrc<cr> :e<cr> :nohl<cr>
 
 # quick saving and quitting
 noremap <leader>q :q!<cr>
 noremap <leader>w :call StripExtraWhiteSpace()<cr>:wq<cr>
 nnoremap <leader>s :call StripExtraWhiteSpace()<cr>:w<cr>
-inoremap <leader>s <C-c>:call StripExtraWhiteSpace()<cr>:w<cr>
+inoremap <leader>s <esc>:call StripExtraWhiteSpace()<cr>:w<cr>
 
 # Don't use arrow keys
 map <up> <nop>
@@ -258,8 +257,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 # opening splits
-map <leader>sp :Se<cr>
-map <leader>vsp :Se!<cr>
+noremap <leader>sv :Se!<cr>:FZF<cr>
+noremap <leader>sh :Se<cr>:FZF<cr>
 
 # Smart way to move between windows
 map <C-j> <C-W>j
@@ -279,9 +278,8 @@ map <leader>tp :tabprevious<cr>
 
 # Let 'tl' toggle between this and the last accessed tab
 g:lasttab = 1
-nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
+nmap <leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * g:lasttab = tabpagenr()
-
 
 # Opens a new tab with the current buffer's path
 # Super useful when editing files in the same directory
@@ -290,16 +288,6 @@ map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/<cr>
 # Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-# insert a shebang
-map <leader>sb i#!/usr/bin/env
-
-# insert matching parentheses/quotes
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap < <><left>
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
 # }}}
 # FUNCTIONS {{{
 # toggle between number and relativenumber
@@ -327,11 +315,36 @@ g:python_highlight_all = 1
 
 augroup Python
   autocmd!
-  autocmd BufRead,BufNewFile *.py setlocal foldmethod=indent
-  autocmd BufRead,BufNewFile *.py setlocal tabstop=4
-  autocmd BufRead,BufNewFile *.py setlocal shiftwidth=4
-  autocmd BufRead,BufNewFile *.py setlocal softtabstop=4
+  autocmd BufRead,BufNewFile *.py setlocal foldmethod=syntax
+  autocmd BufRead,BufNewFile *.py setlocal tabstop=2
+  autocmd BufRead,BufNewFile *.py setlocal shiftwidth=2
+  autocmd BufRead,BufNewFile *.py setlocal softtabstop=2
+  autocmd BufRead,BufNewFile *.py setlocal noexpandtab
 augroup END
+
+# Golang
+
+g:go_highlight_extra_types = 1
+g:go_highlight_operators = 1
+g:go_highlight_functions = 1
+g:go_highlight_function_parameters = 1
+g:go_highlight_function_calls = 1
+g:go_highlight_fields = 1
+g:go_highlight_build_constraints = 1
+g:go_highlight_variable_declarations = 1
+g:go_highlight_variable_assignments = 1
+g:go_highlight_generate_tags = 1
+g:go_highlight_space_tab_error = 1
+
+augroup Go
+  autocmd!
+  autocmd BufRead,BufNewFile *.go setlocal foldmethod=indent
+  autocmd BufRead,BufNewFile *.go setlocal tabstop=2
+  autocmd BufRead,BufNewFile *.go setlocal shiftwidth=2
+  autocmd BufRead,BufNewFile *.go setlocal softtabstop=2
+  autocmd BufRead,BufNewFile *.go setlocal noexpandtab
+augroup END
+
 
 # JavaScript/TypeScript
 
@@ -362,7 +375,7 @@ augroup Misc
 
   autocmd BufRead,BufNewFile *.asm set filetype=asm
 
-  autocmd BufRead,BufNewFile *.{py,js,jsx,ts,tsx,html,css} normal zR
+  autocmd BufRead,BufNewFile *.{py,js,jsx,ts,tsx,html,css,go} normal zR
 augroup END
 # }}}
 # PLUGINS {{{

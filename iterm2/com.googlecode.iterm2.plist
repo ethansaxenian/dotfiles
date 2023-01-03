@@ -54,6 +54,18 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0xf700-0x2a0000-0x7e</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string>Move Divider Up
+Resize Split Pane.Move Divider Up</string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
 		<key>0xf700-0x300000-0x7e</key>
 		<dict>
 			<key>Action</key>
@@ -73,6 +85,18 @@
 			<string></string>
 			<key>Text</key>
 			<string></string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
+		<key>0xf701-0x2a0000-0x7d</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string>Move Divider Down
+Resize Split Pane.Move Divider Down</string>
 			<key>Version</key>
 			<integer>1</integer>
 		</dict>
@@ -98,6 +122,18 @@
 			<key>Version</key>
 			<integer>1</integer>
 		</dict>
+		<key>0xf702-0x2a0000-0x7b</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string>Move Divider Left
+Resize Split Pane.Move Divider Left</string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
 		<key>0xf702-0x300000-0x7b</key>
 		<dict>
 			<key>Action</key>
@@ -117,6 +153,18 @@
 			<string></string>
 			<key>Text</key>
 			<string></string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
+		<key>0xf703-0x2a0000-0x7c</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string>Move Divider Right
+Resize Split Pane.Move Divider Right</string>
 			<key>Version</key>
 			<integer>1</integer>
 		</dict>
