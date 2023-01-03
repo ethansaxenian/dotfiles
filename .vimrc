@@ -185,7 +185,7 @@ function! GitStatusR()
 endfunction
 
 " set the status line
-set statusline=%#StatusLinePurple#			 " set highlighting
+set statusline=%#StatusLinePurple#			     " set highlighting
 set statusline+=%2.2n\                       " buffer number
 set statusline+=%#StatusLineRed#             " set highlighting
 set statusline+=%.35F\                       " file name
@@ -386,7 +386,7 @@ autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 nmap <leader>n :NERDTreeFocus<CR>
 
 let NERDTreeIgnore = ['\.git$[[dir]]', 'node_modules[[dir]]', '\.DS_Store', '\.idea[[dir]]', '__pycache__[[dir]]', 'build[[dir]]', 'venv$[[dir]]', '\.o$', '\.so$', '\.dSYM$']
-let NERDTreeWinPos = "right"
+let NERDTreeWinPos = "left"
 let NERDTreeWinSize = 50
 
 " NERDCommenter

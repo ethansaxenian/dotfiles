@@ -9,7 +9,7 @@ let colors_name="mycolors"
 let s:black       = { "gui": "#000000", "cterm": "0"   }
 let s:red         = { "gui": "#e06c75", "cterm": "168" }
 let s:green       = { "gui": "#87af5f", "cterm": "107" }
-let s:forestgreen = { "gui": "#00af87", "cterm": "36"  }
+let s:darkgreen   = { "gui": "#00af87", "cterm": "36"  }
 let s:yellow      = { "gui": "#ffffaf", "cterm": "229" }
 let s:dullyellow  = { "gui": "#ffffd7", "cterm": "230" }
 let s:deeporange  = { "gui": "#d78700", "cterm": "172" }
@@ -19,8 +19,7 @@ let s:darkblue    = { "gui": "#0087ff", "cterm": "33"  }
 let s:blue        = { "gui": "#61afef", "cterm": "75"  }
 let s:lightblue   = { "gui": "#afd7ff", "cterm": "153" }
 let s:purple      = { "gui": "#c678dd", "cterm": "176" }
-let s:softpurple  = { "gui": "#8282BB", "cterm": "104" }
-let s:brightpink  = { "gui": "#af5faf", "cterm": "164" }
+let s:darkpurple  = { "gui": "#8282BB", "cterm": "104" }
 let s:pink        = { "gui": "#af5faf", "cterm": "133" }
 let s:cyan        = { "gui": "#56b6c2", "cterm": "73"  }
 let s:white       = { "gui": "#ffffff", "cterm": "15"  }
@@ -99,7 +98,6 @@ call s:h("StatusLinePurple", s:purple, s:cursor_line, "")
 call s:h("GitAddedSL", s:green, s:cursor_line, "")
 call s:h("GitModifiedSL", s:blue, s:cursor_line, "")
 call s:h("GitRemovedSL", s:red, s:cursor_line, "")
-call s:h("StatusLineNC", s:comment_fg, s:cursor_line, "")
 call s:h("TabLine", s:comment_fg, s:cursor_line, "")
 call s:h("TabLineFill", s:comment_fg, s:cursor_line, "")
 call s:h("TabLineSel", s:fg, s:bg, "")
@@ -241,7 +239,7 @@ call s:h("pythonImport", s:deeporange, "", "")
 
 call s:h("pythonClass", s:fg, "", "")
 call s:h("pythonFunction", s:lightorange, "", "")
-call s:h("pythonFunctionCall", s:fg, "", "")
+call s:h("pythonFunctionCall", s:lightorange, "", "")
 
 " and in is not or
 call s:h("pythonOperator", s:deeporange, "", "")
@@ -272,14 +270,14 @@ call s:h("pythonNone", s:deeporange, "", "")
 " True False
 call s:h("pythonBoolean", s:deeporange, "", "")
 " NotImplemented
-call s:h("pythonSingleton", s:softpurple, "", "")
+call s:h("pythonSingleton", s:darkpurple, "", "")
 " __debug__ __doc__ __file__ __name__ __package__ ...
-call s:h("pythonBuiltinObj", s:brightpink, "", "")
+call s:h("pythonBuiltinObj", s:pink, "", "")
 " object bool int float tuple str list dict set frozenset
-call s:h("pythonBuiltinType", s:softpurple, "", "")
-call s:h("pythonBuiltinFunc", s:softpurple, "", "")
-call s:h("pythonBuiltin", s:softpurple, "", "")
-call s:h("pythonExClass", s:softpurple, "", "")
+call s:h("pythonBuiltinType", s:darkpurple, "", "")
+call s:h("pythonBuiltinFunc", s:darkpurple, "", "")
+call s:h("pythonBuiltin", s:darkpurple, "", "")
+call s:h("pythonExClass", s:darkpurple, "", "")
 " }}}
 " Javascript Syntax {{{
 call s:h("javaScriptBlock", s:blue, "", "")
@@ -290,7 +288,7 @@ call s:h("jsExportDefault", s:purple, "", "")
 call s:h("jsFrom", s:purple, "", "")
 call s:h("jsModuleKeyword", s:lightblue, "", "")
 call s:h("jsOperatorKeyword", s:darkblue, "", "")
-call s:h("jsExceptions", s:forestgreen, "", "")
+call s:h("jsExceptions", s:darkgreen, "", "")
 
 call s:h("jsString", s:orange, "", "")
 call s:h("jsTemplateString", s:orange, "", "")
@@ -349,11 +347,11 @@ call s:h("jsDestructuringBlock", s:lightblue, "", "")
 call s:h("jsDestructuringArray", s:blue, "", "")
 call s:h("jsSpreadExpression", s:blue, "", "")
 
-call s:h("jsGlobalObjects", s:forestgreen, "", "")
-call s:h("jsGlobalNodeObjects", s:forestgreen, "", "")
+call s:h("jsGlobalObjects", s:darkgreen, "", "")
+call s:h("jsGlobalNodeObjects", s:darkgreen, "", "")
 call s:h("jsBuiltins", s:yellow, "", "")
 
-call s:h("jsxComponentName", s:forestgreen, "", "")
+call s:h("jsxComponentName", s:darkgreen, "", "")
 call s:h("jsxBraces", s:darkblue, "", "")
 call s:h("jsxExpressionBlock", s:blue, "", "")
 call s:h("jsxAttrib", s:lightblue, "", "")
@@ -407,9 +405,9 @@ call s:h("typescriptLabel", s:purple, "", "")
 call s:h("typescriptStatement", s:purple, "", "")
 
 
-call s:h("typescriptGlobalObjects", s:forestgreen, "", "")
+call s:h("typescriptGlobalObjects", s:darkgreen, "", "")
 " module exports global process __dirname __filename
-call s:h("typescriptGlobalNodeObjects", s:forestgreen, "", "")
+call s:h("typescriptGlobalNodeObjects", s:darkgreen, "", "")
 
 " try catch throw finally Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 call s:h("typescriptExceptions", s:purple, "", "")
@@ -429,9 +427,9 @@ call s:h("typescriptLogicSymbols", s:white, "", "")
 call s:h("typescriptOpSymbols", s:white, "", "")
 call s:h("typescriptArrowFunction", s:darkblue, "", "")
 
-call s:h("typescriptType", s:forestgreen, "", "")
-call s:h("typescriptTypeDef", s:forestgreen, "", "")
-call s:h("typescriptTypeCast", s:forestgreen, "", "")
+call s:h("typescriptType", s:darkgreen, "", "")
+call s:h("typescriptTypeDef", s:darkgreen, "", "")
+call s:h("typescriptTypeCast", s:darkgreen, "", "")
 
 call s:h("typescriptStringS", s:orange, "", "")
 
@@ -510,4 +508,57 @@ call s:h("htmlH1", s:blue, "", "bold")
 call s:h("mkdListItem", s:blue, "", "")
 call s:h("mkdCodeDelimiter", s:orange, "", "")
 call s:h("mkdCode", s:orange, "", "")
+" }}}
+" Golang syntax {{{
+call s:h("goPackage", s:purple, "", "")
+call s:h("goImport", s:purple, "", "")
+call s:h("goVar", s:purple, "", "")
+call s:h("goConst", s:purple, "", "")
+call s:h("goDeclaration", s:purple, "", "")
+" defer go goto return break continue fallthrough
+call s:h("goStatement", s:purple, "", "")
+" if else switch select
+call s:h("goConditional", s:purple, "", "")
+" case default
+call s:h("goLabel", s:purple, "", "")
+" for range
+call s:h("goRepeat", s:purple, "", "")
+" chan map bool string error any comparable
+call s:h("goType", s:darkgreen, "", "")
+" int8 int16 int32 int64 rune
+hi! link goSignedInts goType
+" byte uint uint8 uint16 uint32 uint64 uintptr
+hi! link goUnsignedInts goType
+" float32 float64
+hi! link goFloats goType
+" complex64 complex128
+hi! link goComplexes goType
+hi! link goTypeParams goType
+hi! link goReceiverType goType
+hi! link goParamType goType
+" append cap close complex copy delete imag len make new panic print println real recover
+call s:h("goBuiltins", s:dullyellow, "", "")
+call s:h("goBoolean", s:blue, "", "")
+" nil iota
+call s:h("goPredefinedIdentifiers", s:lightblue, "", "")
+call s:h("goComment", s:green, "", "")
+call s:h("goTodo", s:bg, s:fg, "")
+call s:h("goString", s:orange, "", "")
+hi! link goImportString goString
+hi! link goRawString goString
+call s:h("goVar", s:purple, "", "")
+hi! link goConst goVar
+call s:h("goDecimalInt", s:dullyellow, "", "")
+hi! link goFloat goDecimalInt
+call s:h("goField", s:blue, "", "")
+call s:h("goFunctionCall", s:yellow, "", "")
+call s:h("goFunction", s:yellow, "", "")
+call s:h("goDeclType", s:purple, "", "")
+call s:h("goParamName", s:lightblue, "", "")
+call s:h("goReceiverVar", s:lightblue, "", "")
+call s:h("goVarDefs", s:lightblue, "", "")
+hi! link goVarAssign goVarDefs
+call s:h("goEscapeC", s:blue, "", "")
+call s:h("goFormatSpecifier", s:blue, "", "")
+call s:h("goCharacter", s:dullyellow, "", "")
 " }}}
