@@ -34,14 +34,17 @@ brew 'zsh-syntax-highlighting'
 
 # Apps
 cask 'authy'
+cask 'discord'
 cask 'firefox'
 cask 'google-chrome'
 cask 'iterm2'
 cask 'microsoft-word'
+cask 'protonvpn'
 cask 'pycharm'
 cask 'raspberry-pi-imager'
 cask 'spotify'
 cask 'utm'
+cask 'veracrypt'
 cask 'visual-studio-code'
 cask 'zoom'
 

@@ -15,7 +15,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'scrooloose/nerdcommenter'
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
-  Plug 'junegunn/fzf'
+  Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'fatih/vim-go'
 
 call plug#end()
@@ -47,6 +48,9 @@ set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
+
+" use the system clipboard as the default
+set clipboard=unnamed
 " }}}
 " UI {{{
 " Start scrolling four lines before the horizontal window border
@@ -101,8 +105,8 @@ set showmode
 " Show the filename in the window titlebar
 set title
 
-" Enable line numbers
-set number
+" Enable relative line numbers
+set relativenumber
 
 " show command in bottom bar
 set showcmd
@@ -235,6 +239,9 @@ vnoremap H ^
 nnoremap L $
 vnoremap L $
 
+nnoremap cH c^
+nnoremap cL c$
+
 " quick reload
 noremap <leader>r :source $HOME/.vimrc<cr> :e<cr> :nohl<cr>
 
@@ -255,8 +262,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 " opening splits
-noremap <leader>sv :Se!<cr>:FZF<cr>
-noremap <leader>sh :Se<cr>:FZF<cr>
+noremap <leader>v :Se!<cr>:Files<cr>
+noremap <leader>x :Se<cr>:Files<cr>
 
 " Smart way to move between windows
 map <C-j> <C-W>j
@@ -379,9 +386,6 @@ augroup END
 " PLUGINS {{{
 
 " NERDTree
-" Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 nmap <leader>n :NERDTreeFocus<CR>
 
@@ -410,5 +414,5 @@ map <C-_> <plug>NERDCommenterToggle
 set foldtext=gitgutter#fold#foldtext()
 
 " FZF
-map <leader>f :FZF<CR>
+map <leader>f :Files<CR>
 " }}}
