@@ -105,15 +105,19 @@ set showmode
 " Show the filename in the window titlebar
 set title
 
-" Enable relative line numbers
-set relativenumber
-
 " show command in bottom bar
 set showcmd
 
 set foldmethod=marker
 
 set splitbelow splitright
+
+set number
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &number && mode() != "i" | set relativenumber   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &number                  | set norelativenumber | endif
+augroup END
 " }}}
 " SEARCHING {{{
 " Ignore case when searching
@@ -321,10 +325,10 @@ let g:python_highlight_all = 1
 augroup Python
   autocmd!
   autocmd BufRead,BufNewFile *.py setlocal foldmethod=syntax
-  autocmd BufRead,BufNewFile *.py setlocal tabstop=2
-  autocmd BufRead,BufNewFile *.py setlocal shiftwidth=2
-  autocmd BufRead,BufNewFile *.py setlocal softtabstop=2
-  autocmd BufRead,BufNewFile *.py setlocal noexpandtab
+  autocmd BufRead,BufNewFile *.py setlocal tabstop=4
+  autocmd BufRead,BufNewFile *.py setlocal shiftwidth=4
+  autocmd BufRead,BufNewFile *.py setlocal softtabstop=4
+  autocmd BufRead,BufNewFile *.py setlocal expandtab
 augroup END
 
 " Golang

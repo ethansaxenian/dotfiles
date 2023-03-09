@@ -9,8 +9,8 @@ if [[ $OSTYPE =~ ^darwin ]]; then
   export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 fi
 
-if test -d "$HOME/.deta/bin"; then
-  export PATH="$HOME/.deta/bin:$PATH"
+if test -d "$HOME/.detaspace/bin"; then
+  export PATH="$HOME/.detaspace/bin:$PATH"
 fi
 
 # colored manpages with bat
