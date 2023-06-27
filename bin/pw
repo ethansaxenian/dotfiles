@@ -27,4 +27,4 @@ if test -z "$login"; then
   return
 fi
 
-bw get "$object" "$login" --session "$BW_SESSION" | pbcopy | echo "$login $object copied to clipboard"
+bw get "$object" "$login" --session "$BW_SESSION" | pbcopy; echo "$login $object copied to clipboard"

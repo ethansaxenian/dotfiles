@@ -2,3 +2,7 @@
 .idea/
 .vscode/
 *.swp
+.vim/autoload
+.vim/plugged
+.vim/swp
+.vim/undo

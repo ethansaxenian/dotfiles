@@ -18,6 +18,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'fatih/vim-go'
+  Plug 'valloric/youcompleteme'
 
 call plug#end()
 
@@ -113,11 +114,6 @@ set foldmethod=marker
 set splitbelow splitright
 
 set number
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &number && mode() != "i" | set relativenumber   | endif
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &number                  | set norelativenumber | endif
-augroup END
 " }}}
 " SEARCHING {{{
 " Ignore case when searching
@@ -129,6 +125,7 @@ set smartcase
 
 " Highlight search results
 set hlsearch
+nohl
 
 " Highlight dynamically as pattern is typed
 set incsearch
@@ -247,13 +244,7 @@ nnoremap cH c^
 nnoremap cL c$
 
 " quick reload
-noremap <leader>r :source $HOME/.vimrc<cr> :e<cr> :nohl<cr>
-
-" quick saving and quitting
-noremap <leader>q :q!<cr>
-noremap <leader>w :call StripExtraWhiteSpace()<cr>:wq<cr>
-nnoremap <leader>s :call StripExtraWhiteSpace()<cr>:w<cr>
-inoremap <leader>s <esc>:call StripExtraWhiteSpace()<cr>:w<cr>
+noremap <leader>r :source $HOME/.vim/vimrc<cr> :e<cr> :nohl<cr>
 
 " Don't use arrow keys
 map <up> <nop>
@@ -299,16 +290,6 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " }}}
 " FUNCTIONS {{{
-" toggle between number and relativenumber
-function! ToggleNumber()
-  if(&relativenumber == 1)
-    set norelativenumber
-    set number
-  else
-    set relativenumber
-  endif
-endfunction
-
 " Trim extra whitespace
 function! StripExtraWhiteSpace()
   let l = line(".")
@@ -318,59 +299,7 @@ function! StripExtraWhiteSpace()
 endfunction
 " }}}
 " FILETYPES {{{
-" Python
-let g:python_highlight_operators = 0
-let g:python_highlight_all = 1
-
-augroup Python
-  autocmd!
-  autocmd BufRead,BufNewFile *.py setlocal foldmethod=syntax
-  autocmd BufRead,BufNewFile *.py setlocal tabstop=4
-  autocmd BufRead,BufNewFile *.py setlocal shiftwidth=4
-  autocmd BufRead,BufNewFile *.py setlocal softtabstop=4
-  autocmd BufRead,BufNewFile *.py setlocal expandtab
-augroup END
-
-" Golang
-
-let g:go_highlight_extra_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_parameters = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_variable_declarations = 1
-let g:go_highlight_variable_assignments = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_space_tab_error = 1
-
-augroup Go
-  autocmd!
-  autocmd BufRead,BufNewFile *.go setlocal foldmethod=indent
-  autocmd BufRead,BufNewFile *.go setlocal tabstop=2
-  autocmd BufRead,BufNewFile *.go setlocal shiftwidth=2
-  autocmd BufRead,BufNewFile *.go setlocal softtabstop=2
-  autocmd BufRead,BufNewFile *.go setlocal noexpandtab
-augroup END
-
-
 " JavaScript/TypeScript
-
-autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-
-" turn off yats.vim (enabled by default) which adds too many typescript syntax items
-let g:yats_host_keyword = 0
-let g:typescript_ignore_browserwords = 0
-
-augroup JavaScript
-  autocmd!
-  autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal foldmethod=syntax
-  autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal tabstop=2
-  autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal shiftwidth=2
-  autocmd BufRead,BufNewFile *.{js,jsx,ts,tsx} setlocal softtabstop=2
-augroup END
 
 " Misc
 augroup Misc
@@ -379,8 +308,6 @@ augroup Misc
   autocmd BufRead,BufNewFile *.{html,css} setlocal tabstop=2
   autocmd BufRead,BufNewFile *.{html,css} setlocal shiftwidth=2
   autocmd BufRead,BufNewFile *.{html,css} setlocal softtabstop=2
-
-  autocmd FileType make setlocal noexpandtab
 
   autocmd BufRead,BufNewFile *.asm set filetype=asm
 
@@ -419,4 +346,9 @@ set foldtext=gitgutter#fold#foldtext()
 
 " FZF
 map <leader>f :Files<CR>
+
+" YCM
+let g:ycm_autoclose_preview_window_after_completion=1
+
+map <leader>g  :YcmCompleter GoTo<CR>
 " }}}

@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 
-echo "Generating a new SSH key for GitHub..."
-# https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+echo "Generating a new SSH keypair..."
 
 ssh-keygen -t ed25519 -C "ethansaxenian@proton.me"
 

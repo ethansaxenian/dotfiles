@@ -7,7 +7,6 @@
 # ctrl-a: stage all files
 # ctrl-r: unstage all files
 # ctrl-c: start a commit
-# ctrl-b: switch from batdiff to regular diff
 # alt-d: discard untracked changes
 # alt-s: stash all
 # ctrl-e: open in $EDITOR
@@ -31,4 +30,11 @@ eval "$git_files" | fzf --no-sort --tiebreak=index --ansi --header-lines=1 --nth
   --bind="ctrl-c:accept+execute(git commit)" \
   --bind="alt-d:execute-silent(git restore {-1})+reload($git_files)" \
   --bind="alt-s:execute-silent(git stash -u)+accept" \
-  --bind="ctrl-e:execute($EDITOR {-1})+reload($git_files)"
+  --bind="ctrl-e:execute($EDITOR {-1})+reload($git_files)" \
+  --header="# enter: view full-screen diff
+# tab: stage/unstage a file
+# ctrl-a/ctrl-r: stage/unstage all
+# ctrl-c: start a commit
+# alt-d: discard untracked changes
+# alt-s: stash all
+# ctrl-e: open in $EDITOR"

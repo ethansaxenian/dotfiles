@@ -19,40 +19,20 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=Monokai\ Extended'"
 # }}}
 # mac aliases {{{
 if [[ $OSTYPE =~ ^darwin ]]; then
-  # Recursively delete `.DS_Store` files
-  alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
-
   # Empty the Trash on all mounted volumes and the main HDD.
   # Also, clear Apple’s System Logs to improve shell startup speed.
   # Finally, clear download history from quarantine. https://mths.be/bum
   alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-
-  # Show/hide hidden files in Finder
-  alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-  alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
   # Hide/show all desktop icons (useful when presenting)
   alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
   alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
   alias charm='open -a "PyCharm.app"'
-  alias colorpicker='open "/System/Applications/Utilities/Digital Color Meter.app"'
 
   alias sysup='sudo softwareupdate -i -a'
 
-  # change architecture
-  alias intel="env /usr/bin/arch -x86_64 /bin/zsh"
-  alias arm="env /usr/bin/arch -arm64 /bin/zsh"
-
-  # start ubuntu VM
-  alias startvm='open "utm://start?name=Ubuntu"'
-
-  # homebrew
-  alias brews="brew search"
-  alias brewi="brew install"
-  alias brewr="brew uninstall"
   alias brewup="brew update && brew upgrade && brew cleanup && brew autoremove"
-
 fi
 # }}}
 # linux aliases {{{
@@ -76,22 +56,13 @@ alias sudo="sudo "
 
 alias v="$EDITOR"
 
-# displays ip address
-alias myip="curl http://ipecho.net/plain; echo"
-alias localip="ipconfig getifaddr en0"
-
 # opens the zsh config file for editing
 alias config="vim $DOTFILES/.zshrc"
 
-alias vconfig="vim $DOTFILES/.vimrc"
+alias vconfig="vim $HOME/.vim/vimrc"
 
 # reloads the terminal
 alias reload="source $HOME/.zshrc"
-
-# Stopwatch
-alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
-
-alias checksize="du -sch $HOME/* $HOME/.* | sort -hr"
 
 alias grep="grep --color=auto -E"
 
@@ -157,12 +128,6 @@ alias py="python3"
 alias pip="pip3"
 alias makevenv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
-
-# poetry aliases
-alias poei="poetry install"
-alias poea="poetry add"
-alias poer="poetry remove"
-alias poes="poetry shell"
 
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 export POETRY_HOME=$HOME/.poetry
@@ -251,13 +216,11 @@ function up {
 
 # }}}
 # prompt {{{
-PROMPT="%B%F{red}%.%f%b %# "
+function collapse_pwd() {
+  echo "%(5~|%-1~/.../%3~|%4~)"
+}
 
-# prompt displays more info if connected via ssh
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  PROMPT="%B%F{magenta}%n@%m%f%b %B%F{red}%~%f%b %# "
-fi
-
+PROMPT="%B%F{magenta}$(collapse_pwd)%f%b %# "
 
 # shows branch name on right if applicable
 autoload -Uz vcs_info
