@@ -2,41 +2,24 @@
 
 export DOTFILES=$HOME/.dotfiles
 
-# install mac-specific things
-if [[ $OSTYPE == ^darwin ]]; then
-  echo "Starting mac setup..."
+echo "Installing Xcode command line tools..."
+xcode-select --install
 
-  echo "Installing Xcode command line tools..."
-  xcode-select --install
+source $DOTFILES/homebrew/brew.sh
 
-  source $DOTFILES/scripts/brew.sh
-fi
+source $DOTFILES/python/python.sh
 
-# install linux-specific things
-if [[ $OSTYPE =~ ^linux ]]; then
-  echo "Starting linux setup..."
+source $DOTFILES/node/npm.sh
 
-  source $DOTFILES/scripts/apt.sh
+source $DOTFILES/vim/vim.sh
 
-  source $DOTFILES/scripts/ubuntu.sh
-fi
+source $DOTFILES/ssh/ssh.sh
 
-source $DOTFILES/scripts/npm.sh
+source $DOTFILES/config/symlink.sh
 
-source $DOTFILES/scripts/python.sh
+source $DOTFILES/git/git.sh
 
-source $DOTFILES/scripts/vim.sh
+source $DOTFILES/zsh/zsh.sh
 
-source $DOTFILES/scripts/symlink.sh
-
-source $DOTFILES/scripts/ssh.sh
-
-$(brew --prefix)/opt/fzf/install
-
-# reload zsh config
-source $HOME/.zshrc
-
-if [[ $OSTYPE =~ ^darwin ]]; then
-  # Set macOS preferences - we will run this last because this will reload the shell
-  source $DOTFILES/scripts/macos.sh
-fi
+# Set macOS preferences - we will run this last because this will reload the shell
+source $DOTFILES/scripts/macos.sh

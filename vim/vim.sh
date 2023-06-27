@@ -1,8 +1,7 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 echo "Setting up .vim directories..."
-rm -rf $HOME/.vim
-ln -s $DOTFILES/.vim $HOME/.vim
+ln -sf $DOTFILES/vim $HOME/.vim
 mkdir $HOME/.vim/undo $HOME/.vim/swp
 
 echo "Installing vim-plug and plugins..."

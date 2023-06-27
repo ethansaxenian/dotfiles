@@ -57,7 +57,7 @@ alias sudo="sudo "
 alias v="$EDITOR"
 
 # opens the zsh config file for editing
-alias config="vim $DOTFILES/.zshrc"
+alias config="vim $DOTFILES/zsh/.zshrc"
 
 alias vconfig="vim $HOME/.vim/vimrc"
 
@@ -150,7 +150,7 @@ fi
 # }}}
 # ls {{{
 
-eval $(dircolors $DOTFILES/LS_COLORS)
+eval $(dircolors $DOTFILES/zsh/LS_COLORS)
 alias ls="ls --color=auto -Fh"
 alias la="ls -A"
 alias ll="ls -l"
