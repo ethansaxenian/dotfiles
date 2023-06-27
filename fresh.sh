@@ -13,8 +13,6 @@ source $DOTFILES/node/npm.sh
 
 source $DOTFILES/vim/vim.sh
 
-source $DOTFILES/ssh/ssh.sh
-
 source $DOTFILES/config/symlink.sh
 
 source $DOTFILES/git/git.sh
