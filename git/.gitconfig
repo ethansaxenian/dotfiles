@@ -1,6 +1,7 @@
 [user]
   name = Ethan Saxenian
   email = ethansaxenian+github@proton.me
+	signingkey = /Users/ethansaxenian/.ssh/id_ed25519.pub
 [init]
   defaultBranch = main
 [color]
@@ -13,3 +14,7 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true

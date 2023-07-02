@@ -9,8 +9,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'pangloss/vim-javascript'
   Plug 'MaxMEllon/vim-jsx-pretty'
   Plug 'leafgarland/typescript-vim'
-  Plug 'sonph/onehalf', { 'rtp': 'vim' }
-  Plug 'flazz/vim-colorschemes'
   Plug 'scrooloose/nerdtree'
   Plug 'scrooloose/nerdcommenter'
   Plug 'airblade/vim-gitgutter'
@@ -110,6 +108,11 @@ set title
 set showcmd
 
 set foldmethod=marker
+
+augroup folding
+  autocmd!
+  autocmd BufRead,BufNewFile * normal zR
+augroup END
 
 set splitbelow splitright
 
@@ -217,14 +220,12 @@ set laststatus=2
 " like <leader>w saves the current file
 let mapleader = ","
 
-" Disable highlight when <leader><cr> is pressed
-map <leader><cr> :noh<cr>
+" Disable highlight when <leader><CR> is pressed
+map <leader><CR> :noh<CR>
 
 " Type jk to exit insert mode quickly
 inoremap jk <esc>
 
-" Press ,, to jump back to the last cursor position.
-nnoremap <leader><leader> ``
 
 " Center the cursor vertically when moving to the next word during a search.
 nnoremap n nzz
@@ -243,8 +244,22 @@ vnoremap L $
 nnoremap cH c^
 nnoremap cL c$
 
-" quick reload
-noremap <leader>r :source $HOME/.vim/vimrc<cr> :e<cr> :nohl<cr>
+
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>c :set cursorline! cursorcolumn!<CR>
+nnoremap <leader>f <Plug>FzfFiles
+nnoremap <leader>F <Plug>FzfAllFiles
+nnoremap <leader>g :RG<CR>
+nnoremap <leader>G  :YcmCompleter GoTo<CR>
+nnoremap <leader>h :History:<CR>
+nnoremap <leader>l :Lines<CR>
+nnoremap <leader>m :Marks<CR>
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>r :registers<CR>
+nnoremap <leader>R :source $MYVIMRC<CR>
+nnoremap <leader>t <Plug>ToggleNumber
+nnoremap <leader>w :set wrap! wrap?<CR>
+
 
 " Don't use arrow keys
 map <up> <nop>
@@ -257,8 +272,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 " opening splits
-noremap <leader>v :Se!<cr>:Files<cr>
-noremap <leader>x :Se<cr>:Files<cr>
+noremap <leader>v :Se!<CR><Plug>FzfFilesFull
+noremap <leader>x :Se<CR><Plug>FzfFilesFull
 
 " Smart way to move between windows
 map <C-j> <C-W>j
@@ -270,11 +285,11 @@ map <C-l> <C-W>l
 nnoremap <space> za
 
 " Useful mappings for managing tabs
-map <leader>tt :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tn :tabnext<cr>
-map <leader>tp :tabprevious<cr>
+map <leader>tt :tabnew<CR>
+map <leader>to :tabonly<CR>
+map <leader>tc :tabclose<CR>
+map <leader>tn :tabnext<CR>
+map <leader>tp :tabprevious<CR>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -283,48 +298,17 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/<cr>
+map <leader>te :tabedit <C-r>=expand("%:p:h")<CR>/<CR>
 
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
-" }}}
-" FUNCTIONS {{{
-" Trim extra whitespace
-function! StripExtraWhiteSpace()
-  let l = line(".")
-  let c = col(".")
-  %s/\s\+$//e
-  call cursor(l, c)
-endfunction
-" }}}
-" FILETYPES {{{
-" JavaScript/TypeScript
-
-" Misc
-augroup Misc
-  autocmd!
-  autocmd BufRead,BufNewFile *.{html,css} setlocal foldmethod=syntax
-  autocmd BufRead,BufNewFile *.{html,css} setlocal tabstop=2
-  autocmd BufRead,BufNewFile *.{html,css} setlocal shiftwidth=2
-  autocmd BufRead,BufNewFile *.{html,css} setlocal softtabstop=2
-
-  autocmd BufRead,BufNewFile *.asm set filetype=asm
-
-  autocmd BufRead,BufNewFile *.{py,js,jsx,ts,tsx,html,css,go} normal zR
-augroup END
+" cd to the directory of the open buffer
+map <leader>cd :<C-U>cd %:h <Bar> pwd<CR>
 " }}}
 " PLUGINS {{{
-
-" NERDTree
-
-nmap <leader>n :NERDTreeFocus<CR>
 
 let NERDTreeIgnore = ['\.git$[[dir]]', 'node_modules[[dir]]', '\.DS_Store', '\.idea[[dir]]', '__pycache__[[dir]]', 'build[[dir]]', 'venv$[[dir]]', '\.o$', '\.so$', '\.dSYM$']
 let NERDTreeWinPos = "left"
 let NERDTreeWinSize = 50
 
-" NERDCommenter
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
@@ -338,17 +322,20 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " ctrl-/ toggles comments
-map <C-_> <plug>NERDCommenterToggle
+map <C-_> <Plug>NERDCommenterToggle
 
-" GitGutter
+" match sign column to number column background color
+autocmd ColorScheme * highlight! link SignColumn LineNr
+let g:gitgutter_set_sign_backgrounds = 1
+
+" don't define any gitgutter mappings by default
+let g:gitgutter_map_keys = 0
+
 " show if fold contains changed text
 set foldtext=gitgutter#fold#foldtext()
 
-" FZF
-map <leader>f :Files<CR>
-
-" YCM
 let g:ycm_autoclose_preview_window_after_completion=1
 
-map <leader>g  :YcmCompleter GoTo<CR>
+let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'relative': v:true, 'yoffset': 1.0 } }
+let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 " }}}

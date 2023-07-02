@@ -6,3 +6,4 @@ vim/autoload
 vim/plugged
 vim/swp
 vim/undo
+vim/.netrwhist

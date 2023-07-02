@@ -12,7 +12,7 @@ if [[ -z "$cmd" ]]; then
   fzf
 else
   if (($dir_commands[(Ie)$cmd])); then
-    dir=$(fd . $HOME --type directory --hidden --follow -E $FD_EXCLUDES | fzf --prompt="$cmd " --preview "tree -C {}")
+    dir=$(fd . $HOME --type directory --follow -E $FD_EXCLUDES | fzf --prompt="$cmd " --preview "tree -C {}")
 
     if [[ -z "$dir" ]]; then
       return
@@ -25,7 +25,7 @@ else
     fi
   else
     # otherwise normal fzf with bat preview for files
-    file=$(fd . "$HOME" --type file --hidden --follow -E $FD_EXCLUDES | fzf --prompt="$cmd " --preview "bat --style=numbers --color=always {}")
+    file=$(fd . "$HOME" --type file --follow -E $FD_EXCLUDES | fzf --prompt="$cmd " --preview "bat --style=numbers --color=always {}")
 
     if [[ -z "$file" ]]; then
       return
