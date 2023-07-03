@@ -508,6 +508,8 @@ call s:h("htmlH1", s:blue, "", "bold")
 call s:h("mkdListItem", s:blue, "", "")
 call s:h("mkdCodeDelimiter", s:orange, "", "")
 call s:h("mkdCode", s:orange, "", "")
+call s:h("markdownCodeDelimiter", s:comment_fg, "", "")
+call s:h("markdownCodeBlock", s:lightblue, "", "")
 " }}}
 " Golang syntax {{{
 call s:h("goPackage", s:purple, "", "")

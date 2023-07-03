@@ -1,0 +1,8 @@
+{
+  "coc.preferences.formatOnSave": true,
+  "colors.enable": true,
+  "inlayHint.refreshOnInsertMode": true,
+  "python.formatting.provider": "black",
+  "python.linting.ruffEnabled": true,
+  "pyright.organizeimports.provider": "ruff"
+}

@@ -3,6 +3,7 @@ set nocompatible
 
 " Plugins
 call plug#begin('~/.vim/plugged')
+
   " colorschemes
   Plug 'romainl/Apprentice'
   Plug 'ayu-theme/ayu-vim'
@@ -23,13 +24,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'leafgarland/typescript-vim'
 
   " tools
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'tpope/vim-fugitive'
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'airblade/vim-gitgutter'
   Plug 'scrooloose/nerdcommenter'
   Plug 'scrooloose/nerdtree'
-  Plug 'valloric/youcompleteme'
 
 call plug#end()
 
@@ -262,17 +263,17 @@ nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>c :set cursorline! cursorcolumn!<CR>
 nnoremap <leader>f <Plug>FzfFiles
 nnoremap <leader>F <Plug>FzfAllFiles
-nnoremap <leader>g :RG<CR>
-nnoremap <leader>G  :YcmCompleter GoTo<CR>
+nnoremap <leader>g <Plug>(coc-definition)
 nnoremap <leader>h :History:<CR>
 nnoremap <leader>l :Lines<CR>
 nnoremap <leader>m :Marks<CR>
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <leader>r :registers<CR>
+nnoremap <leader>rg :RG<CR>
+nnoremap <leader>rn <Plug>(coc-rename)
 nnoremap <leader>R :source $MYVIMRC<CR>
 nnoremap <leader>t <Plug>ToggleNumber
 nnoremap <leader>w :set wrap! wrap?<CR>
-
 
 " Don't use arrow keys
 map <up> <nop>
@@ -357,4 +358,8 @@ let g:ycm_autoclose_preview_window_after_completion=1
 
 let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'relative': v:true, 'yoffset': 1.0 } }
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
+
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 " }}}

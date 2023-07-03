@@ -9,5 +9,4 @@ echo "Installing vim-plug and plugins..."
 curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 vim +PlugInstall +qall
-
-python3 $HOME/.vim/plugged/youcompleteme/install.py --clangd-completer --go-completer --ts-completer
+vim +CocInstall coc-clangd coc-json coc-sh coc-gopls coc-pyright
