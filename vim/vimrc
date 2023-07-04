@@ -36,7 +36,9 @@ call plug#end()
 
 " MISC {{{
 " remove all autocommands
-autocmd!
+augroup vimrc
+  autocmd!
+augroup END
 
 " Sets how many lines of history VIM has to remember
 set history=1000
@@ -54,7 +56,9 @@ filetype plugin indent on
 set mouse=a
 
 " Return to last edit position when opening files (You want this!)
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+autocmd vimrc BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+autocmd vimrc BufWritePre * :call StripTrailingWhitespace()
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -123,10 +127,7 @@ set showcmd
 
 set foldmethod=marker
 
-augroup folding
-  autocmd!
-  autocmd BufRead,BufNewFile * normal zR
-augroup END
+autocmd vimrc BufRead,BufNewFile * normal zR
 
 set splitbelow splitright
 
@@ -150,7 +151,7 @@ set incsearch
 " COLORS {{{
 set termguicolors
 
-colorscheme mycolors
+colorscheme ayu
 
 set background=dark
 
@@ -207,27 +208,27 @@ function! GitStatusR()
 endfunction
 
 " set the status line
-set statusline=%#StatusLinePurple#			     " set highlighting
-set statusline+=%2.2n\                       " buffer number
-set statusline+=%#StatusLineRed#             " set highlighting
-set statusline+=%.35F\                       " file name
-set statusline+=%#StatusLinePurple#          " set highlighting
-set statusline+=%h%m%r%w\                    " flags
-set statusline+=%{FugitiveStatusline()}\     " git branch
-set statusline+=%#GitAddedSL#
-set statusline+=%{GitStatusA()}\             " number of lines added
-set statusline+=%#GitModifiedSL#
-set statusline+=%{GitStatusM()}\             " number of lines modified
-set statusline+=%#GitRemovedSL#
-set statusline+=%{GitStatusR()}\ \           " number of lines removed
-set statusline+=%#StatusLinePurple#          " set highlighting
-set statusline+=%{strlen(&ft)?&ft:'none'}\ \ " file type
-set statusline+=%{SyntaxItem()}\             " syntax highlight group under cursor
-set statusline+=%=\                          " indent to the right
-set statusline+=%#StatusLinePurple#          " set highlighting
-set statusline+=%(%l/%L,%c%V%)\ \ %P\        " cursor position/offset
+set statusline=%#Identifier#			            " set highlighting
+set statusline+=%2.2n\                        " buffer number
+set statusline+=%#PreProc#                    " set highlighting
+set statusline+=%.35F\                        " file name
+set statusline+=%#Statement#                  " set highlighting
+set statusline+=%h%m%r%w\                     " flags
+set statusline+=%{FugitiveStatusline()}\      " git branch
+set statusline+=%#diffAdded#
+set statusline+=%{GitStatusA()}\              " number of lines added
+set statusline+=%#Identifier#
+set statusline+=%{GitStatusM()}\              " number of lines modified
+set statusline+=%#Todo#
+set statusline+=%{GitStatusR()}\ \            " number of lines removed
+set statusline+=%#PreProc#                    " set highlighting
+set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
+set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
+set statusline+=%=\                           " indent to the right
+set statusline+=%#Identifier#                 " set highlighting
+set statusline+=%(%l/%L,%c%V%)\ \ %P\         " cursor position/offset
 
-set laststatus=2
+ set laststatus=2
 " }}}
 " MAPPINGS {{{
 " With a map leader it's possible to do extra key combinations
@@ -275,6 +276,7 @@ nnoremap <leader>R :source $MYVIMRC<CR>
 nnoremap <leader>t <Plug>ToggleNumber
 nnoremap <leader>w :set wrap! wrap?<CR>
 
+
 " Don't use arrow keys
 map <up> <nop>
 map <down> <nop>
@@ -308,10 +310,7 @@ map <leader>tp :tabprevious<CR>
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <leader>tl :exe "tabn ".g:lasttab<CR>
-augroup tabtoggle
-  autocmd!
-  autocmd TabLeave * let g:lasttab = tabpagenr()
-augroup END
+autocmd vimrc TabLeave * let g:lasttab = tabpagenr()
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -342,10 +341,7 @@ let g:NERDTrimTrailingWhitespace = 1
 map <C-_> <Plug>NERDCommenterToggle
 
 " match sign column to number column background color
-augroup signcolumncolor
-  autocmd!
-  autocmd ColorScheme * highlight! link SignColumn LineNr
-augroup END
+autocmd vimrc ColorScheme * highlight! link SignColumn LineNr
 let g:gitgutter_set_sign_backgrounds = 1
 
 " don't define any gitgutter mappings by default
