@@ -151,7 +151,14 @@ set incsearch
 " COLORS {{{
 set termguicolors
 
-colorscheme ayu
+colorscheme jellybeans
+let g:jellybeans_overrides = {
+\    'Search': { 'guifg': 'ffb964', 'guibg': '503030', 'attr': '' },
+\    'SignColumn': { 'guifg': '605958', 'guibg': '151515' },
+\    'GitGutterAdd': { 'guifg': '99ad6a' },
+\    'GitGutterChange': { 'guifg': '597bc5' },
+\    'GitGutterDelete': { 'guifg': 'cf6a4c' },
+\}
 
 set background=dark
 
@@ -208,24 +215,24 @@ function! GitStatusR()
 endfunction
 
 " set the status line
-set statusline=%#Identifier#			            " set highlighting
+set statusline=%#PreProc#			            " set highlighting
 set statusline+=%2.2n\                        " buffer number
-set statusline+=%#PreProc#                    " set highlighting
+set statusline+=%#Identifier#                    " set highlighting
 set statusline+=%.35F\                        " file name
-set statusline+=%#Statement#                  " set highlighting
+set statusline+=%#Function#                  " set highlighting
 set statusline+=%h%m%r%w\                     " flags
 set statusline+=%{FugitiveStatusline()}\      " git branch
-set statusline+=%#diffAdded#
+set statusline+=%#GitGutterAdd#
 set statusline+=%{GitStatusA()}\              " number of lines added
-set statusline+=%#Identifier#
+set statusline+=%#GitGutterChange#
 set statusline+=%{GitStatusM()}\              " number of lines modified
-set statusline+=%#Todo#
+set statusline+=%#GitGutterDelete#
 set statusline+=%{GitStatusR()}\ \            " number of lines removed
-set statusline+=%#PreProc#                    " set highlighting
+set statusline+=%#Identifier#                    " set highlighting
 set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
 set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
 set statusline+=%=\                           " indent to the right
-set statusline+=%#Identifier#                 " set highlighting
+set statusline+=%#PreProc#                 " set highlighting
 set statusline+=%(%l/%L,%c%V%)\ \ %P\         " cursor position/offset
 
  set laststatus=2
@@ -339,10 +346,6 @@ let g:NERDTrimTrailingWhitespace = 1
 
 " ctrl-/ toggles comments
 map <C-_> <Plug>NERDCommenterToggle
-
-" match sign column to number column background color
-autocmd vimrc ColorScheme * highlight! link SignColumn LineNr
-let g:gitgutter_set_sign_backgrounds = 1
 
 " don't define any gitgutter mappings by default
 let g:gitgutter_map_keys = 0
