@@ -25,7 +25,6 @@ call plug#begin('~/.vim/plugged')
 
   " tools
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'tpope/vim-fugitive'
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'airblade/vim-gitgutter'
@@ -59,6 +58,8 @@ set mouse=a
 autocmd vimrc BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 autocmd vimrc BufWritePre * :call StripTrailingWhitespace()
+
+autocmd vimrc BufWritePost $MYVIMRC source $MYVIMRC
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -132,6 +133,11 @@ autocmd vimrc BufRead,BufNewFile * normal zR
 set splitbelow splitright
 
 set number
+
+" use different cursor style depending on mode
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
 " }}}
 " SEARCHING {{{
 " Ignore case when searching
@@ -155,6 +161,10 @@ colorscheme jellybeans
 let g:jellybeans_overrides = {
 \    'Search': { 'guifg': 'ffb964', 'guibg': '503030', 'attr': '' },
 \    'SignColumn': { 'guifg': '605958', 'guibg': '151515' },
+\    'StatusLine': { 'guifg': 'c6b6ee', 'guibg': '272727' },
+\    'StatusLineAdd': { 'guifg': '99ad6a', 'guibg': '272727'  },
+\    'StatusLineChange': { 'guifg': '597bc5', 'guibg': '272727' },
+\    'StatusLineDelete': { 'guifg': 'cf6a4c', 'guibg': '272727' },
 \    'GitGutterAdd': { 'guifg': '99ad6a' },
 \    'GitGutterChange': { 'guifg': '597bc5' },
 \    'GitGutterDelete': { 'guifg': 'cf6a4c' },
@@ -195,10 +205,6 @@ set autoindent " Auto indent
 set smartindent " Smart indent
 " }}}
 " STATUS LINE {{{
-function! SyntaxItem()
-  return synIDattr(synID(line("."), col("."), 1), "name")
-endfunction
-
 function! GitStatusA()
   let [a,_,_] = GitGutterGetHunkSummary()
   return printf('+%d', a)
@@ -215,24 +221,21 @@ function! GitStatusR()
 endfunction
 
 " set the status line
-set statusline=%#PreProc#			            " set highlighting
+set statusline=%#StatusLine#			            " set highlighting
 set statusline+=%2.2n\                        " buffer number
-set statusline+=%#Identifier#                    " set highlighting
 set statusline+=%.35F\                        " file name
-set statusline+=%#Function#                  " set highlighting
 set statusline+=%h%m%r%w\                     " flags
-set statusline+=%{FugitiveStatusline()}\      " git branch
-set statusline+=%#GitGutterAdd#
+set statusline+=%{StatusLineGit()}\           " git branch
+set statusline+=%#StatusLineAdd#
 set statusline+=%{GitStatusA()}\              " number of lines added
-set statusline+=%#GitGutterChange#
+set statusline+=%#StatusLineChange#
 set statusline+=%{GitStatusM()}\              " number of lines modified
-set statusline+=%#GitGutterDelete#
+set statusline+=%#StatusLineDelete#
 set statusline+=%{GitStatusR()}\ \            " number of lines removed
-set statusline+=%#Identifier#                    " set highlighting
+set statusline+=%#StatusLine#                 " set highlighting
 set statusline+=%{strlen(&ft)?&ft:'none'}\ \  " file type
-set statusline+=%{SyntaxItem()}\              " syntax highlight group under cursor
+set statusline+=%{coc#status()}\              " syntax highlight group under cursor
 set statusline+=%=\                           " indent to the right
-set statusline+=%#PreProc#                 " set highlighting
 set statusline+=%(%l/%L,%c%V%)\ \ %P\         " cursor position/offset
 
  set laststatus=2
@@ -272,6 +275,7 @@ nnoremap <leader>c :set cursorline! cursorcolumn!<CR>
 nnoremap <leader>f <Plug>FzfFiles
 nnoremap <leader>F <Plug>FzfAllFiles
 nnoremap <leader>g <Plug>(coc-definition)
+nnoremap <leader>gt :GitGutterToggle<CR>
 nnoremap <leader>h :History:<CR>
 nnoremap <leader>l :Lines<CR>
 nnoremap <leader>m :Marks<CR>
@@ -328,7 +332,7 @@ map <leader>cd :<C-U>cd %:h <Bar> pwd<CR>
 " }}}
 " PLUGINS {{{
 
-let NERDTreeIgnore = ['\.git$[[dir]]', 'node_modules[[dir]]', '\.DS_Store', '\.idea[[dir]]', '__pycache__[[dir]]', 'build[[dir]]', 'venv$[[dir]]', '\.o$', '\.so$', '\.dSYM$']
+let NERDTreeIgnore = ['\.git$[[dir]]', 'node_modules[[dir]]', '\.DS_Store', '\.idea[[dir]]', '__pycache__[[dir]]', 'build[[dir]]', '\.venv$[[dir]]', '\.o$', '\.so$', '\.dSYM$']
 let NERDTreeWinPos = "left"
 let NERDTreeWinSize = 50
 
@@ -352,8 +356,6 @@ let g:gitgutter_map_keys = 0
 
 " show if fold contains changed text
 set foldtext=gitgutter#fold#foldtext()
-
-let g:ycm_autoclose_preview_window_after_completion=1
 
 let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'relative': v:true, 'yoffset': 1.0 } }
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
