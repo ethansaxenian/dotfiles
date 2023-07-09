@@ -312,6 +312,10 @@ nnoremap <leader>R :source $MYVIMRC<CR>
 noremap <leader>v :Se!<CR><Plug>FzfFilesFull
 noremap <leader>x :Se<CR><Plug>FzfFilesFull
 
+" use J/K to move visual blocks
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
 " indent visually selected blocks
 vnoremap < <gv
 vnoremap > >gv
