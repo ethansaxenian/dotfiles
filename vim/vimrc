@@ -67,8 +67,6 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-" use the system clipboard as the default
-set clipboard=unnamed
 " }}}
 " UI {{{
 " Start scrolling four lines before the horizontal window border
@@ -286,6 +284,10 @@ nnoremap <leader>rn <Plug>(coc-rename)
 nnoremap <leader>R :source $MYVIMRC<CR>
 nnoremap <leader>t <Plug>ToggleNumber
 nnoremap <leader>w :set wrap! wrap?<CR>
+
+" leader + y yanks to system clipboard
+nnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
 
 
 " Don't use arrow keys
