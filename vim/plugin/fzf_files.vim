@@ -7,7 +7,8 @@ function s:FzfFiles(full)
 
   call system('git rev-parse --is-inside-work-tree 2>/dev/null')
   if v:shell_error == 0
-    call fzf#vim#gitfiles('', fzf#vim#with_preview())
+    " show all files in git repository including untracked files, but not gitignore'd files
+    call fzf#run({'source': 'git ls-files; git ls-files --others --exclude-standard', 'sink': 'e'}, fzf#vim#with_preview())
   else
     call fzf#vim#files('', fzf#vim#with_preview())
   endif

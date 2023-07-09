@@ -57,8 +57,10 @@ set mouse=a
 " Return to last edit position when opening files (You want this!)
 autocmd vimrc BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
+" strip trailing whitespace on save
 autocmd vimrc BufWritePre * :call StripTrailingWhitespace()
 
+" source vimrc when it is saved
 autocmd vimrc BufWritePost $MYVIMRC source $MYVIMRC
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -124,10 +126,13 @@ set title
 " show command in bottom bar
 set showcmd
 
+" fold on {{{...}}}
 set foldmethod=marker
 
+" open all folds by default
 autocmd vimrc BufRead,BufNewFile * normal zR
 
+" opening splits
 set splitbelow splitright
 
 set number
@@ -236,7 +241,8 @@ set statusline+=%{coc#status()}\              " syntax highlight group under cur
 set statusline+=%=\                           " indent to the right
 set statusline+=%(%l/%L,%c%V%)\ \ %P\         " cursor position/offset
 
- set laststatus=2
+" always show status line
+set laststatus=2
 " }}}
 " MAPPINGS {{{
 " With a map leader it's possible to do extra key combinations
@@ -249,6 +255,11 @@ map <leader><CR> :noh<CR>
 " Type jk to exit insert mode quickly
 inoremap jk <esc>
 
+" Don't use arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
 
 " Center the cursor vertically when moving to the next word during a search.
 nnoremap n nzz
@@ -264,45 +275,46 @@ vnoremap H ^
 nnoremap L $
 vnoremap L $
 
-nnoremap cH c^
-nnoremap cL c$
-
-
-nnoremap <leader>b :Buffers<CR>
+" mappings that toggle options
 nnoremap <leader>c :set cursorline! cursorcolumn!<CR>
-nnoremap <leader>f <Plug>FzfFiles
-nnoremap <leader>F <Plug>FzfAllFiles
-nnoremap <leader>g <Plug>(coc-definition)
+nnoremap <leader>t <Plug>ToggleNumber
+nnoremap <leader>w :set wrap! wrap?<CR>
 nnoremap <leader>gt :GitGutterToggle<CR>
+
+" mappings that show lists of things, often with fzf
+nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>h :History:<CR>
 nnoremap <leader>l :Lines<CR>
 nnoremap <leader>m :Marks<CR>
-nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>f <Plug>FzfFiles
+nnoremap <leader>F <Plug>FzfAllFiles
 nnoremap <leader>r :registers<CR>
 nnoremap <leader>rg :RG<CR>
-nnoremap <leader>rn <Plug>(coc-rename)
-nnoremap <leader>R :source $MYVIMRC<CR>
-nnoremap <leader>t <Plug>ToggleNumber
-nnoremap <leader>w :set wrap! wrap?<CR>
 
 " leader + y yanks to system clipboard
 nnoremap <leader>y "+y
+vnoremap <leader>y "+y
 nnoremap <leader>Y "+Y
 
+" leader + p pastes from system clipboard
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>P "+P
 
-" Don't use arrow keys
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-
-" indent visually selected blocks
-vnoremap < <gv
-vnoremap > >gv
+" misc
+nnoremap <leader>g <Plug>(coc-definition)
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>rn <Plug>(coc-rename)
+nnoremap <leader>R :source $MYVIMRC<CR>
 
 " opening splits
 noremap <leader>v :Se!<CR><Plug>FzfFilesFull
 noremap <leader>x :Se<CR><Plug>FzfFilesFull
+
+" indent visually selected blocks
+vnoremap < <gv
+vnoremap > >gv
 
 " Smart way to move between windows
 map <C-j> <C-W>j
@@ -362,6 +374,7 @@ set foldtext=gitgutter#fold#foldtext()
 let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'relative': v:true, 'yoffset': 1.0 } }
 let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 
+" use tab/s-tab to select next completion, <cr> to confirm
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
