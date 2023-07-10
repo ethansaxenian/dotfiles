@@ -5,23 +5,9 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 
   " colorschemes
-  Plug 'romainl/Apprentice'
   Plug 'ayu-theme/ayu-vim'
-  Plug 'sjl/badwolf'
-  Plug 'doums/darcula'
-  Plug 'dracula/vim', { 'name': 'dracula' }
-  Plug 'morhetz/gruvbox'
   Plug 'nanotech/jellybeans.vim'
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
-  Plug 'NLKNguyen/papercolor-theme'
-
-  " syntax highlighting
-  Plug 'bfrg/vim-cpp-modern'
-  Plug 'fatih/vim-go'
-  Plug 'pangloss/vim-javascript'
-  Plug 'MaxMEllon/vim-jsx-pretty'
-  Plug 'vim-python/python-syntax'
-  Plug 'leafgarland/typescript-vim'
 
   " tools
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -29,7 +15,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'airblade/vim-gitgutter'
   Plug 'scrooloose/nerdcommenter'
-  Plug 'scrooloose/nerdtree'
 
 call plug#end()
 
@@ -295,6 +280,7 @@ nnoremap <leader>rg :RG<CR>
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y "+Y
+vnoremap <leader>Y "+Y
 
 " leader + p pastes from system clipboard
 nnoremap <leader>p "+p
@@ -304,13 +290,16 @@ vnoremap <leader>P "+P
 
 " misc
 nnoremap <leader>g <Plug>(coc-definition)
-nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>gr <Plug>(coc-references)
 nnoremap <leader>rn <Plug>(coc-rename)
+nnoremap <leader>ac  <Plug>(coc-codeaction-cursor)
+nnoremap <leader>d :call CocActionAsync('doHover')<CR>
+
 nnoremap <leader>R :source $MYVIMRC<CR>
 
 " opening splits
-noremap <leader>v :Se!<CR><Plug>FzfFilesFull
-noremap <leader>x :Se<CR><Plug>FzfFilesFull
+noremap <leader>v :Se!<CR><Plug>FzfFiles
+noremap <leader>x :Se<CR><Plug>FzfFiles
 
 " use J/K to move visual blocks
 vnoremap J :m '>+1<CR>gv=gv
@@ -349,11 +338,6 @@ map <leader>te :tabedit <C-r>=expand("%:p:h")<CR>/<CR>
 map <leader>cd :<C-U>cd %:h <Bar> pwd<CR>
 " }}}
 " PLUGINS {{{
-
-let NERDTreeIgnore = ['\.git$[[dir]]', 'node_modules[[dir]]', '\.DS_Store', '\.idea[[dir]]', '__pycache__[[dir]]', 'build[[dir]]', '\.venv$[[dir]]', '\.o$', '\.so$', '\.dSYM$']
-let NERDTreeWinPos = "left"
-let NERDTreeWinSize = 50
-
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
@@ -382,4 +366,14 @@ let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+" Map function and class text objects
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 " }}}

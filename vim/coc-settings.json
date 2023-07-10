@@ -1,6 +1,7 @@
 {
   "coc.preferences.formatOnSave": true,
   "colors.enable": true,
+  "semanticTokens.enable": true,
   "inlayHint.refreshOnInsertMode": true,
   "python.formatting.provider": "black",
   "python.linting.ruffEnabled": true,
