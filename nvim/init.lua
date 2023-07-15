@@ -69,6 +69,7 @@ require("lazy").setup({
 
 vim.cmd.colorscheme "nightfox"
 
+vim.g.python3_host_prog = os.execute("which python3")
 -- OPTIONS
 
 vim.o.number = true
