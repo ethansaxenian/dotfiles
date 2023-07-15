@@ -232,7 +232,7 @@ set laststatus=2
 " MAPPINGS {{{
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
+let mapleader = " "
 
 " Disable highlight when <leader><CR> is pressed
 map <leader><CR> :noh<CR>
@@ -315,8 +315,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" space open/closes folds
-nnoremap <space> za
 
 " Useful mappings for managing tabs
 map <leader>tt :tabnew<CR>
