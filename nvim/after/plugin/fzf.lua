@@ -1,7 +1,7 @@
 function _FzfFiles()
    local is_git = os.execute('git rev-parse --is-inside-work-tree 2>/dev/null')
    if is_git == 0 then
-      vim.cmd("GFiles --cached --others")
+      vim.cmd("GFiles --cached --others --exclude-standard")
    else
       vim.cmd("Files")
    end
