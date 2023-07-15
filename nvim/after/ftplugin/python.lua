@@ -6,7 +6,7 @@ vim.opt_local.expandtab = true
 
 vim.api.nvim_create_autocmd("BufWritePre", {
    callback = function()
-      Format("black --stdin-filename % --quiet -")
-      Format("ruff check --fix -")
+      Format("black", "--stdin-filename % --quiet -")
+      Format("ruff", "check --fix -")
    end
 })

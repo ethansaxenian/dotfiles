@@ -29,6 +29,7 @@ require('lspconfig').pyright.setup({
       local function get_python_path(workspace)
          local util = require('lspconfig/util')
          local path = util.path
+
          -- Use activated virtualenv.
          if vim.env.VIRTUAL_ENV then
             return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')

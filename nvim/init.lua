@@ -45,9 +45,7 @@ require("lazy").setup({
          { 'hrsh7th/nvim-cmp' },
          { 'hrsh7th/cmp-buffer' },
          { 'hrsh7th/cmp-path' },
-         { 'saadparwaiz1/cmp_luasnip' },
          { 'hrsh7th/cmp-nvim-lsp' },
-         { 'hrsh7th/cmp-nvim-lua' },
 
          -- Snippets
          { "L3MON4D3/LuaSnip" },
@@ -175,9 +173,11 @@ vim.keymap.set("", "<down>", "<nop>")
 vim.keymap.set("", "<left>", "<nop>")
 vim.keymap.set("", "<right>", "<nop>")
 
--- center cursor when searching
+-- center cursor when searching or scrolling
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
 -- move vertically by visual line
 vim.keymap.set("n", "j", "gj")
@@ -214,7 +214,7 @@ vim.keymap.set("", "<C-k>", "<C-w>k")
 vim.keymap.set("", "<C-h>", "<C-w>h")
 vim.keymap.set("", "<C-l>", "<C-w>l")
 
--- Pluging
+-- Plugins
 
 vim.g.fzf_layout = { window = { width = 1, height = 0.5, relative = true, yoffset = 1.0 } }
 vim.g.fzf_preview_window = { "right,50%", "ctrl-p" }
