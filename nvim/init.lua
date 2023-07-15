@@ -12,22 +12,11 @@ end
 vim.opt.rtp:prepend(lazypath) -- Default options
 
 require("lazy").setup({
-  {
-    "EdenEast/nightfox.nvim",
-    opts = {
-      palettes = {
-        nightfox = {
-          -- swap background and statusline colors
-          bg1 = "#131a24",
-          bg0 = "#192330",
-        },
-      },
-    }
-  },
+  -- {
+  "EdenEast/nightfox.nvim",
   {
     "rose-pine/neovim",
     name = "rose-pine",
-    opts = { disable_italics = true }
   },
 
   "junegunn/fzf",
@@ -43,19 +32,25 @@ require("lazy").setup({
     branch = "v2.x",
     dependencies = {
       -- LSP Support
-      { "neovim/nvim-lspconfig" }, -- Required
-      {                            -- Optional
+      { "neovim/nvim-lspconfig" },
+      {
         "williamboman/mason.nvim",
         build = function()
           pcall(vim.cmd, "MasonUpdate")
         end,
       },
-      { "williamboman/mason-lspconfig.nvim" }, -- Optional
+      { "williamboman/mason-lspconfig.nvim" },
 
       -- Autocompletion
-      { "hrsh7th/nvim-cmp" },     -- Required
-      { "hrsh7th/cmp-nvim-lsp" }, -- Required
-      { "L3MON4D3/LuaSnip" },     -- Required
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-path' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-nvim-lua' },
+
+      -- Snippets
+      { "L3MON4D3/LuaSnip" },
     }
   },
 
@@ -167,6 +162,9 @@ vim.g.mapleader = " "
 
 -- ctrl-c should behave the same as esc
 vim.keymap.set("i", "<C-c>", "<ESC>")
+
+-- source nvim nvim
+vim.keymap.set("n", "<leader>so", ":so $MYVIMRC<CR>")
 
 -- open file browser
 vim.keymap.set("n", "<leader><CR>", vim.cmd.Ex)
