@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
 echo "Setting up nvim directories..."
-ln -sf $DOTFILES/nvim $HOME/.config/nvim
+rm -rf $HOME/.config/nvim
+ln -s $DOTFILES/nvim $HOME/.config/nvim
