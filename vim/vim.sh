@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 echo "Setting up .vim directories..."
-ln -sf $DOTFILES/vim $HOME/.vim
+rm -rf $HOME/.vim/
+ln -s $DOTFILES/vim $HOME/.vim
 mkdir $HOME/.vim/undo $HOME/.vim/swp
+ln -sf $DOTFILES/vim/.ideavimrc $HOME/.ideavimrc
 
 echo "Installing vim-plug and plugins..."
 # install vim-plug and plugins

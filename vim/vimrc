@@ -14,7 +14,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'airblade/vim-gitgutter'
-  Plug 'scrooloose/nerdcommenter'
+  Plug 'tpope/vim-commentary'
+  Plug 'romainl/vim-cool'
+  Plug 'tpope/vim-surround'
 
 call plug#end()
 
@@ -292,7 +294,7 @@ vnoremap <leader>P "+P
 nnoremap <leader>g <Plug>(coc-definition)
 nnoremap <leader>gr <Plug>(coc-references)
 nnoremap <leader>rn <Plug>(coc-rename)
-nnoremap <leader>ac  <Plug>(coc-codeaction-cursor)
+nnoremap <leader>ac <Plug>(coc-codeaction-cursor)
 nnoremap <leader>d :call CocActionAsync('doHover')<CR>
 
 nnoremap <leader>R :source $MYVIMRC<CR>
@@ -336,21 +338,6 @@ map <leader>te :tabedit <C-r>=expand("%:p:h")<CR>/<CR>
 map <leader>cd :<C-U>cd %:h <Bar> pwd<CR>
 " }}}
 " PLUGINS {{{
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-
-" ctrl-/ toggles comments
-map <C-_> <Plug>NERDCommenterToggle
-
 " don't define any gitgutter mappings by default
 let g:gitgutter_map_keys = 0
 
