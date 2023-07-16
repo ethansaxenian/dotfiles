@@ -1,75 +1,3 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath) -- Default options
-
-require("lazy").setup({
-  -- {
-  "EdenEast/nightfox.nvim",
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-  },
-
-  "junegunn/fzf",
-  "junegunn/fzf.vim",
-
-  "romainl/vim-cool",
-  "airblade/vim-gitgutter",
-  "tpope/vim-commentary",
-  "tpope/vim-surround",
-
-  {
-    "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x",
-    dependencies = {
-      -- LSP Support
-      { "neovim/nvim-lspconfig" },
-      {
-        "williamboman/mason.nvim",
-        build = function()
-          pcall(vim.cmd, "MasonUpdate")
-        end,
-      },
-      { "williamboman/mason-lspconfig.nvim" },
-
-      -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-path' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-
-      -- Snippets
-      { "L3MON4D3/LuaSnip" },
-    }
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    opts = {
-      ensure_installed = { "lua", "python", "vim", "vimdoc", "go" },
-      sync_install = false,
-      highlight = { enable = true },
-      indent = { enable = true },
-    }
-  },
-  "nvim-treesitter/nvim-treesitter-context",
-  "nvim-treesitter/nvim-treesitter-textobjects",
-})
-
-
-
-vim.cmd.colorscheme "nightfox"
-
 -- fix slow python loading time
 vim.g.python3_host_prog = os.execute("which python3")
 
@@ -114,19 +42,13 @@ vim.o.foldenable = false
 
 
 -- STATUS LINE
-function GitStatus()
-  local a, m, r = unpack(vim.fn["GitGutterGetHunkSummary"]())
-  return string.format("+%d ~%d -%d", a, m, r)
-end
-
 vim.o.statusline = table.concat {
-  "%2.2n ",
-  "%.35F ",
-  "%h%m%r%w ",
-  GitStatus(),
-  "  %{strlen(&ft)?&ft:'none'} ",
-  " %=",
-  "%(%l/%L,%c%V%) %P",
+   "%2.2n ",
+   "%.35F ",
+   "%h%m%r%w ",
+   "  %{strlen(&ft)?&ft:'none'} ",
+   " %=",
+   "%(%l/%L,%c%V%) %P",
 }
 
 
@@ -136,26 +58,56 @@ local nvim_config = vim.api.nvim_create_augroup("nvim_config", { clear = true })
 
 -- highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = nvim_config,
-  pattern = "*",
+   callback = function()
+      vim.highlight.on_yank()
+   end,
+   group = nvim_config,
+   pattern = "*",
 })
 
 -- return to last edit position when opening files
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = nvim_config,
-  pattern = "*",
-  command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
+   group = nvim_config,
+   pattern = "*",
+   command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
 })
 
 -- strip trailing whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", {
-  group = nvim_config,
-  pattern = "*",
-  command = [[%s/\s\+$//e]],
+   group = nvim_config,
+   pattern = "*",
+   command = [[%s/\s\+$//e]],
 })
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
+   group = nvim_config,
+   callback = function()
+      if vim.o.number and vim.fn.mode() ~= "i" then
+         vim.o.relativenumber = true
+      end
+   end,
+   pattern = '*',
+})
+
+
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+   group = nvim_config,
+   callback = function()
+      if vim.o.number then
+         vim.o.relativenumber = false
+      end
+   end,
+   pattern = '*',
+})
+
+function ToggleNumber()
+   if vim.o.relativenumber then
+      vim.o.number = true
+      vim.o.relativenumber = false
+   else
+      vim.o.relativenumber = true
+   end
+end
 
 
 -- MAPPINGS
@@ -193,7 +145,7 @@ vim.keymap.set({ "n", "v" }, "L", "$")
 
 vim.keymap.set("n", "<leader>c", ":set cursorline! cursorcolumn!<CR>")
 vim.keymap.set("n", "<leader>w", ":set wrap! wrap?<CR>")
-vim.keymap.set("n", "<leader>t", "<Plug>ToggleNumber")
+vim.keymap.set("n", "<leader>t", ToggleNumber())
 
 vim.keymap.set("n", "<leader>r", vim.cmd.registers)
 
@@ -217,22 +169,3 @@ vim.keymap.set("", "<C-j>", "<C-w>j")
 vim.keymap.set("", "<C-k>", "<C-w>k")
 vim.keymap.set("", "<C-h>", "<C-w>h")
 vim.keymap.set("", "<C-l>", "<C-w>l")
-
--- Plugins
-
-vim.g.fzf_layout = { window = { width = 1, height = 1 } }
-vim.g.fzf_preview_window = { "right,50%", "ctrl-p" }
-
-vim.keymap.set("n", "<leader>b", vim.cmd.Buffers)
-vim.keymap.set("n", "<leader>h", vim.cmd.History)
-vim.keymap.set("n", "<leader>l", vim.cmd.Lines)
-vim.keymap.set("n", "<leader>m", vim.cmd.Marks)
-vim.keymap.set("n", "<leader>f", "<Plug>FzfFiles")
-vim.keymap.set("n", "<leader>F", "<Plug>FzfAllFiles")
-vim.keymap.set("n", "<leader>rg", vim.cmd.RG)
-
--- don't define any gitgutter mappings by default
-vim.g.gitgutter_map_keys = 0
-
--- show if fold contains changed text
-vim.o.foldtext = vim.fn["gitgutter#fold#foldtext"]()

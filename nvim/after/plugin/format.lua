@@ -1,5 +1,7 @@
+vim.b.format_on = true
+
 function Format(cmd, args)
-   if not vim.fn.executable("cmd") then
+   if (not vim.b.format_on or vim.fn.executable(cmd) == 0) then
       return
    end
 
@@ -14,3 +16,8 @@ function Format(cmd, args)
 
    vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.fn.split(output, "\n"))
 end
+
+vim.api.nvim_create_user_command("ToggleFormat", function()
+   vim.b.format_on = not vim.b.format_on
+   print("Format on save: " .. tostring(vim.b.format_on))
+end, {})
