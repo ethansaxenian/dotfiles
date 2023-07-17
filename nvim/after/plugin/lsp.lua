@@ -1,16 +1,27 @@
-local lsp = require('lsp-zero').preset({})
+if not pcall(require, "lsp-zero") then
+   return
+end
 
-lsp.on_attach(function(client, bufnr)
+
+local lsp = require('lsp-zero').preset({})
+local virtual_text_on = true
+
+lsp.on_attach(function(_, bufnr)
    lsp.default_keymaps({ bufner = bufnr })
    lsp.buffer_autoformat()
    local opts = { buffer = bufnr }
 
    vim.keymap.set("n", "<leader>gd", function() vim.lsp.buf.definition() end, opts)
-   vim.keymap.set("n", "<leader>k", function() vim.lsp.buf.hover() end, opts)
+   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
    vim.keymap.set("n", "<leader>gr", function() vim.lsp.buf.references() end, opts)
    vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
    vim.keymap.set({ 'n', 'x' }, '<leader>gf', function() vim.lsp.buf.format({ async = true }) end, opts)
+   vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
+      vim.diagnostic.config({ virtual_text = not virtual_text_on })
+      virtual_text_on = not virtual_text_on
+      print("Diagnostic Virtual Text: " .. tostring(virtual_text_on))
+   end, {})
 end)
 
 lsp.ensure_installed({

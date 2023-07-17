@@ -1,3 +1,7 @@
+if not pcall(require, "nightfox") then
+   return
+end
+
 require("nightfox").setup({
    palettes = {
       nightfox = {
