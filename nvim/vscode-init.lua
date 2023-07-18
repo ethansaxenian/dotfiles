@@ -43,12 +43,12 @@ vim.o.foldenable = false
 
 -- STATUS LINE
 vim.o.statusline = table.concat {
-   "%2.2n ",
-   "%.35F ",
-   "%h%m%r%w ",
-   "  %{strlen(&ft)?&ft:'none'} ",
-   " %=",
-   "%(%l/%L,%c%V%) %P",
+  "%2.2n ",
+  "%.35F ",
+  "%h%m%r%w ",
+  "  %{strlen(&ft)?&ft:'none'} ",
+  " %=",
+  "%(%l/%L,%c%V%) %P",
 }
 
 
@@ -58,57 +58,56 @@ local nvim_config = vim.api.nvim_create_augroup("nvim_config", { clear = true })
 
 -- highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
-   callback = function()
-      vim.highlight.on_yank()
-   end,
-   group = nvim_config,
-   pattern = "*",
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = nvim_config,
+  pattern = "*",
 })
 
 -- return to last edit position when opening files
 vim.api.nvim_create_autocmd("BufReadPost", {
-   group = nvim_config,
-   pattern = "*",
-   command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
+  group = nvim_config,
+  pattern = "*",
+  command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
 })
 
 -- strip trailing whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", {
-   group = nvim_config,
-   pattern = "*",
-   command = [[%s/\s\+$//e]],
+  group = nvim_config,
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
 })
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
-   group = nvim_config,
-   callback = function()
-      if vim.o.number and vim.fn.mode() ~= "i" then
-         vim.o.relativenumber = true
-      end
-   end,
-   pattern = '*',
+  group = nvim_config,
+  callback = function()
+    if vim.o.number and vim.fn.mode() ~= "i" then
+      vim.o.relativenumber = true
+    end
+  end,
+  pattern = '*',
 })
 
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
-   group = nvim_config,
-   callback = function()
-      if vim.o.number then
-         vim.o.relativenumber = false
-      end
-   end,
-   pattern = '*',
+  group = nvim_config,
+  callback = function()
+    if vim.o.number then
+      vim.o.relativenumber = false
+    end
+  end,
+  pattern = '*',
 })
 
 function ToggleNumber()
-   if vim.o.relativenumber then
-      vim.o.number = true
-      vim.o.relativenumber = false
-   else
-      vim.o.relativenumber = true
-   end
+  if vim.o.relativenumber then
+    vim.o.number = true
+    vim.o.relativenumber = false
+  else
+    vim.o.relativenumber = true
+  end
 end
-
 
 -- MAPPINGS
 

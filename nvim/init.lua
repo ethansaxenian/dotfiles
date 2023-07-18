@@ -1,69 +1,71 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-   vim.fn.system({
-      "git",
-      "clone",
-      "--filter=blob:none",
-      "https://github.com/folke/lazy.nvim.git",
-      "--branch=stable", -- latest stable release
-      lazypath,
-   })
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath) -- Default options
 
 require("lazy").setup({
-   -- {
-   "EdenEast/nightfox.nvim",
-   {
-      "rose-pine/neovim",
-      name = "rose-pine",
-   },
+  -- {
+  "EdenEast/nightfox.nvim",
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+  },
 
-   "junegunn/fzf",
-   "junegunn/fzf.vim",
+  "junegunn/fzf",
+  "junegunn/fzf.vim",
 
-   "romainl/vim-cool",
-   'lewis6991/gitsigns.nvim',
-   "tpope/vim-commentary",
-   "tpope/vim-surround",
+  "romainl/vim-cool",
+  'lewis6991/gitsigns.nvim',
+  "tpope/vim-commentary",
+  "tpope/vim-surround",
 
-   {
-      "VonHeikemen/lsp-zero.nvim",
-      branch = "v2.x",
-      dependencies = {
-         -- LSP Support
-         { "neovim/nvim-lspconfig" },
-         {
-            "williamboman/mason.nvim",
-            build = function()
-               pcall(vim.cmd, "MasonUpdate")
-            end,
-         },
-         { "williamboman/mason-lspconfig.nvim" },
+  {
+    "VonHeikemen/lsp-zero.nvim",
+    branch = "v2.x",
+    dependencies = {
+      -- LSP Support
+      { "neovim/nvim-lspconfig" },
+      {
+        "williamboman/mason.nvim",
+        build = function()
+          pcall(vim.cmd, "MasonUpdate")
+        end,
+      },
+      { "williamboman/mason-lspconfig.nvim" },
 
-         -- Autocompletion
-         { 'hrsh7th/nvim-cmp' },
-         { 'hrsh7th/cmp-buffer' },
-         { 'hrsh7th/cmp-path' },
-         { 'hrsh7th/cmp-nvim-lsp' },
+      -- Autocompletion
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-path' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-nvim-lua' },
 
-         -- Snippets
-         { "L3MON4D3/LuaSnip" },
-      }
-   },
+      -- Snippets
+      { "L3MON4D3/LuaSnip" },
+      { "rafamadriz/friendly-snippets" }
+    }
+  },
 
-   {
-      "nvim-treesitter/nvim-treesitter",
-      build = ":TSUpdate",
-      opts = {
-         ensure_installed = { "lua", "python", "vim", "vimdoc", "go" },
-         sync_install = false,
-         highlight = { enable = true },
-         indent = { enable = true },
-      }
-   },
-   "nvim-treesitter/nvim-treesitter-context",
-   "nvim-treesitter/nvim-treesitter-textobjects",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    opts = {
+      ensure_installed = { "lua", "python", "vim", "vimdoc", "go" },
+      sync_install = false,
+      highlight = { enable = true },
+      indent = { enable = true },
+    }
+  },
+  "nvim-treesitter/nvim-treesitter-context",
+  "nvim-treesitter/nvim-treesitter-textobjects",
 })
 
 
@@ -117,17 +119,16 @@ vim.o.foldenable = false
 
 -- STATUS LINE
 
-vim.o.statusline = table.concat {
-   "%2.2n ",
-   "%.35F ",
-   "%h%m%r%w ",
-   string.format("[%s] ", vim.b.gitsigns_head),
-   string.format("%s ", vim.b.gitsigns_status),
-   vim.o.filetype,
-   " %=",
-   "%(%l/%L,%c%V%) %P",
-}
-
+vim.cmd([[
+set statusline=%2.2n\                             " buffer number
+set statusline+=%.35F\                            " file name
+set statusline+=%h%m%r%w\                         " flags
+set statusline+=%{get(b:,'gitsigns_head','')}\    " git branch
+set statusline+=%{get(b:,'gitsigns_status','')}\  " git changes
+set statusline+=%{strlen(&ft)?&ft:'none'}\ \      " file type
+set statusline+=%=\                               " indent to the right
+set statusline+=%(%l/%L,%c%V%)\ \ %P\             " cursor position/offset
+]])
 
 -- AUTOCOMMANDS
 
@@ -135,25 +136,26 @@ local nvim_config = vim.api.nvim_create_augroup("nvim_config", { clear = true })
 
 -- highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
-   callback = function()
-      vim.highlight.on_yank()
-   end,
-   group = nvim_config,
-   pattern = "*",
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = nvim_config,
+  pattern = "*",
 })
+
 
 -- return to last edit position when opening files
 vim.api.nvim_create_autocmd("BufReadPost", {
-   group = nvim_config,
-   pattern = "*",
-   command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
+  group = nvim_config,
+  pattern = "*",
+  command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
 })
 
 -- strip trailing whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", {
-   group = nvim_config,
-   pattern = "*",
-   command = [[%s/\s\+$//e]],
+  group = nvim_config,
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
 })
 
 
