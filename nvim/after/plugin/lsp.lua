@@ -30,6 +30,7 @@ lsp.ensure_installed({
    'jsonls',
    'lua_ls',
    'bashls',
+   'efm'
 })
 
 
@@ -57,6 +58,7 @@ require('lspconfig').pyright.setup({
          -- Fallback to system Python.
          return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
       end
+
       local python_path = get_python_path(config.root_dir)
       config.settings.python.pythonPath = python_path
    end
@@ -66,6 +68,27 @@ require('lspconfig').ruff_lsp.setup({})
 require('lspconfig').bashls.setup({})
 require('lspconfig').jsonls.setup({})
 
+
+-- format python with efm
+require('lspconfig').efm.setup({
+   filetypes = { 'python' },
+   init_options = {
+      documentFormatting = true,
+      hover = true,
+      documentSymbol = true,
+      codeAction = true,
+      completion = true
+   },
+   settings = {
+      rootMarkers = { ".git/", ".venv/", ".env", "pyproject.toml" },
+      languages = {
+         python = {
+            { formatCommand = "ruff check -", formatStdin = true },
+            { formatCommand = "black -",      formatStdin = true },
+         }
+      }
+   }
+})
 
 lsp.setup()
 
