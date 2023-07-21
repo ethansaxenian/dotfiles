@@ -119,6 +119,8 @@ _fzf_comprun() {
   esac
 }
 
+bindkey -s '^v' 'nvim $(fzf --preview "bat --style=numbers --color=always {}")^M'
+
 # load f into current shell in case cd is needed
 alias f="source $DOTFILES/bin/f"
 
@@ -315,15 +317,6 @@ export PATH="$DOTFILES/bin:$PATH"
 typeset -aU path
 typeset -aU fpath
 
-if [[ $OSTYPE =~ ^darwin ]]; then
-  ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
-elif [[ $OSTYPE =~ ^linux ]]; then
-  ZSH_SYNTAX_HIGHLIGHTING_PREFIX="$HOME"/.local/zsh-syntax-highlighting
-fi
-
-# setup syntax highlighting
-source "$ZSH_SYNTAX_HIGHLIGHTING_PREFIX"/zsh-syntax-highlighting.zsh
-
 # setup fzf
 if [ -f "$HOME"/.fzf.zsh ]; then
   source "$HOME"/.fzf.zsh
@@ -334,3 +327,16 @@ fi
 # setup z
 export _ZO_DATA_DIR="${HOME}/.local/share/zoxide"
 eval "$(zoxide init zsh)"
+
+# setup zsh autosuggestions
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^ ' autosuggest-accept
+
+if [[ $OSTYPE =~ ^darwin ]]; then
+  ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
+elif [[ $OSTYPE =~ ^linux ]]; then
+  ZSH_SYNTAX_HIGHLIGHTING_PREFIX="$HOME"/.local/zsh-syntax-highlighting
+fi
+
+# setup syntax highlighting
+source "$ZSH_SYNTAX_HIGHLIGHTING_PREFIX"/zsh-syntax-highlighting.zsh
