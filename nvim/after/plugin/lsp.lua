@@ -36,7 +36,10 @@ lsp.ensure_installed({
 
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
 require('lspconfig').pyright.setup({
+  capabilities = capabilities,
   before_init = function(_, config)
     local function get_python_path(workspace)
       local util = require('lspconfig/util')
@@ -83,8 +86,8 @@ require('lspconfig').efm.setup({
     rootMarkers = { ".git/", ".venv/", ".env", "pyproject.toml" },
     languages = {
       python = {
-        { formatCommand = "ruff check -", formatStdin = true },
-        { formatCommand = "black -",      formatStdin = true },
+        { formatCommand = "ruff check --fix --unfixable F841 -", formatStdin = true },
+        { formatCommand = "black -",                             formatStdin = true },
       }
     }
   }
