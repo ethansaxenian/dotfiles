@@ -17,6 +17,8 @@ lsp.on_attach(function(_, bufnr)
   vim.keymap.set("n", "<leader>gr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set({ 'n', 'x' }, '<leader>gf', function() vim.lsp.buf.format({ async = true }) end, opts)
+  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
   vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
     vim.diagnostic.config({ virtual_text = not virtual_text_on })
     virtual_text_on = not virtual_text_on
@@ -30,7 +32,9 @@ lsp.ensure_installed({
   'jsonls',
   'lua_ls',
   'bashls',
-  'efm'
+  'efm',
+  'gopls',
+  'tsserver',
 })
 
 
@@ -71,10 +75,21 @@ require('lspconfig').ruff_lsp.setup({})
 require('lspconfig').bashls.setup({})
 require('lspconfig').jsonls.setup({})
 
+require('lspconfig').gopls.setup({
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+    },
+  },
+})
 
--- format python with efm
+
+-- format python and typescript with efm
 require('lspconfig').efm.setup({
-  filetypes = { 'python' },
+  filetypes = { 'python', 'typescriptreact', 'typescript' },
   init_options = {
     documentFormatting = true,
     hover = true,
@@ -83,12 +98,18 @@ require('lspconfig').efm.setup({
     completion = true
   },
   settings = {
-    rootMarkers = { ".git/", ".venv/", ".env", "pyproject.toml" },
+    rootMarkers = { ".git/", ".venv/", ".env", "pyproject.toml", "node_modules", "package.json" },
     languages = {
       python = {
-        { formatCommand = "ruff check --fix --unfixable F841 -", formatStdin = true },
-        { formatCommand = "black -",                             formatStdin = true },
-      }
+        { formatCommand = "ruff check --fix --unfixable F841 --select=I -", formatStdin = true },
+        { formatCommand = "black -",                                        formatStdin = true },
+      },
+      typescript = {
+        { formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true }
+      },
+      typescriptreact = {
+        { formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true }
+      },
     }
   }
 })

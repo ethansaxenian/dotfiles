@@ -3,7 +3,7 @@ if not pcall(require, "nvim-treesitter") then
 end
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = { "lua", "python", "vim", "vimdoc", "go" },
+  ensure_installed = { "lua", "python", "vim", "vimdoc", "go", "typescript", "tsx", "bash" },
   sync_install = false,
   highlight = { enable = true },
   indent = { enable = true },

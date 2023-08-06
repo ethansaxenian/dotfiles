@@ -158,6 +158,24 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   command = [[%s/\s\+$//e]],
 })
 
+-- disable nightfox italics :/
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = nvim_config,
+  pattern = "*",
+  callback = function()
+    vim.cmd("highlight @tag.attribute gui=NONE cterm=NONE")
+  end
+})
+
+-- automatically enter insert mode in Terminal buffer
+vim.api.nvim_create_autocmd("TermOpen", {
+  group = nvim_config,
+  callback = function()
+    vim.cmd("startinsert!")
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+  end,
+})
 
 -- MAPPINGS
 
@@ -218,6 +236,10 @@ vim.keymap.set("", "<C-j>", "<C-w>j")
 vim.keymap.set("", "<C-k>", "<C-w>k")
 vim.keymap.set("", "<C-h>", "<C-w>h")
 vim.keymap.set("", "<C-l>", "<C-w>l")
+
+-- Terminal Mode
+
+vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")
 
 -- Plugins
 

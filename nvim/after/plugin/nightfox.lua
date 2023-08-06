@@ -9,7 +9,5 @@ require("nightfox").setup({
       bg1 = "#131a24",
       bg0 = "#192330",
     },
-  }
+  },
 })
-
-require("rose-pine").setup({ disable_italics = true })
