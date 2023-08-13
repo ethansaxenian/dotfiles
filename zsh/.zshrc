@@ -119,7 +119,7 @@ _fzf_comprun() {
   esac
 }
 
-bindkey -s '^v' 'nvim $(fzf --preview "bat --style=numbers --color=always {}")^M'
+bindkey -s '^v' 'fvim^M'
 
 # load f into current shell in case cd is needed
 alias f="source $DOTFILES/bin/f"

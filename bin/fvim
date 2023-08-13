@@ -1,0 +1,9 @@
+#!/bin/bash
+
+file=$(fzf --preview "bat --style=numbers --color=always {}")
+
+if [[ -z $file ]]; then
+  exit
+fi
+
+nvim $file
