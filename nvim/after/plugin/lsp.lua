@@ -11,14 +11,15 @@ lsp.on_attach(function(_, bufnr)
   lsp.buffer_autoformat()
   local opts = { buffer = bufnr }
 
-  vim.keymap.set("n", "<leader>gd", function() vim.lsp.buf.definition() end, opts)
-  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-  vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
-  vim.keymap.set("n", "<leader>gr", function() vim.lsp.buf.references() end, opts)
-  vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
-  vim.keymap.set({ 'n', 'x' }, '<leader>gf', function() vim.lsp.buf.format({ async = true }) end, opts)
-  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
-  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+  vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+  vim.keymap.set('n', '<leader>?', vim.diagnostic.open_float, opts)
+
   vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
     vim.diagnostic.config({ virtual_text = not virtual_text_on })
     virtual_text_on = not virtual_text_on
