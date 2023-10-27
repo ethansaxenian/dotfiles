@@ -103,13 +103,14 @@ require('lspconfig').efm.setup({
     languages = {
       python = {
         { formatCommand = "ruff check --fix --unfixable F841 --select=I -", formatStdin = true },
+        { formatCommand = "ruff format -",                                  formatStdin = true },
         { formatCommand = "black -",                                        formatStdin = true },
       },
       typescript = {
-        { formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true }
+        { formatCommand = "npx prettier --stdin-filepath ${INPUT}", formatStdin = true }
       },
       typescriptreact = {
-        { formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true }
+        { formatCommand = "npx prettier --stdin-filepath ${INPUT}", formatStdin = true }
       },
     }
   }
