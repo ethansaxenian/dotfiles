@@ -326,17 +326,20 @@ fi
 
 # setup z
 export _ZO_DATA_DIR="${HOME}/.local/share/zoxide"
-eval "$(zoxide init zsh)"
-
-# setup zsh autosuggestions
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^ ' autosuggest-accept
+if [[ -a $_ZO_DATA_DIR ]]; then
+  eval "$(zoxide init zsh)"
+fi
 
 if [[ $OSTYPE =~ ^darwin ]]; then
   ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [[ $OSTYPE =~ ^linux ]]; then
   ZSH_SYNTAX_HIGHLIGHTING_PREFIX="$HOME"/.local/zsh-syntax-highlighting
+  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+
+# setup zsh autosuggestions
+bindkey '^ ' autosuggest-accept
 
 # setup syntax highlighting
 source "$ZSH_SYNTAX_HIGHLIGHTING_PREFIX"/zsh-syntax-highlighting.zsh

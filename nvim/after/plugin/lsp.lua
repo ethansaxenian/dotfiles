@@ -72,10 +72,6 @@ require('lspconfig').pyright.setup({
   end
 })
 
-require('lspconfig').ruff_lsp.setup({})
-require('lspconfig').bashls.setup({})
-require('lspconfig').jsonls.setup({})
-
 require('lspconfig').gopls.setup({
   settings = {
     gopls = {
@@ -86,7 +82,6 @@ require('lspconfig').gopls.setup({
     },
   },
 })
-
 
 -- format python and typescript with efm
 require('lspconfig').efm.setup({
@@ -102,9 +97,9 @@ require('lspconfig').efm.setup({
     rootMarkers = { ".git/", ".venv/", ".env", "pyproject.toml", "node_modules", "package.json" },
     languages = {
       python = {
-        { formatCommand = "ruff check --fix --unfixable F841 --select=I -", formatStdin = true },
-        { formatCommand = "ruff format -",                                  formatStdin = true },
-        { formatCommand = "black -",                                        formatStdin = true },
+        { formatCommand = "ruff check --fix --select=I -", formatStdin = true },
+        { formatCommand = "ruff format -",                 formatStdin = true },
+        { formatCommand = "black -",                       formatStdin = true },
       },
       typescript = {
         { formatCommand = "npx prettier --stdin-filepath ${INPUT}", formatStdin = true }
