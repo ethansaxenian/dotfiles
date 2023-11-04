@@ -330,16 +330,15 @@ if [[ -a $_ZO_DATA_DIR ]]; then
   eval "$(zoxide init zsh)"
 fi
 
+# setup syntax highlighting and autosuggestions
 if [[ $OSTYPE =~ ^darwin ]]; then
-  ZSH_SYNTAX_HIGHLIGHTING_PREFIX=$(brew --prefix)/share/zsh-syntax-highlighting
-  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [[ $OSTYPE =~ ^linux ]]; then
-  ZSH_SYNTAX_HIGHLIGHTING_PREFIX="$HOME"/.local/zsh-syntax-highlighting
+  source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [[ $OSTYPE =~ ^linux ]]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
-# setup zsh autosuggestions
+# tab-space accepts autosuggestion
 bindkey '^ ' autosuggest-accept
 
-# setup syntax highlighting
-source "$ZSH_SYNTAX_HIGHLIGHTING_PREFIX"/zsh-syntax-highlighting.zsh
