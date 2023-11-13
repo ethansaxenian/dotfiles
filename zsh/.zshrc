@@ -339,6 +339,12 @@ elif [[ $OSTYPE =~ ^linux ]]; then
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
+# vi-mode
+bindkey -v
+bindkey -v '^?' backward-delete-char
+
 # tab-space accepts autosuggestion
 bindkey '^ ' autosuggest-accept
 
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
