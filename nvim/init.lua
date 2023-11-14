@@ -19,6 +19,8 @@ require("lazy").setup({
     name = "rose-pine",
   },
 
+  "github/copilot.vim",
+
   "junegunn/fzf",
   "junegunn/fzf.vim",
 
