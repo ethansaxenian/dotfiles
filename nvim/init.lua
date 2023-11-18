@@ -5,14 +5,13 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
-vim.opt.rtp:prepend(lazypath) -- Default options
+vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- {
   "EdenEast/nightfox.nvim",
   {
     "rose-pine/neovim",
@@ -30,30 +29,30 @@ require("lazy").setup({
   "tpope/vim-surround",
 
   {
-    "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x",
+    'neovim/nvim-lspconfig',
     dependencies = {
-      -- LSP Support
-      { "neovim/nvim-lspconfig" },
       {
         "williamboman/mason.nvim",
         build = function()
           pcall(vim.cmd, "MasonUpdate")
         end,
       },
-      { "williamboman/mason-lspconfig.nvim" },
+      'williamboman/mason-lspconfig.nvim',
+    },
+  },
 
-      -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-path' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lua' },
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
 
-      -- Snippets
-      { "L3MON4D3/LuaSnip" },
-      { "rafamadriz/friendly-snippets" }
-    }
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+
+      'rafamadriz/friendly-snippets',
+    },
   },
 
   {
@@ -256,3 +255,5 @@ vim.keymap.set("n", "<leader>f", "<Plug>FzfFiles")
 vim.keymap.set("n", "<leader>F", "<Plug>FzfAllFiles")
 vim.keymap.set("n", "<leader>rg", vim.cmd.RG)
 vim.keymap.set("n", "<leader>j", vim.cmd.Jumps)
+
+vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk)

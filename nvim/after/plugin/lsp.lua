@@ -1,50 +1,79 @@
-if not pcall(require, "lsp-zero") then
-  return
-end
-
-
-local lsp = require('lsp-zero').preset({})
 local virtual_text_on = true
+local format_on_save = true
 
-lsp.on_attach(function(_, bufnr)
-  lsp.default_keymaps({ bufner = bufnr })
-  lsp.buffer_autoformat()
-  local opts = { buffer = bufnr }
+local lsp_group = vim.api.nvim_create_augroup('Lsp', { clear = true })
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = lsp_group,
+  callback = function(event)
+    local opts = { buffer = event.buf }
 
-  vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-  vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-  vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', '<leader>?', vim.diagnostic.open_float, opts)
+    vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "<leader>gt", vim.lsp.buf.type_definition, opts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "<leader>ds", vim.lsp.buf.document_symbol, opts)
+    vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', '<leader>?', vim.diagnostic.open_float, opts)
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
 
-  vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
-    vim.diagnostic.config({ virtual_text = not virtual_text_on })
-    virtual_text_on = not virtual_text_on
-    print("Diagnostic Virtual Text: " .. tostring(virtual_text_on))
-  end, {})
-end)
+    vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
+      vim.diagnostic.config({ virtual_text = not virtual_text_on })
+      virtual_text_on = not virtual_text_on
+      print("Diagnostic Virtual Text: " .. tostring(virtual_text_on))
+    end, {})
 
-lsp.ensure_installed({
-  'pyright',
-  'ruff_lsp',
-  'jsonls',
-  'lua_ls',
-  'bashls',
-  'efm',
-  'gopls',
-  'tsserver',
+    vim.api.nvim_create_user_command("ToggleFormatOnSave", function()
+      format_on_save = not format_on_save
+      print("Format On Save: " .. tostring(format_on_save))
+    end, {})
+
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      callback = function()
+        if format_on_save then
+          vim.lsp.buf.format()
+        end
+      end,
+      group = lsp_group,
+      pattern = '*',
+    })
+  end
 })
 
-
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+require('mason').setup()
+require('mason-lspconfig').setup({
+  ensure_installed = {
+    'pyright',
+    'ruff_lsp',
+    'jsonls',
+    'lua_ls',
+    'bashls',
+    'efm',
+    'gopls',
+    'tsserver',
+  }
+})
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
 require('lspconfig').pyright.setup({
-  capabilities = capabilities,
+  -- ignore diagnostics that conflict with ruff_lsp
+  capabilities = vim.tbl_deep_extend('force', capabilities, {
+    textDocument = {
+      publishDiagnostics = {
+        tagSupport = {
+          valueSet = { 2 },
+        },
+      },
+    },
+  }),
   before_init = function(_, config)
     local function get_python_path(workspace)
       local util = require('lspconfig/util')
@@ -72,7 +101,42 @@ require('lspconfig').pyright.setup({
   end
 })
 
+require('lspconfig').ruff_lsp.setup({
+  capabilities = capabilities,
+})
+
+require('lspconfig').jsonls.setup({
+  capabilities = capabilities,
+})
+
+require('lspconfig').lua_ls.setup({
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT'
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME
+        }
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' }
+      },
+    },
+  }
+})
+
+
+require('lspconfig').bashls.setup({
+  capabilities = capabilities,
+})
+
 require('lspconfig').gopls.setup({
+  capabilities = capabilities,
   settings = {
     gopls = {
       analyses = {
@@ -83,8 +147,10 @@ require('lspconfig').gopls.setup({
   },
 })
 
+
 -- format python and typescript with efm
 require('lspconfig').efm.setup({
+  capabilities = capabilities,
   filetypes = { 'python', 'typescriptreact', 'typescript' },
   init_options = {
     documentFormatting = true,
@@ -111,18 +177,50 @@ require('lspconfig').efm.setup({
   }
 })
 
-lsp.setup()
+require('lspconfig').tsserver.setup({
+  capabilities = capabilities,
+})
 
 
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
+local luasnip = require('luasnip')
+luasnip.config.setup()
 
 cmp.setup({
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
   mapping = {
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-J>'] = cmp_action.tab_complete(),
-    ['<C-K>'] = cmp_action.select_prev_or_fallback(),
-
     ['<C-Space>'] = cmp.mapping.complete(),
-  }
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
+    ['<C-j>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<C-k>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
+  },
 })
