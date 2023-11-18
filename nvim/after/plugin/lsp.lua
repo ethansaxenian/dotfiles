@@ -60,8 +60,18 @@ require('mason-lspconfig').setup({
   }
 })
 
+local default_servers = {
+  'ruff_lsp', 'jsonls', 'bashls', 'tsserver',
+}
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+for _, server in ipairs(default_servers) do
+  require('lspconfig')[server].setup({
+    capabilities = capabilities,
+  })
+end
 
 require('lspconfig').pyright.setup({
   -- ignore diagnostics that conflict with ruff_lsp
@@ -76,8 +86,7 @@ require('lspconfig').pyright.setup({
   }),
   before_init = function(_, config)
     local function get_python_path(workspace)
-      local util = require('lspconfig/util')
-      local path = util.path
+      local path = require('lspconfig/util').path
 
       -- Use activated virtualenv.
       if vim.env.VIRTUAL_ENV then
@@ -101,13 +110,6 @@ require('lspconfig').pyright.setup({
   end
 })
 
-require('lspconfig').ruff_lsp.setup({
-  capabilities = capabilities,
-})
-
-require('lspconfig').jsonls.setup({
-  capabilities = capabilities,
-})
 
 require('lspconfig').lua_ls.setup({
   capabilities = capabilities,
@@ -130,10 +132,6 @@ require('lspconfig').lua_ls.setup({
   }
 })
 
-
-require('lspconfig').bashls.setup({
-  capabilities = capabilities,
-})
 
 require('lspconfig').gopls.setup({
   capabilities = capabilities,
@@ -177,9 +175,6 @@ require('lspconfig').efm.setup({
   }
 })
 
-require('lspconfig').tsserver.setup({
-  capabilities = capabilities,
-})
 
 
 local cmp = require('cmp')
