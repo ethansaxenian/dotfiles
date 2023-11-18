@@ -11,5 +11,14 @@ function _AllFiles()
   vim.fn['fzf#vim#files']('~', vim.fn['fzf#vim#with_preview']())
 end
 
-vim.keymap.set("n", "<Plug>FzfFiles", _FzfFiles)
-vim.keymap.set("n", "<Plug>FzfAllFiles", _AllFiles)
+vim.g.fzf_layout = { window = { width = 1, height = 1 } }
+vim.g.fzf_preview_window = { "right,50%", "ctrl-p" }
+
+vim.keymap.set("n", "<leader>b", vim.cmd.Buffers)
+vim.keymap.set("n", "<leader>h", ":History:<CR>")
+vim.keymap.set("n", "<leader>l", vim.cmd.Lines)
+vim.keymap.set("n", "<leader>m", vim.cmd.Marks)
+vim.keymap.set("n", "<leader>f", _FzfFiles)
+vim.keymap.set("n", "<leader>F", _AllFiles)
+vim.keymap.set("n", "<leader>rg", vim.cmd.RG)
+vim.keymap.set("n", "<leader>j", vim.cmd.Jumps)

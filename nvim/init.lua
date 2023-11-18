@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -23,8 +25,9 @@ require("lazy").setup({
   "junegunn/fzf",
   "junegunn/fzf.vim",
 
-  "romainl/vim-cool",
   'lewis6991/gitsigns.nvim',
+
+  "romainl/vim-cool",
   "tpope/vim-commentary",
   "tpope/vim-surround",
 
@@ -58,15 +61,11 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    opts = {
-      ensure_installed = { "lua", "python", "vim", "vimdoc", "go" },
-      sync_install = false,
-      highlight = { enable = true },
-      indent = { enable = true },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-context",
+      "nvim-treesitter/nvim-treesitter-textobjects",
     }
   },
-  "nvim-treesitter/nvim-treesitter-context",
-  "nvim-treesitter/nvim-treesitter-textobjects",
 })
 
 
@@ -180,8 +179,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 -- MAPPINGS
 
-vim.g.mapleader = " "
-
 -- ctrl-c should behave the same as esc
 vim.keymap.set("i", "<C-c>", "<ESC>")
 
@@ -241,19 +238,3 @@ vim.keymap.set("", "<C-l>", "<C-w>l")
 -- Terminal Mode
 
 vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")
-
--- Plugins
-
-vim.g.fzf_layout = { window = { width = 1, height = 1 } }
-vim.g.fzf_preview_window = { "right,50%", "ctrl-p" }
-
-vim.keymap.set("n", "<leader>b", vim.cmd.Buffers)
-vim.keymap.set("n", "<leader>h", ":History:<CR>")
-vim.keymap.set("n", "<leader>l", vim.cmd.Lines)
-vim.keymap.set("n", "<leader>m", vim.cmd.Marks)
-vim.keymap.set("n", "<leader>f", "<Plug>FzfFiles")
-vim.keymap.set("n", "<leader>F", "<Plug>FzfAllFiles")
-vim.keymap.set("n", "<leader>rg", vim.cmd.RG)
-vim.keymap.set("n", "<leader>j", vim.cmd.Jumps)
-
-vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk)

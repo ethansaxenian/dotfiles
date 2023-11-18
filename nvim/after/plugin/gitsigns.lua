@@ -11,3 +11,5 @@ require("gitsigns").setup({
     changedelete = { text = '~' },
   },
 })
+
+vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk)
