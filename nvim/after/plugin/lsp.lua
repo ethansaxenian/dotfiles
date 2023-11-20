@@ -38,15 +38,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
       print("Format On Save: " .. tostring(format_on_save))
     end, {})
 
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      callback = function()
-        if format_on_save then
-          vim.lsp.buf.format()
-        end
-      end,
-      group = lsp_group,
-      pattern = '*',
-    })
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client and client.server_capabilities.documentFormattingProvider then
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        callback = function()
+          if format_on_save then
+            vim.lsp.buf.format()
+          end
+        end,
+        group = lsp_group,
+        pattern = '*',
+      })
+    end
   end
 })
 
