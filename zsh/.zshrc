@@ -82,10 +82,13 @@ alias mkd="mkdir -pv"
 export FZF_DEFAULT_OPTS='--height=100% --border --layout=default --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef --bind="alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap" --preview-window="border-left"'
 
 export FD_EXCLUDES="{.Trash,node_modules,.git,.idea,__pycache__,Library,.venv,venv,ios,android,.android,.cocoapods}"
-export FD_OPTIONS="--ignore --hidden --follow --strip-cwd-prefix -E '$FD_EXCLUDES'"
+export FD_OPTIONS="--ignore --follow --strip-cwd-prefix -E '$FD_EXCLUDES'"
 export FZF_DEFAULT_COMMAND="fd --type file $FD_OPTIONS"
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 export FZF_ALT_C_COMMAND="fd --type directory $FD_OPTIONS"
+export FZF_ALT_C_OPTS="--preview 'tree -C {}' --bind 'ctrl-/:change-preview-window(hidden|)'"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window up:3:hidden:wrap --bind 'ctrl-/:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'"
 
 # Options to fzf command
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS --height=100% --layout=default"
@@ -112,7 +115,7 @@ _fzf_comprun() {
   case "$command" in
     export|unset)       fzf "$@" --preview "eval 'echo \$'{}" ;;
     unalias)            fzf "$@" --preview 'echo $(alias {})' ;;
-    ssh)                fzf "$@" --preview 'dig {}' ;;
+    ssh)                fzf "$@" --preview 'nslookup {}' ;;
     cd)                 fzf "$@" --preview "tree -C {}" ;;
     vim|v|code|charm)   fzf "$@" --preview "bat --style=numbers --color=always {}" ;;
     *)                  fzf "$@" ;;
@@ -123,6 +126,8 @@ bindkey -s '^v' 'fvim^M'
 
 # load f into current shell in case cd is needed
 alias f="source $DOTFILES/bin/f"
+
+alias vf="fzf --bind 'enter:become(vim {})'"
 
 # }}}
 # python {{{
