@@ -25,6 +25,8 @@ require("lazy").setup({
   "junegunn/fzf",
   "junegunn/fzf.vim",
 
+  'stevearc/conform.nvim',
+
   'lewis6991/gitsigns.nvim',
 
   "romainl/vim-cool",
@@ -210,7 +212,7 @@ vim.keymap.set({ "n", "v" }, "L", "$")
 
 vim.keymap.set("n", "<leader>c", ":set cursorline! cursorcolumn!<CR>")
 vim.keymap.set("n", "<leader>w", ":set wrap! wrap?<CR>")
-vim.keymap.set("n", "<leader>t", "<Plug>ToggleNumber")
+vim.keymap.set("n", "<leader>n", "<Plug>ToggleNumber")
 
 vim.keymap.set("n", "<leader>r", vim.cmd.registers)
 

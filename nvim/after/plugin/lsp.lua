@@ -2,8 +2,7 @@ if not pcall(require, "lspconfig") then
   return
 end
 
-local virtual_text_on = true
-local format_on_save = true
+vim.g.virtual_text_on = true
 
 local lsp_group = vim.api.nvim_create_augroup('Lsp', { clear = true })
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -28,28 +27,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
 
     vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
-      vim.diagnostic.config({ virtual_text = not virtual_text_on })
-      virtual_text_on = not virtual_text_on
-      print("Diagnostic Virtual Text: " .. tostring(virtual_text_on))
+      vim.diagnostic.config({ virtual_text = not vim.g.virtual_text_on })
+      vim.g.virtual_text_on = not vim.g.virtual_text_on
+      print("Diagnostic Virtual Text: " .. tostring(vim.g.virtual_text_on))
     end, {})
-
-    vim.api.nvim_create_user_command("ToggleFormatOnSave", function()
-      format_on_save = not format_on_save
-      print("Format On Save: " .. tostring(format_on_save))
-    end, {})
-
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client.server_capabilities.documentFormattingProvider then
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        callback = function()
-          if format_on_save then
-            vim.lsp.buf.format()
-          end
-        end,
-        group = lsp_group,
-        pattern = '*',
-      })
-    end
   end
 })
 
@@ -61,7 +42,6 @@ require('mason-lspconfig').setup({
     'jsonls',
     'lua_ls',
     'bashls',
-    'efm',
     'gopls',
     'tsserver',
   }
@@ -150,34 +130,4 @@ require('lspconfig').gopls.setup({
       staticcheck = true,
     },
   },
-})
-
-
--- format python and typescript with efm
-require('lspconfig').efm.setup({
-  capabilities = capabilities,
-  filetypes = { 'python', 'typescriptreact', 'typescript' },
-  init_options = {
-    documentFormatting = true,
-    hover = true,
-    documentSymbol = true,
-    codeAction = true,
-    completion = true
-  },
-  settings = {
-    rootMarkers = { ".git/", ".venv/", ".env", "pyproject.toml", "node_modules", "package.json" },
-    languages = {
-      python = {
-        { formatCommand = "ruff check --fix --select=I -", formatStdin = true },
-        { formatCommand = "ruff format -",                 formatStdin = true },
-        { formatCommand = "black -",                       formatStdin = true },
-      },
-      typescript = {
-        { formatCommand = "npx prettier --stdin-filepath ${INPUT}", formatStdin = true }
-      },
-      typescriptreact = {
-        { formatCommand = "npx prettier --stdin-filepath ${INPUT}", formatStdin = true }
-      },
-    }
-  }
 })
