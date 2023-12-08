@@ -127,7 +127,7 @@ bindkey -s '^v' 'fvim^M'
 # load f into current shell in case cd is needed
 alias f="source $DOTFILES/bin/f"
 
-alias vf="fzf --bind 'enter:become(vim {})'"
+alias vf="fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS"
 
 # }}}
 # python {{{
@@ -353,3 +353,5 @@ bindkey '^ ' autosuggest-accept
 
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
+
+bindkey -s '^v' 'vf\n'
