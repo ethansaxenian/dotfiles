@@ -15,6 +15,7 @@ require("nvim-treesitter.configs").setup({
     "toml",
     "tsx",
     "typescript",
+    "javascript",
     "vim",
     "vimdoc",
     "yaml",
