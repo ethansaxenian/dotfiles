@@ -102,10 +102,10 @@ vim.opt.wildmode = { "longest", "full" }
 vim.opt.wildignore = { "*.docx", "*.jpg", "*.png", "*.gif", "*.pdf", "*.pyc", "*.exe", "*.o", "*.img", "*.xlsx" }
 
 vim.opt.wrap = false
-vim.opt.whichwrap:append "<,>,h,l"
+vim.opt.whichwrap:append("<,>,h,l")
 vim.opt.breakindent = true
 
-vim.opt.matchpairs:append "<:>"
+vim.opt.matchpairs:append("<:>")
 
 vim.o.splitbelow = true
 vim.o.splitright = true
