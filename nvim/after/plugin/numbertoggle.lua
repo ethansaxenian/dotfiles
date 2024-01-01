@@ -1,20 +1,19 @@
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
   callback = function()
     if vim.o.number and vim.fn.mode() ~= "i" then
       vim.o.relativenumber = true
     end
   end,
-  pattern = '*',
+  pattern = "*",
 })
 
-
-vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
   callback = function()
     if vim.o.number then
       vim.o.relativenumber = false
     end
   end,
-  pattern = '*',
+  pattern = "*",
 })
 
 function _ToggleNumber()

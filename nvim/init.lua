@@ -13,67 +13,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-  "EdenEast/nightfox.nvim",
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-  },
+require("lazy").setup("plugins")
 
-  "github/copilot.vim",
-
-  "junegunn/fzf",
-  "junegunn/fzf.vim",
-
-  'stevearc/conform.nvim',
-
-  'lewis6991/gitsigns.nvim',
-
-  "romainl/vim-cool",
-  "tpope/vim-commentary",
-  "tpope/vim-surround",
-
-  {
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      {
-        "williamboman/mason.nvim",
-        build = function()
-          pcall(vim.cmd, "MasonUpdate")
-        end,
-      },
-      'williamboman/mason-lspconfig.nvim',
-    },
-  },
-
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-
-      'rafamadriz/friendly-snippets',
-    },
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-context",
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "nvim-treesitter/playground",
-    }
-  },
-})
-
-
-
-vim.cmd.colorscheme "nightfox"
+vim.cmd.colorscheme("nightfox")
 
 -- fix slow python loading time
 vim.g.python3_host_prog = os.execute("which python3")
@@ -119,7 +61,6 @@ vim.o.timeoutlen = 500
 
 vim.o.foldenable = false
 
-
 -- STATUS LINE
 
 vim.cmd([[
@@ -146,12 +87,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
-
 -- return to last edit position when opening files
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = nvim_config,
   pattern = "*",
-  command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
+  command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]],
 })
 
 -- strip trailing whitespace on save
@@ -167,7 +107,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = function()
     vim.cmd("highlight @tag.attribute gui=NONE cterm=NONE")
-  end
+  end,
 })
 
 -- automatically enter insert mode in Terminal buffer

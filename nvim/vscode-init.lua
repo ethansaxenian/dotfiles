@@ -25,9 +25,9 @@ vim.opt.wildmode = { "list", "longest", "full" }
 vim.opt.wildignore = { "*.docx", "*.jpg", "*.png", "*.gif", "*.pdf", "*.pyc", "*.exe", "*.o", "*.img", "*.xlsx" }
 
 vim.opt.wrap = false
-vim.opt.whichwrap:append "<,>,h,l"
+vim.opt.whichwrap:append("<,>,h,l")
 
-vim.opt.matchpairs:append "<:>"
+vim.opt.matchpairs:append("<:>")
 
 vim.o.splitbelow = true
 vim.o.splitright = true
@@ -40,17 +40,15 @@ vim.o.timeoutlen = 500
 
 vim.o.foldenable = false
 
-
 -- STATUS LINE
-vim.o.statusline = table.concat {
+vim.o.statusline = table.concat({
   "%2.2n ",
   "%.35F ",
   "%h%m%r%w ",
   "  %{strlen(&ft)?&ft:'none'} ",
   " %=",
   "%(%l/%L,%c%V%) %P",
-}
-
+})
 
 -- AUTOCOMMANDS
 
@@ -69,7 +67,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = nvim_config,
   pattern = "*",
-  command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]]
+  command = [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]],
 })
 
 -- strip trailing whitespace on save
@@ -79,25 +77,24 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   command = [[%s/\s\+$//e]],
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
   group = nvim_config,
   callback = function()
     if vim.o.number and vim.fn.mode() ~= "i" then
       vim.o.relativenumber = true
     end
   end,
-  pattern = '*',
+  pattern = "*",
 })
 
-
-vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
   group = nvim_config,
   callback = function()
     if vim.o.number then
       vim.o.relativenumber = false
     end
   end,
-  pattern = '*',
+  pattern = "*",
 })
 
 function ToggleNumber()

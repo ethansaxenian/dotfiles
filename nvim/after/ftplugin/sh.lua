@@ -4,5 +4,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
   group = group,
   callback = function(args)
     vim.diagnostic.disable(args.buf)
-  end
+  end,
 })
