@@ -1,3 +1,10 @@
+vim.g.format_on_save = true
+
+vim.api.nvim_create_user_command("ToggleFormatOnSave", function()
+  vim.g.format_on_save = not vim.g.format_on_save
+  print("Format On Save: " .. tostring(vim.g.format_on_save))
+end, {})
+
 return {
   "stevearc/conform.nvim",
   opts = {
@@ -20,12 +27,4 @@ return {
       return { timeout_ms = 500, lsp_fallback = true, async = true }
     end,
   },
-  init = function()
-    vim.g.format_on_save = true
-
-    vim.api.nvim_create_user_command("ToggleFormatOnSave", function()
-      vim.g.format_on_save = not vim.g.format_on_save
-      print("Format On Save: " .. tostring(vim.g.format_on_save))
-    end, {})
-  end,
 }

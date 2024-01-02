@@ -13,6 +13,9 @@ if test -d "$HOME/.detaspace/bin"; then
   export PATH="$HOME/.detaspace/bin:$PATH"
 fi
 
+export GOPATH="$HOME/go/bin"
+export PATH="$PATH:$GOPATH"
+
 # colored manpages with bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=Monokai\ Extended'"
 
