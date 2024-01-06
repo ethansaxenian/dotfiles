@@ -56,7 +56,10 @@ local servers = {
         for _, pattern in ipairs({ "*", ".*" }) do
           local match = vim.fn.glob(path.join(workspace, pattern, "pyvenv.cfg"))
           if match ~= "" then
-            return path.join(path.dirname(match), "bin", "python")
+            local venv = path.dirname(match)
+            vim.env.VIRTUAL_ENV = venv
+            vim.env.PATH = venv .. "/bin:" .. vim.env.PATH
+            return path.join(venv, "bin", "python")
           end
         end
 
