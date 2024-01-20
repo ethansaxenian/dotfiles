@@ -24,6 +24,8 @@ vim.cmd.colorscheme("nightfox")
 -- fix slow python loading time
 vim.g.python3_host_prog = os.execute("which python3")
 
+vim.filetype.add({ extension = { templ = "templ" } })
+
 -- OPTIONS
 
 vim.o.number = true

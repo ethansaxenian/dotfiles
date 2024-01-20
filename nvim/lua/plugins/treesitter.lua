@@ -10,13 +10,16 @@ return {
     opts = {
       ensure_installed = {
         "bash",
+        "css",
         "dockerfile",
+        "html",
         "go",
         "gomod",
         "gosum",
         "json",
         "lua",
         "python",
+        "templ",
         "toml",
         "tsx",
         "typescript",

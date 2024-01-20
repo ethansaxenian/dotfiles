@@ -103,10 +103,20 @@ local servers = {
     },
   },
 
+  html = {
+    filetypes = { "html", "templ" },
+  },
+
+  tailwindcss = {
+    filetypes = { "templ", "javascript", "typescript", "react" },
+    init_options = { userLanguages = { templ = "html" } },
+  },
+
   bashls = {},
   tsserver = {},
   ruff_lsp = {},
   jsonls = {},
+  templ = {},
 }
 
 return {

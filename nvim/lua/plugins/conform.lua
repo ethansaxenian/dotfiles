@@ -14,6 +14,7 @@ return {
       typescript = { "prettier" },
       go = { "gofmt" },
       lua = { "stylua" },
+      templ = { "templ" },
     },
     formatters = {
       ruff_fix = {

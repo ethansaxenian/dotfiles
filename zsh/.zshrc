@@ -13,8 +13,8 @@ if test -d "$HOME/.detaspace/bin"; then
   export PATH="$HOME/.detaspace/bin:$PATH"
 fi
 
-export GOPATH="$HOME/go/bin"
-export PATH="$PATH:$GOPATH"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
 
 # colored manpages with bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=Monokai\ Extended'"
@@ -124,8 +124,6 @@ _fzf_comprun() {
     *)                  fzf "$@" ;;
   esac
 }
-
-bindkey -s '^v' 'fvim^M'
 
 # load f into current shell in case cd is needed
 alias f="source $DOTFILES/bin/f"
@@ -320,6 +318,7 @@ compctl -K _pip_completion pip3
 
 # add my own executables to $PATH
 export PATH="$DOTFILES/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # remove uniques from $PATH and $FPATH
 typeset -aU path
@@ -351,7 +350,7 @@ fi
 bindkey -v
 bindkey -v '^?' backward-delete-char
 
-# tab-space accepts autosuggestion
+# ctrl-space accepts autosuggestion
 bindkey '^ ' autosuggest-accept
 
 bindkey '^p' history-search-backward
