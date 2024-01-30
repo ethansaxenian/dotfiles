@@ -7,6 +7,7 @@ export DOTFILES=$HOME/.dotfiles
 
 if [[ $OSTYPE =~ ^darwin ]]; then
   export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+  export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 fi
 
 if test -d "$HOME/.detaspace/bin"; then
@@ -27,29 +28,7 @@ if [[ $OSTYPE =~ ^darwin ]]; then
   # Finally, clear download history from quarantine. https://mths.be/bum
   alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
-  # Hide/show all desktop icons (useful when presenting)
-  alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-  alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
   alias charm='open -a "PyCharm.app"'
-
-  alias sysup='sudo softwareupdate -i -a'
-
-  alias brewup="brew update && brew upgrade && brew cleanup && brew autoremove"
-fi
-# }}}
-# linux aliases {{{
-if [[ "$OSTYPE" =~ ^linux ]]; then
-  alias halt="sudo halt -p"
-  alias reboot="sudo reboot"
-
-  alias aptu="sudo apt update && sudo apt upgrade"
-  alias apti="sudo apt install"
-  alias aptr="sudo apt remove"
-  alias aptar="sudo apt autoremove"
-  alias aptl="apt list --installed"
-
-  alias c="clear"
 fi
 # }}}
 # misc aliases {{{
@@ -57,13 +36,12 @@ fi
 # enable aliases to be sudo'ed
 alias sudo="sudo "
 
-alias v="$EDITOR"
 alias vim="$EDITOR"
 
 # opens the zsh config file for editing
 alias config="vim $DOTFILES/zsh/.zshrc"
 
-alias vconfig="cd $DOTFILES/nvim && nvim init.lua"
+alias vconfig="nvim $DOTFILES/nvim/init.lua"
 
 # reloads the terminal
 alias reload="source $HOME/.zshrc"
@@ -133,7 +111,6 @@ alias vf="fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS"
 # }}}
 # python {{{
 
-alias py="python3"
 alias pip="pip3"
 alias makevenv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
@@ -194,33 +171,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias n="npm"
-alias ni="npm install"
-alias nid="npm install --save-dev"
-alias nig="npm install --location=global"
-alias nu="npm uninstall"
-alias ns="npm start"
-alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
-alias npmup='npm -g cache verify && npm -g update && npm-check-updates -u && npm install'
-
 # }}}
 # functions {{{
 
 function mkcd() {
   mkdir -p "$1" && cd "$1";
-}
-
-# can do "up" or "up x"
-function up {
-  if [[ "$#" < 1 ]] ; then
-    cd ..
-  else
-    CDSTR=""
-    for i in {1..$1} ; do
-      CDSTR="../$CDSTR"
-    done
-    cd $CDSTR
-  fi
 }
 
 # }}}
@@ -267,8 +222,6 @@ export HISTSIZE=2000
 
 setopt NO_CASE_GLOB
 setopt AUTO_CD
-# share history across multiple zsh sessions
-setopt SHARE_HISTORY
 # append to history
 setopt APPEND_HISTORY
 # adds commands as they are typed, not at shell exit
@@ -346,9 +299,9 @@ elif [[ $OSTYPE =~ ^linux ]]; then
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
+
 # vi-mode
 bindkey -v
-bindkey -v '^?' backward-delete-char
 
 # ctrl-space accepts autosuggestion
 bindkey '^ ' autosuggest-accept
@@ -357,3 +310,4 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
 bindkey -s '^v' 'vf\n'
+bindkey -s '^f' 'tmux-sessionizer\n'
