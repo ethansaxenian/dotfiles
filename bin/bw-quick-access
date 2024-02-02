@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+host=localhost
+port=8087
+
+if ! pgrep -f "bw serve" &> /dev/null; then
+  bw serve --hostname $host --port $port &> /dev/null &
+fi
+
+while ! curl -s "${host}:${port}/status" &> /dev/null; do
+  sleep 0.1
+done
+
+if [[ $(curl -s "${host}:${port}/status" | jq -r '.data.template.status') == "locked" ]]; then
+  read -r -s -p "Enter master password: " master_password
+  curl -s -X POST "${host}:${port}/unlock" -d "{\"password\": \"${master_password}\"}" -H 'Content-Type: application/json' &> /dev/null
+fi
+
+
+items=$(curl -s "${host}:${port}/list/object/items" | jq -r '.data.data.[] | {id,name} | join(" ")')
+
+if [[ -z "$items" ]]; then
+  exit 1
+fi
+
+echo "$items" | fzf \
+  --with-nth 2.. \
+  --height=100% \
+  --border=none \
+  --info=hidden \
+  --no-scrollbar \
+  --bind="enter:execute-silent(open -a Bitwarden)+accept" \
+  --bind="ctrl-u:execute-silent(curl -s $host:$port/object/username/{1} | jq -r '.data.data' | tr -d '\n' | pbcopy)+accept" \
+  --bind="ctrl-p:execute-silent(curl -s $host:$port/object/password/{1} | jq -r '.data.data' | tr -d '\n' | pbcopy)+accept" \
+  --bind="ctrl-t:execute-silent(curl -s $host:$port/object/totp/{1} | jq -r '.data.data' | tr -d '\n' | pbcopy)+accept" \
+  --bind="ctrl-g:execute-silent(curl -s \"$host:$port/generate?length=18\" | jq -r '.data.data' | tr -d '\n' | pbcopy)+accept" \
+  --bind="ctrl-s:execute-silent(curl -s -X POST $host:$port/sync &> /dev/null)+reload(curl -s $host:$port/list/object/items | jq -r '.data.data.[] | {id,name} | join(\" \")')" \
+  --bind="ctrl-i:execute-silent(echo {1} | tr -d '\n' | pbcopy)+accept"
+
