@@ -168,8 +168,9 @@ alias gstp="git stash pop"
 
 export NVM_COLORS=Bmgre
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@"
 
 # }}}
 # functions {{{
@@ -240,10 +241,6 @@ setopt CORRECT_ALL
 
 # }}}
 # completion {{{
-if test $(command -v bw); then
-  eval "$(bw completion --shell zsh); compdef _bw bw;"
-fi
-
 fpath+="$HOME"/.zfunc
 
 if test $(command -v brew); then
