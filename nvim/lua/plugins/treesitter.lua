@@ -24,8 +24,6 @@ return {
         "tsx",
         "typescript",
         "javascript",
-        "vim",
-        "vimdoc",
         "yaml",
       },
       sync_install = false,

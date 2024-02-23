@@ -138,6 +138,7 @@ vim.keymap.set("n", "<leader>so", ":so $MYVIMRC<CR>")
 vim.keymap.set("n", "<leader><CR>", vim.cmd.Ex)
 
 -- don't use arrow keys
+vim.keymap.set("", "<space>", "<nop>")
 vim.keymap.set("", "<up>", "<nop>")
 vim.keymap.set("", "<down>", "<nop>")
 vim.keymap.set("", "<left>", "<nop>")

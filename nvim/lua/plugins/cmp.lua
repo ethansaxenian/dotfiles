@@ -25,7 +25,7 @@ return {
         mapping = {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
+            behavior = cmp.ConfirmBehavior.Insert,
             select = true,
           }),
           ["<C-j>"] = cmp.mapping(function(fallback)

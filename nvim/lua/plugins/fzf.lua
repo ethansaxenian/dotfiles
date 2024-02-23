@@ -22,6 +22,7 @@ vim.keymap.set("n", "<leader>f", _FzfFiles)
 vim.keymap.set("n", "<leader>F", _AllFiles)
 vim.keymap.set("n", "<leader>rg", vim.cmd.RG)
 vim.keymap.set("n", "<leader>j", vim.cmd.Jumps)
+vim.keymap.set("n", "<leader>sh", vim.cmd.Help)
 
 return {
   "junegunn/fzf",
