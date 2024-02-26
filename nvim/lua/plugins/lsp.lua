@@ -123,13 +123,13 @@ return {
       {
         "williamboman/mason.nvim",
         build = ":MasonUpdate",
-        config = true
+        config = true,
       },
       {
         "williamboman/mason-lspconfig.nvim",
         opts = {
-          ensure_installed = vim.tbl_keys(servers)
-        }
+          ensure_installed = vim.tbl_keys(servers),
+        },
       },
       "hrsh7th/cmp-nvim-lsp",
     },
