@@ -67,6 +67,8 @@ vim.o.timeoutlen = 500
 
 vim.o.foldenable = false
 
+vim.o.termguicolors = true
+
 -- STATUS LINE
 
 vim.cmd([[
@@ -130,9 +132,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 -- ctrl-c should behave the same as esc
 vim.keymap.set("i", "<C-c>", "<ESC>")
-
--- source nvim nvim
-vim.keymap.set("n", "<leader>so", ":so $MYVIMRC<CR>")
 
 -- open file browser
 vim.keymap.set("n", "<leader><CR>", vim.cmd.Ex)
