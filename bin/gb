@@ -3,7 +3,8 @@
 chosen_branch=$(git branch --sort=-HEAD | fzf --header-lines=1 \
   --preview="git log {} --color=always --format='%C(bold red)%h%C(auto)%d %s %C(green)(%cr) %C(bold blue)<%an>'" \
   --preview-window="hidden" \
-  --bind="ctrl-/:change-preview-window(down,50%,border-top|right,50%,border-left|)")
+  --bind="ctrl-/:change-preview-window(down,50%,border-top|right,50%,border-left|)" \
+  --bind="ctrl-d:execute(git branch -d {})")
 
 if [[ -n $chosen_branch ]]; then
   git checkout "$(echo "$chosen_branch" | awk '{print $1}')"
