@@ -2,6 +2,7 @@ return {
   {
     "EdenEast/nightfox.nvim",
     opts = {
+      options = { inverse = { visual = true } },
       palettes = {
         nightfox = {
           -- swap background and statusline colors
