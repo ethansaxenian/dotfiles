@@ -147,7 +147,6 @@ alias lla="ls -lA"
 
 alias ga="git add -A"
 alias gac="git add -A && git commit -m"
-alias gb="git branch"
 alias gbd="git branch -d"
 alias gc="git commit -m"
 alias gco="git checkout"
