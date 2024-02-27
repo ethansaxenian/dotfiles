@@ -1,13 +1,13 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # use fzf and the spotify api to search for a song, then play it with shpotify (https://github.com/hnarayanan/shpotify)
 
-if test ! $(command -v spotify); then
+if test ! "$(command -v spotify)"; then
   echo "shpotify not installed"
   exit 1
 fi
 
-if test ! $(command -v jq); then
+if test ! "$(command -v jq)"; then
   echo "jq not installed"
   exit 1
 fi
@@ -19,10 +19,10 @@ if [[ ! -a "$USER_CONFIG_FILE" ]]; then
   exit 1
 fi
 
-source "${USER_CONFIG_FILE}";
+source "$USER_CONFIG_FILE";
 
 function getAccessToken() {
-  SHPOTIFY_CREDENTIALS=$(printf "${CLIENT_ID}:${CLIENT_SECRET}" | base64 | tr -d "\n");
+  SHPOTIFY_CREDENTIALS=$(printf '%s:%s' "$CLIENT_ID" "$CLIENT_SECRET" | base64 | tr -d "\n");
 
   SPOTIFY_TOKEN_URI="https://accounts.spotify.com/api/token"
   SPOTIFY_SEARCH_API="https://api.spotify.com/v1/search"
@@ -36,7 +36,7 @@ function getAccessToken() {
   )
 
   if ! [[ "${SPOTIFY_TOKEN_RESPONSE_DATA}" =~ "access_token" ]]; then
-    echo "Autorization failed, please check ${USER_CONFG_FILE}"
+    echo "Autorization failed, please check ${USER_CONFIG_FILE}"
     echo "${SPOTIFY_TOKEN_RESPONSE_DATA}"
     exit 1
   fi
@@ -68,12 +68,12 @@ function playSong() {
   spotify play uri "spotify:track:$spotify_uri"
 }
 
-suppress_fzf="${@[-1]}"
+suppress_fzf="${BASH_ARGV[0]}"
 if [[ "$suppress_fzf" == "no-fzf" ]]; then
   # query = all but last arg
-  query=${@:1:$#@[@]-1}
+  query=${*:1:$#-1}
 else
-  query="$@"
+  query="$*"
 fi
 
 if [[ -z "$query" ]]; then
@@ -88,7 +88,7 @@ else
   # 'filter' mode
   getAccessToken
 
-  spotify_results=$(searchSpotify $query)
+  spotify_results=$(searchSpotify "$query")
 
   # there's gotta be a better way to do this...
   if [[ "$suppress_fzf" == "no-fzf" ]]; then

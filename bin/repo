@@ -1,10 +1,9 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # Call from a local repo to open the repository on github/bitbucket in browser
 # Modified version of https://github.com/zeke/ghwd
 
 # Figure out github repo base URL
-local base_url
 base_url=$(git config --get remote.origin.url)
 base_url=${base_url%\.git} # remove .git from end of string
 
@@ -23,13 +22,13 @@ base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
 # Validate that this folder is a git folder
 if ! git branch 2>/dev/null 1>&2 ; then
   echo "Not a git repo!"
-  return $?
+  exit 1
 fi
 
 # Find current directory relative to .git parent
 full_path=$(pwd)
 git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
-relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
+relative_path=${full_path#"$git_base_path"} # remove leading git_base_path from working directory
 
 # If filename argument is present, append it
 if [ "$1" ]; then
@@ -48,6 +47,6 @@ branch=${branch#remotes\/origin\/}
 url="$base_url/$tree/$branch$relative_path"
 
 
-echo "Calling $(type open) for $url"
+echo "Calling $(which open) for $url"
 
 open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);

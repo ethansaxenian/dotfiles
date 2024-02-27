@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-
-git diff --name-only --relative --diff-filter=d | xargs bat --diff --diff-context=4
