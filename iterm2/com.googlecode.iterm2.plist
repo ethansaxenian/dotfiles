@@ -1046,7 +1046,7 @@ Resize Split Pane.Move Divider Right</string>
 			<key>Minimum Contrast</key>
 			<real>0.0</real>
 			<key>Mouse Reporting</key>
-			<false/>
+			<true/>
 			<key>Movement Keys Scroll Outside Interactive Apps</key>
 			<false/>
 			<key>Name</key>

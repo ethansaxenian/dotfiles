@@ -1,8 +1,13 @@
 vim.g.virtual_text_on = true
 
-local lsp_group = vim.api.nvim_create_augroup("Lsp", { clear = true })
+vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
+  vim.diagnostic.config({ virtual_text = not vim.g.virtual_text_on })
+  vim.g.virtual_text_on = not vim.g.virtual_text_on
+  print("Diagnostic Virtual Text: " .. tostring(vim.g.virtual_text_on))
+end, {})
+
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = lsp_group,
+  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(event)
     local opts = { buffer = event.buf }
 
@@ -20,12 +25,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
     vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
     vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
-
-    vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
-      vim.diagnostic.config({ virtual_text = not vim.g.virtual_text_on })
-      vim.g.virtual_text_on = not vim.g.virtual_text_on
-      print("Diagnostic Virtual Text: " .. tostring(vim.g.virtual_text_on))
-    end, {})
   end,
 })
 
@@ -76,7 +75,8 @@ local servers = {
         workspace = {
           checkThirdParty = false,
           library = {
-            vim.env.VIMRUNTIME,
+            "${3rd}/luv/library",
+            unpack(vim.api.nvim_get_runtime_file("", true)),
           },
         },
         diagnostics = {

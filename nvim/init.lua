@@ -27,23 +27,23 @@ vim.filetype.add({ extension = { templ = "templ" } })
 
 -- OPTIONS
 
-vim.o.number = true
-vim.o.relativenumber = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 
-vim.o.scrolloff = 8
+vim.opt.scrolloff = 8
 
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.hlsearch = true
-vim.o.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
 
-vim.o.shiftwidth = 2
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
-vim.o.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
 
-vim.o.autoindent = true
-vim.o.smartindent = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
 
 vim.opt.wildmode = { "longest", "full" }
 vim.opt.wildignore = { "*.docx", "*.jpg", "*.png", "*.gif", "*.pdf", "*.pyc", "*.exe", "*.o", "*.img", "*.xlsx" }
@@ -54,19 +54,19 @@ vim.opt.breakindent = true
 
 vim.opt.matchpairs:append("<:>")
 
-vim.o.splitbelow = true
-vim.o.splitright = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 
-vim.o.backup = false
-vim.o.writebackup = false
-vim.o.undofile = true
-vim.o.swapfile = false
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.undofile = true
+vim.opt.swapfile = false
 
-vim.o.timeoutlen = 500
+vim.opt.timeoutlen = 500
 
-vim.o.foldenable = false
+vim.opt.foldenable = false
 
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 
 -- STATUS LINE
 
