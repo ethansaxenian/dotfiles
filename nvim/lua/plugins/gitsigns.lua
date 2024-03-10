@@ -13,6 +13,7 @@ return {
     init = function()
       vim.keymap.set("n", "<leader>hp", require("gitsigns").preview_hunk)
       vim.keymap.set("n", "<leader>hr", require("gitsigns").reset_hunk)
+      vim.keymap.set("n", "<leader>hq", require("gitsigns").setqflist)
     end,
   },
 }

@@ -20,6 +20,7 @@ vim.keymap.set("n", "<leader>F", function()
 end)
 vim.keymap.set("n", "<leader>rg", vim.cmd.RG)
 vim.keymap.set("n", "<leader>sh", vim.cmd.Help)
+vim.keymap.set("n", "<leader>l", vim.cmd.BLines)
 
 return {
   "junegunn/fzf",

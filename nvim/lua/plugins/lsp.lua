@@ -30,6 +30,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 local servers = {
   pyright = {
+    settings = {
+      python = {
+        analysis = {
+          diagnosticSeverityOverrides = {
+            reportUndefinedVariable = "none",
+          },
+        },
+      },
+    },
     capabilities = {
       textDocument = {
         publishDiagnostics = {
