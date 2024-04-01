@@ -10,8 +10,8 @@ echo "Installing poetry..."
 curl -sSL https://install.python-poetry.org | POETRY_HOME=$HOME/.poetry python3 -
 
 echo "Insatlling poetry completions..."
-if ! test -d $HOME/.zfunc; then
-  mkdir $HOME/.zfunc
+if ! test -d "$HOME"/.zfunc; then
+  mkdir "$HOME"/.zfunc
 fi
 
-poetry completions zsh > $HOME/.zfunc/_poetry
+poetry completions zsh > "$HOME"/.zfunc/_poetry
