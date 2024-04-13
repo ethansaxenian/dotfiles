@@ -135,13 +135,6 @@ vim.keymap.set("i", "<C-c>", "<ESC>")
 -- open file browser
 vim.keymap.set("n", "<leader><CR>", vim.cmd.Ex)
 
--- don't use arrow keys
-vim.keymap.set("", "<space>", "<nop>")
-vim.keymap.set("", "<up>", "<nop>")
-vim.keymap.set("", "<down>", "<nop>")
-vim.keymap.set("", "<left>", "<nop>")
-vim.keymap.set("", "<right>", "<nop>")
-
 -- center cursor when searching or scrolling
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
@@ -178,10 +171,8 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
-vim.keymap.set("", "<C-j>", "<C-w>j")
-vim.keymap.set("", "<C-k>", "<C-w>k")
-vim.keymap.set("", "<C-h>", "<C-w>h")
-vim.keymap.set("", "<C-l>", "<C-w>l")
+vim.keymap.set("n", "]c", vim.cmd.cnext)
+vim.keymap.set("n", "[c", vim.cmd.cprev)
 
 -- Terminal Mode
 
