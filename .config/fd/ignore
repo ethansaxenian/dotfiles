@@ -1,0 +1,13 @@
+.Trash
+node_modules
+.git
+.idea
+__pycache__
+Library
+.venv
+venv
+ios
+android
+.android
+.cocoapods
+postgres*data

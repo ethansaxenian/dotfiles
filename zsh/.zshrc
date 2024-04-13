@@ -60,16 +60,28 @@ alias mkd="mkdir -pv"
 # }}}
 # fzf {{{
 
-export FZF_DEFAULT_OPTS='--height=100% --border --layout=default --color=dark --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef --bind="alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap" --preview-window="border-left"'
+FZF_DEFAULT_OPTS='--height=100%'
+FZF_DEFAULT_OPTS+=' --border'
+FZF_DEFAULT_OPTS+=' --layout=default'
+FZF_DEFAULT_OPTS+=' --color=dark'
+FZF_DEFAULT_OPTS+=' --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe'
+FZF_DEFAULT_OPTS+=' --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
+FZF_DEFAULT_OPTS+=' --bind="alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap"'
+FZF_DEFAULT_OPTS+=' --preview-window="border-left"'
+export FZF_DEFAULT_OPTS
 
-export FD_EXCLUDES="{.Trash,node_modules,.git,.idea,__pycache__,Library,.venv,venv,ios,android,.android,.cocoapods}"
-export FD_OPTIONS="--ignore --follow --strip-cwd-prefix -E '$FD_EXCLUDES'"
-export FZF_DEFAULT_COMMAND="fd --type file $FD_OPTIONS"
+export FD_OPTIONS="--ignore --hidden --follow --strip-cwd-prefix"
+export FZF_DEFAULT_COMMAND="fd --type file $FD_OPTIONS --no-ignore"
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 export FZF_ALT_C_COMMAND="fd --type directory $FD_OPTIONS"
 export FZF_ALT_C_OPTS="--preview 'tree -C {}' --bind 'ctrl-/:change-preview-window(hidden|)'"
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window up:3:hidden:wrap --bind 'ctrl-/:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'"
+
+FZF_CTRL_R_OPTS="--preview 'echo {}'"
+FZF_CTRL_R_OPTS+=" --preview-window up:3:hidden:wrap"
+FZF_CTRL_R_OPTS+=" --bind 'ctrl-/:toggle-preview'"
+FZF_CTRL_R_OPTS+=" --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'"
+export FZF_CTRL_R_OPTS
 
 # Options to fzf command
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS --height=100% --layout=default"
