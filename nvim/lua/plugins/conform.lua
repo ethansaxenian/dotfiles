@@ -18,7 +18,7 @@ return {
     },
     formatters = {
       ruff_fix = {
-        prepend_args = { "--select=I" },
+        prepend_args = { "--select=I", "--select=F401" },
       },
     },
     format_on_save = function()
