@@ -9,23 +9,18 @@ return {
   "stevearc/conform.nvim",
   opts = {
     formatters_by_ft = {
-      python = { "ruff_fix", "ruff_format" },
+      python = { "ruff_organize_imports", "ruff_format" },
       javascript = { "prettier" },
       typescript = { "prettier" },
       go = { "gofmt" },
       lua = { "stylua" },
       templ = { "templ" },
     },
-    formatters = {
-      ruff_fix = {
-        prepend_args = { "--select=I", "--select=F401" },
-      },
-    },
     format_on_save = function()
       if not vim.g.format_on_save then
         return
       end
-      return { timeout_ms = 500, lsp_fallback = true, async = true }
+      return { timeout_ms = 500, lsp_fallback = true }
     end,
   },
 }

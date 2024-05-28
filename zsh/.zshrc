@@ -231,7 +231,7 @@ zstyle ':vcs_info:*' enable git
 # shell options {{{
 export HISTFILE=$HOME/.zsh_history
 export SAVEHIST=5000
-export HISTSIZE=2000
+export HISTSIZE=5000
 
 setopt NO_CASE_GLOB
 setopt AUTO_CD
@@ -264,6 +264,7 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 # partial completion suggestions
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 # pip zsh completion start
 function _pip_completion {
@@ -313,7 +314,7 @@ fi
 bindkey -v
 
 # ctrl-space accepts autosuggestion
-bindkey '^ ' autosuggest-accept
+bindkey '^y' autosuggest-accept
 
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward

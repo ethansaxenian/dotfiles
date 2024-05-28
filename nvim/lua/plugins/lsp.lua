@@ -120,7 +120,7 @@ local servers = {
 
   bashls = {},
   tsserver = {},
-  ruff_lsp = {},
+  ruff = {},
   jsonls = {},
   templ = {},
 }
