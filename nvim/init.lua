@@ -68,6 +68,8 @@ vim.opt.foldenable = false
 
 vim.opt.termguicolors = true
 
+vim.opt.formatoptions:remove("o")
+
 -- STATUS LINE
 
 vim.cmd([[
