@@ -144,7 +144,11 @@ return {
     },
 
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities()
+      )
 
       for server, server_opts in pairs(servers) do
         server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
