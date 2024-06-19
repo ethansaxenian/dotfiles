@@ -49,12 +49,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
     vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, opts)
     vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, opts)
-
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client ~= nil and client.name == "basedpyright" then
-      local python_path = get_python_path(client.root_dir)
-      client.settings = vim.tbl_deep_extend("force", client.settings, { python = { pythonPath = python_path } })
-    end
   end,
 })
 
@@ -81,15 +75,20 @@ local servers = {
         },
       },
     },
-    capabilities = {
-      textDocument = {
-        publishDiagnostics = {
-          tagSupport = {
-            valueSet = { 2 },
-          },
-        },
-      },
-    },
+    on_attach = function(client)
+      local python_path = get_python_path(client.root_dir)
+      client.settings = vim.tbl_deep_extend("force", client.settings, { python = { pythonPath = python_path } })
+      -- client.server_capabilities.semanticTokensProvider = nil
+    end,
+    -- capabilities = {
+    --   textDocument = {
+    --     publishDiagnostics = {
+    --       tagSupport = {
+    --         valueSet = { 2 },
+    --       },
+    --     },
+    --   },
+    -- },
   },
 
   lua_ls = {
