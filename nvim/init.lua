@@ -155,8 +155,6 @@ vim.keymap.set("n", "<leader>c", ":set cursorline! cursorcolumn!<CR>")
 vim.keymap.set("n", "<leader>w", ":set wrap! wrap?<CR>")
 vim.keymap.set("n", "<leader>n", "<Plug>ToggleNumber")
 
-vim.keymap.set("n", "<leader>r", vim.cmd.registers)
-
 -- yank to system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<leader>Y", [["+Y]])

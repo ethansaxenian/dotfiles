@@ -5,7 +5,6 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter-context",
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "nvim-treesitter/playground",
     },
     opts = {
       ensure_installed = {
@@ -40,6 +39,26 @@ return {
             ["ic"] = "@class.inner",
           },
           include_surrounding_whitespace = true,
+        },
+        move = {
+          enable = true,
+          set_jumps = true,
+          goto_next_start = {
+            ["]f"] = "@function.outer",
+            ["]]"] = "@class.outer",
+          },
+          goto_next_end = {
+            ["]F"] = "@function.outer",
+            ["]["] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[f"] = "@function.outer",
+            ["[["] = "@class.outer",
+          },
+          goto_previous_end = {
+            ["[F"] = "@function.outer",
+            ["[]"] = "@class.outer",
+          },
         },
       },
     },

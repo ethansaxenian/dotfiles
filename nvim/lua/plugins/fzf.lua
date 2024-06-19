@@ -1,31 +1,45 @@
-local function _FzfFiles()
-  local is_git = os.execute("git rev-parse --is-inside-work-tree 2>/dev/null")
-  if is_git == 0 then
-    vim.cmd("GFiles --cached --others --exclude-standard")
-  else
-    vim.cmd("Files")
-  end
-end
-
-vim.g.fzf_layout = { window = { width = 1, height = 1 } }
-vim.g.fzf_preview_window = { "right,50%", "ctrl-p" }
-
-vim.keymap.set("n", "<leader>b", vim.cmd.Buffers)
-vim.keymap.set("n", "<leader>h", function()
-  vim.cmd("History:")
-end)
-vim.keymap.set("n", "<leader>f", _FzfFiles)
-vim.keymap.set("n", "<leader>F", function()
-  vim.cmd("Files")
-end)
-vim.keymap.set("n", "<leader>FF", function()
-  vim.cmd("Files ~")
-end)
-vim.keymap.set("n", "<leader>rg", vim.cmd.RG)
-vim.keymap.set("n", "<leader>sh", vim.cmd.Help)
-vim.keymap.set("n", "<leader>l", vim.cmd.BLines)
-
 return {
-  "junegunn/fzf",
-  "junegunn/fzf.vim",
+  "ibhagwan/fzf-lua",
+  dependencies = { "junegunn/fzf" },
+  opts = {
+    winopts = {
+      fullscreen = true,
+      preview = { horizontal = "right:50%" },
+    },
+    keymap = {
+      builtin = {
+        ["<F1>"] = "toggle-help",
+        ["<C-w>"] = "toggle-preview-wrap",
+        ["<C-p>"] = "toggle-preview",
+        ["<C-/>"] = "toggle-preview-cw",
+        ["<M-n>"] = "preview-down",
+        ["<M-p>"] = "preview-up",
+        ["<M-j>"] = "preview-page-down",
+        ["<M-k>"] = "preview-page-up",
+      },
+    },
+    fzf_opts = {
+      ["--layout"] = "default",
+    },
+    lsp = {
+      symbols = {
+        symbol_style = 3,
+      },
+    },
+  },
+  config = function(_, opts)
+    local fzf = require("fzf-lua")
+    fzf.setup(opts)
+
+    vim.keymap.set("n", "<leader>b", fzf.buffers)
+    vim.keymap.set("n", "<leader>f", fzf.files)
+    vim.keymap.set("n", "<leader>g", fzf.live_grep_native)
+    vim.keymap.set("n", "<leader>h", fzf.helptags)
+    vim.keymap.set("n", "<leader>ch", fzf.command_history)
+    vim.keymap.set("n", "<leader>r", fzf.registers)
+    vim.keymap.set("n", "<leader>q", fzf.quickfix)
+    vim.keymap.set("n", "<leader>l", fzf.loclist)
+    vim.keymap.set("n", "<leader>ds", fzf.lsp_document_symbols)
+    vim.keymap.set("n", "<leader>ws", fzf.lsp_live_workspace_symbols)
+  end,
 }

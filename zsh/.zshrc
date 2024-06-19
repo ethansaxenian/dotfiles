@@ -321,3 +321,4 @@ bindkey '^n' history-search-forward
 
 bindkey -s '^v' 'vf\n'
 bindkey -s '^f' 'tmux-sessionizer\n'
+bindkey -s '^[t' 'tmux a\n'

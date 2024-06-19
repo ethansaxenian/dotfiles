@@ -10,14 +10,6 @@
 	<false/>
 	<key>Command</key>
 	<string>/bin/zsh-il</string>
-	<key>Coprocess MRU</key>
-	<array>
-		<string>vim /Users/ethansaxenian/.dotfiles/mycolors.vim</string>
-		<string>echo /Users/ethansaxenian/.dotfiles/Brewfile.lock.json</string>
-		<string>echo /Users/ethansaxenian/.dotfiles/mycolors.vim</string>
-		<string>echo /Users/ethansaxenian/.dotfiles/README.md</string>
-		<string>echo /Users/ethansaxenian/Projects/Python/fraction.py</string>
-	</array>
 	<key>CopySelection</key>
 	<true/>
 	<key>Default Bookmark Guid</key>
