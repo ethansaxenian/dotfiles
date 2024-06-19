@@ -1,0 +1,13 @@
+{
+  "reportUnusedVariable": false,
+  "reportUndefinedVariable": false,
+  "strictListInference": true,
+  "strictDictionaryInference": true,
+  "strictSetInference": true,
+  "reportDeprecated": "warning",
+  "reportMatchNotExhaustive": "error",
+  "reportPrivateUsage": "warning",
+  "reportUnusedClass": "warning",
+  "reportUnusedFunction": "warning",
+  "reportUnreachable": "warning"
+}
