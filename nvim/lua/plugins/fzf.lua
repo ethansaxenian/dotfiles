@@ -1,21 +1,27 @@
 return {
   "ibhagwan/fzf-lua",
-  dependencies = { "junegunn/fzf" },
   opts = {
     winopts = {
       fullscreen = true,
-      preview = { horizontal = "right:50%" },
+      preview = {
+        horizontal = "right:50%",
+        vertical = "up:50%",
+        scrollbar = "float",
+      },
+    },
+    hls = {
+      border = "Comment",
+      preview_border = "Comment",
     },
     keymap = {
       builtin = {
         ["<F1>"] = "toggle-help",
         ["<C-w>"] = "toggle-preview-wrap",
         ["<C-p>"] = "toggle-preview",
-        ["<C-/>"] = "toggle-preview-cw",
-        ["<M-n>"] = "preview-down",
-        ["<M-p>"] = "preview-up",
-        ["<M-j>"] = "preview-page-down",
-        ["<M-k>"] = "preview-page-up",
+        ["<M-j>"] = "preview-down",
+        ["<M-k>"] = "preview-up",
+        ["<M-d>"] = "preview-page-down",
+        ["<M-u>"] = "preview-page-up",
       },
     },
     fzf_opts = {

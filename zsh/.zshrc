@@ -68,6 +68,8 @@ FZF_DEFAULT_OPTS+=' --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#
 FZF_DEFAULT_OPTS+=' --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
 FZF_DEFAULT_OPTS+=' --bind="alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap"'
 FZF_DEFAULT_OPTS+=' --preview-window="border-left"'
+FZF_DEFAULT_OPTS+=' --pointer=">"'
+FZF_DEFAULT_OPTS+=' --marker=">"'
 export FZF_DEFAULT_OPTS
 
 export FD_OPTIONS="--ignore --hidden --follow --strip-cwd-prefix"
