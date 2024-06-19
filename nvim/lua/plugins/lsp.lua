@@ -1,5 +1,7 @@
 vim.g.virtual_text_on = true
 
+vim.diagnostic.config({ underline = false })
+
 vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
   vim.diagnostic.config({ virtual_text = not vim.g.virtual_text_on })
   vim.g.virtual_text_on = not vim.g.virtual_text_on

@@ -33,12 +33,14 @@ return {
         },
         formatting = {
           format = function(entry, vim_item)
-            vim_item.menu = ({
+            local source = ({
               nvim_lsp = "[LSP]",
               buffer = "[Buffer]",
               path = "[Path]",
               tmux = "[TMUX]",
             })[entry.source.name]
+
+            vim_item.menu = source .. " " .. (vim_item.menu or "")
             return vim_item
           end,
         },
