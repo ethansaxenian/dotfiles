@@ -12,8 +12,7 @@ while ! curl -s "${host}:${port}/status" &> /dev/null; do
 done
 
 if [[ $(curl -s "${host}:${port}/status" | jq -r '.data.template.status') == "locked" ]]; then
-  read -r -s -p "Enter master password: " master_password
-  curl -s -X POST "${host}:${port}/unlock" -d "{\"password\": \"${master_password}\"}" -H 'Content-Type: application/json' &> /dev/null
+  curl -s -X POST "${host}:${port}/unlock" -d "{\"password\": \"$(sudo cat /etc/bw_pass)\"}" -H 'Content-Type: application/json' &> /dev/null
 fi
 
 
@@ -37,3 +36,4 @@ echo "$items" | fzf \
   --bind="ctrl-s:execute-silent(curl -s -X POST $host:$port/sync &> /dev/null)+reload(curl -s $host:$port/list/object/items | jq -r '.data.data.[] | {id,name} | join(\" \")')" \
   --bind="ctrl-i:execute-silent(echo {1} | tr -d '\n' | pbcopy)+accept"
 
+curl -s -X POST "${host}:${port}/lock" &> /dev/null

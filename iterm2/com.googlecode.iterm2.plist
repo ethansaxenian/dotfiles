@@ -32,6 +32,8 @@
 	<true/>
 	<key>FlashTabBarInFullscreen</key>
 	<false/>
+	<key>GenerativeAIAllowed</key>
+	<false/>
 	<key>GlobalKeyMap</key>
 	<dict>
 		<key>0x19-0x60000</key>
@@ -284,6 +286,10 @@ Resize Split Pane.Move Divider Right</string>
 	<key>NeverWarnAboutShortLivedSessions_617B66AF-7CDE-45FC-BF76-0DC37F154736</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_617B66AF-7CDE-45FC-BF76-0DC37F154736_selection</key>
+	<integer>0</integer>
+	<key>NeverWarnAboutShortLivedSessions_E1D1C4B8-3A04-4982-9532-49CBEACA2924</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_E1D1C4B8-3A04-4982-9532-49CBEACA2924_selection</key>
 	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
@@ -1716,7 +1722,7 @@ Resize Split Pane.Move Divider Right</string>
 			<key>HotKey Window Animates</key>
 			<false/>
 			<key>HotKey Window AutoHides</key>
-			<true/>
+			<false/>
 			<key>HotKey Window Dock Click Action</key>
 			<integer>0</integer>
 			<key>HotKey Window Floats</key>
@@ -2253,7 +2259,7 @@ Resize Split Pane.Move Divider Right</string>
 			<key>Smart Cursor Color</key>
 			<true/>
 			<key>Space</key>
-			<integer>0</integer>
+			<integer>-1</integer>
 			<key>Status Bar Layout</key>
 			<dict>
 				<key>advanced configuration</key>
