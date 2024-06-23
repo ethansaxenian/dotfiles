@@ -8,29 +8,6 @@ vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
   print("Diagnostic Virtual Text: " .. tostring(vim.g.virtual_text_on))
 end, {})
 
-local function get_python_path(workspace)
-  local path = require("lspconfig/util").path
-
-  -- Use activated virtualenv.
-  if vim.env.VIRTUAL_ENV then
-    return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
-  end
-
-  -- Find and use virtualenv in workspace directory.
-  for _, pattern in ipairs({ "*", ".*" }) do
-    local match = vim.fn.glob(path.join(workspace, pattern, "pyvenv.cfg"))
-    if match ~= "" then
-      local venv = path.dirname(match)
-      vim.env.VIRTUAL_ENV = venv
-      vim.env.PATH = venv .. "/bin:" .. vim.env.PATH
-      return path.join(venv, "bin", "python")
-    end
-  end
-
-  -- Fallback to system Python.
-  return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
-end
-
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(event)
@@ -76,19 +53,41 @@ local servers = {
       },
     },
     on_attach = function(client)
+      local function get_python_path(workspace)
+        local path = require("lspconfig/util").path
+
+        -- Use activated virtualenv.
+        if vim.env.VIRTUAL_ENV then
+          return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+        end
+
+        -- Find and use virtualenv in workspace directory.
+        for _, pattern in ipairs({ "*", ".*" }) do
+          local match = vim.fn.glob(path.join(workspace, pattern, "pyvenv.cfg"))
+          if match ~= "" then
+            local venv = path.dirname(match)
+            vim.env.VIRTUAL_ENV = venv
+            vim.env.PATH = venv .. "/bin:" .. vim.env.PATH
+            return path.join(venv, "bin", "python")
+          end
+        end
+
+        -- Fallback to system Python.
+        return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+      end
       local python_path = get_python_path(client.root_dir)
       client.settings = vim.tbl_deep_extend("force", client.settings, { python = { pythonPath = python_path } })
-      -- client.server_capabilities.semanticTokensProvider = nil
+      client.server_capabilities.semanticTokensProvider = nil
     end,
-    -- capabilities = {
-    --   textDocument = {
-    --     publishDiagnostics = {
-    --       tagSupport = {
-    --         valueSet = { 2 },
-    --       },
-    --     },
-    --   },
-    -- },
+    capabilities = {
+      textDocument = {
+        publishDiagnostics = {
+          tagSupport = {
+            valueSet = { 2 },
+          },
+        },
+      },
+    },
   },
 
   lua_ls = {
@@ -113,10 +112,11 @@ local servers = {
   gopls = {
     settings = {
       gopls = {
-        experimentalPostfixCompletions = true,
         analyses = {
-          unusedparams = true,
+          fieldalignment = true,
+          shadow = true,
           unusedvariable = true,
+          useany = true,
         },
         staticcheck = true,
       },

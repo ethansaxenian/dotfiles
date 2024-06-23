@@ -40,7 +40,7 @@ return {
     vim.keymap.set("n", "<leader>b", fzf.buffers)
     vim.keymap.set("n", "<leader>f", fzf.files)
     vim.keymap.set("n", "<leader>g", fzf.live_grep_native)
-    vim.keymap.set("n", "<leader>h", fzf.helptags)
+    vim.keymap.set("n", "<leader>sh", fzf.helptags)
     vim.keymap.set("n", "<leader>ch", fzf.command_history)
     vim.keymap.set("n", "<leader>r", fzf.registers)
     vim.keymap.set("n", "<leader>q", fzf.quickfix)
