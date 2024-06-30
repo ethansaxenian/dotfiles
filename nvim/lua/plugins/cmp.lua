@@ -40,7 +40,10 @@ return {
               tmux = "[TMUX]",
             })[entry.source.name]
 
-            vim_item.menu = source .. " " .. (vim_item.menu or "")
+            if source and vim_item.menu then
+              vim_item.menu = source .. " " .. vim_item.menu
+            end
+
             return vim_item
           end,
         },

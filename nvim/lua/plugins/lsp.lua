@@ -1,6 +1,12 @@
 vim.g.virtual_text_on = true
 
-vim.diagnostic.config({ underline = false })
+vim.diagnostic.config({
+  underline = false,
+  signs = false,
+  float = {
+    source = "if_many",
+  },
+})
 
 vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
   vim.diagnostic.config({ virtual_text = not vim.g.virtual_text_on })
@@ -90,6 +96,14 @@ local servers = {
     },
   },
 
+  ruff = {
+    init_options = {
+      settings = {
+        showSyntaxErrors = false,
+      },
+    },
+  },
+
   lua_ls = {
     settings = {
       Lua = {
@@ -134,7 +148,6 @@ local servers = {
 
   bashls = {},
   tsserver = {},
-  ruff = {},
   jsonls = {},
   templ = {},
 }
