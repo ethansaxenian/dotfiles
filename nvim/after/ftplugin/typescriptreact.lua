@@ -1,1 +1,1 @@
-vim.cmd([[runtime! ftplugin/javascript.lua]])
+require("after.ftplugin.javascript")

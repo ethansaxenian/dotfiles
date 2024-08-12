@@ -42,7 +42,7 @@ brew 'zsh-autosuggestions'
 brew 'zsh-syntax-highlighting'
 
 # Apps
-cask 'bitwarden'
+# cask 'bitwarden'
 cask 'brave-browser'
 cask 'docker'
 cask 'iterm2'

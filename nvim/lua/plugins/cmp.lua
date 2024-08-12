@@ -37,7 +37,6 @@ return {
               nvim_lsp = "[LSP]",
               buffer = "[Buffer]",
               path = "[Path]",
-              tmux = "[TMUX]",
             })[entry.source.name]
 
             if source and vim_item.menu then
