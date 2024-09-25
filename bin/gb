@@ -7,7 +7,7 @@ if [ "$#" -eq 0 ]; then
     --bind="ctrl-/:change-preview-window(down,50%,border-top|right,50%,border-left|)")
 
   if [ -n "$chosen_branch" ]; then
-    git checkout "$(echo "$chosen_branch" | awk '{print $1}')"
+    git switch "$(echo "$chosen_branch" | awk '{print $1}')"
   fi
 
 else

@@ -7,5 +7,5 @@ if [[ -z "$1" ]]; then
   exit 1
 fi
 
-git checkout -b "$1"
+git switch -b "$1"
 git push -u origin "$1"

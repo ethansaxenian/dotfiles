@@ -147,7 +147,7 @@ local servers = {
   },
 
   bashls = {},
-  tsserver = {},
+  ts_ls = {},
   jsonls = {},
   templ = {},
 }
