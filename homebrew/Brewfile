@@ -35,8 +35,8 @@ brew 'telnet'
 brew 'texlive'
 brew 'tmux'
 brew 'tree'
+brew 'uv'
 brew 'vim'
-brew 'zoxide'
 brew 'zsh'
 brew 'zsh-autosuggestions'
 brew 'zsh-syntax-highlighting'
@@ -52,7 +52,5 @@ cask 'postico'
 cask 'pycharm'
 cask 'utm'
 cask 'veracrypt'
-cask 'visual-studio-code'
 
-mas 'Xcode', id: 497799835
 mas 'Bitwarden', id: 1352778147

@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-echo "Symlinking .tldrrc..."
-ln -sf "$DOTFILES"/.config/.tldrrc "$HOME"/.tldrrc
-
 echo "Symlinking neofetch config..."
 rm -rf "$HOME"/.config/neofetch
 ln -s "$DOTFILES"/.config/neofetch "$HOME"/.config/neofetch

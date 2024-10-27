@@ -1,37 +1,21 @@
-# env variables {{{
-
-export EDITOR="nvim"
-
-# Path to your dotfiles.
 export DOTFILES=$HOME/.dotfiles
 
-if [[ $OSTYPE =~ ^darwin ]]; then
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-  export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-fi
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
 
-if test -d "$HOME/.detaspace/bin"; then
-  export PATH="$HOME/.detaspace/bin:$PATH"
-fi
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 
-# colored manpages with bat
-export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=Monokai\ Extended'"
+export MANPAGER='nvim +Man!'
 
-# }}}
-# mac aliases {{{
-if [[ $OSTYPE =~ ^darwin ]]; then
-  # Empty the Trash on all mounted volumes and the main HDD.
-  # Also, clear Apple’s System Logs to improve shell startup speed.
-  # Finally, clear download history from quarantine. https://mths.be/bum
-  alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-
-  alias charm='open -a "PyCharm.app"'
-fi
-# }}}
-# misc aliases {{{
 
 # enable aliases to be sudo'ed
 alias sudo="sudo "
@@ -57,8 +41,6 @@ alias mv="nocorrect mv -iv"
 alias rm="rm -Iv"
 alias mkd="mkdir -pv"
 
-# }}}
-# fzf {{{
 
 FZF_DEFAULT_OPTS='--height=100%'
 FZF_DEFAULT_OPTS+=' --border'
@@ -117,38 +99,23 @@ _fzf_comprun() {
   esac
 }
 
-# load f into current shell in case cd is needed
-alias f="source $DOTFILES/bin/f"
 
-alias vf="fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS"
-
-# }}}
-# python {{{
 
 alias pip="pip3"
 alias makevenv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
 
-export POETRY_VIRTUALENVS_IN_PROJECT=true
-export POETRY_HOME=$HOME/.poetry
+# # set up pyenv
+# export PYENV_ROOT="$HOME/.pyenv"
+#
+# if test -d "$PYENV_ROOT/bin"; then
+#   export PATH="$PYENV_ROOT/bin:$PATH"
+# fi
+#
+# if test $(command -v pyenv); then
+#   eval "$(pyenv init -)"
+# fi
 
-if test -d $POETRY_HOME; then
-  export PATH="$POETRY_HOME/bin:$PATH"
-fi
-
-# set up pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-
-if test -d "$PYENV_ROOT/bin"; then
-  export PATH="$PYENV_ROOT/bin:$PATH"
-fi
-
-if test $(command -v pyenv); then
-  eval "$(pyenv init -)"
-fi
-
-# }}}
-# ls {{{
 
 eval $(dircolors $DOTFILES/zsh/LS_COLORS)
 alias ls="ls --color=auto -Fh"
@@ -156,12 +123,10 @@ alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
 
-# }}}
-# git {{{
 
 alias ga="git add -A"
 alias gac="git add -A && git commit -m"
-alias gbd="git branch -d"
+alias gbd="git branch -D"
 alias gc="git commit -m"
 alias gco="git checkout"
 alias gd="git diff --color | sed 's/^\([^-+ ]*\)[-+ ]/\\1/' | less -RFX"
@@ -176,8 +141,6 @@ alias gstd="git stash drop"
 alias gstl="git stash list"
 alias gstp="git stash pop"
 
-# }}}
-# npm {{{
 
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
   export NVM_COLORS=Bmgre
@@ -186,15 +149,7 @@ if [ -s "$HOME/.nvm/nvm.sh" ]; then
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 fi
 
-# }}}
-# functions {{{
 
-function mkcd() {
-  mkdir -p "$1" && cd "$1";
-}
-
-# }}}
-# prompt {{{
 function collapse_pwd() {
   echo "%(5~|%-1~/.../%3~|%4~)"
 }
@@ -268,19 +223,6 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
-# pip zsh completion start
-function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
-}
-compctl -K _pip_completion pip3
-# pip zsh completion end
-# }}}
-
 # add my own executables to $PATH
 export PATH="$DOTFILES/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
@@ -296,24 +238,12 @@ elif test $(command -v fzf) && $(command -v brew); then
   $(brew --prefix)/opt/fzf/install
 fi
 
-# setup z
-export _ZO_DATA_DIR="${HOME}/.local/share/zoxide"
-if [[ -a $_ZO_DATA_DIR ]]; then
-  eval "$(zoxide init zsh)"
-fi
-
-# setup syntax highlighting and autosuggestions
-if [[ $OSTYPE =~ ^darwin ]]; then
-  source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [[ $OSTYPE =~ ^linux ]]; then
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # vi-mode
 bindkey -v
+export KEYTIMEOUT=1
 
 # ctrl-space accepts autosuggestion
 bindkey '^y' autosuggest-accept
@@ -321,6 +251,7 @@ bindkey '^y' autosuggest-accept
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
+alias vf="fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS"
 bindkey -s '^v' 'vf\n'
 bindkey -s '^f' 'tmux-sessionizer\n'
 bindkey -s '^[t' 'tmux a\n'

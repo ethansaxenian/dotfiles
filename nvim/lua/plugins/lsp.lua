@@ -127,7 +127,6 @@ local servers = {
     settings = {
       gopls = {
         analyses = {
-          fieldalignment = true,
           shadow = true,
           unusedvariable = true,
           useany = true,
