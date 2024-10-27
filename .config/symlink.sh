@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-echo "Symlinking neofetch config..."
-rm -rf "$HOME"/.config/neofetch
-ln -s "$DOTFILES"/.config/neofetch "$HOME"/.config/neofetch
-
 echo "Symlinking bat config..."
 rm -rf "$HOME"/.config/bat
 ln -s "$DOTFILES"/.config/bat "$HOME"/.config/bat

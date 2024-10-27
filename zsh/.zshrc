@@ -1,20 +1,43 @@
 export DOTFILES=$HOME/.dotfiles
 
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
-export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-
 export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
 
 export MANPAGER='nvim +Man!'
+
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+  export NVM_COLORS=Bmgre
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+fi
+
+# add my own executables to $PATH
+path=(
+  "$HOME/.local/bin"
+  "$DOTFILES/bin"
+  "$GOPATH/bin"
+  "/opt/homebrew/bin"
+  "/opt/homebrew/opt/coreutils/libexec/gnubin"
+  "/opt/homebrew/opt/libpq/bin"
+  $path
+)
+
+fpath=(
+  "$(brew --prefix)/share/zsh/site-functions"
+  $fpath
+)
+
+# remove uniques from $PATH and $FPATH
+typeset -aU path
+typeset -aU fpath
 
 
 # enable aliases to be sudo'ed
@@ -41,18 +64,18 @@ alias mv="nocorrect mv -iv"
 alias rm="rm -Iv"
 alias mkd="mkdir -pv"
 
-
-FZF_DEFAULT_OPTS='--height=100%'
-FZF_DEFAULT_OPTS+=' --border'
-FZF_DEFAULT_OPTS+=' --layout=default'
-FZF_DEFAULT_OPTS+=' --color=dark'
-FZF_DEFAULT_OPTS+=' --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe'
-FZF_DEFAULT_OPTS+=' --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef'
-FZF_DEFAULT_OPTS+=' --bind="alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap"'
-FZF_DEFAULT_OPTS+=' --preview-window="border-left"'
-FZF_DEFAULT_OPTS+=' --pointer=">"'
-FZF_DEFAULT_OPTS+=' --marker=">"'
-export FZF_DEFAULT_OPTS
+export FZF_DEFAULT_OPTS='
+--height=100%
+--border
+--layout=default
+--color=dark
+--color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
+--color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef
+--bind="alt-k:preview-up,alt-j:preview-down,ctrl-w:toggle-preview-wrap"
+--preview-window="border-left"
+--pointer=">"
+--marker=">"
+'
 
 export FD_OPTIONS="--ignore --hidden --follow --strip-cwd-prefix"
 export FZF_DEFAULT_COMMAND="fd --type file $FD_OPTIONS --no-ignore-vcs"
@@ -61,11 +84,12 @@ export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:chan
 export FZF_ALT_C_COMMAND="fd --type directory $FD_OPTIONS"
 export FZF_ALT_C_OPTS="--preview 'tree -C {}' --bind 'ctrl-/:change-preview-window(hidden|)'"
 
-FZF_CTRL_R_OPTS="--preview 'echo {}'"
-FZF_CTRL_R_OPTS+=" --preview-window up:3:hidden:wrap"
-FZF_CTRL_R_OPTS+=" --bind 'ctrl-/:toggle-preview'"
-FZF_CTRL_R_OPTS+=" --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'"
-export FZF_CTRL_R_OPTS
+export FZF_CTRL_R_OPTS="
+--preview 'echo {}'
+--preview-window up:3:hidden:wrap
+--bind 'ctrl-/:toggle-preview'
+--bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+"
 
 # Options to fzf command
 export FZF_COMPLETION_OPTS="$FZF_DEFAULT_OPTS --height=100% --layout=default"
@@ -94,28 +118,13 @@ _fzf_comprun() {
     unalias)            fzf "$@" --preview 'echo $(alias {})' ;;
     ssh)                fzf "$@" --preview 'nslookup {}' ;;
     cd)                 fzf "$@" --preview "tree -C {}" ;;
-    vim|v|code|charm)   fzf "$@" --preview "bat --style=numbers --color=always {}" ;;
+    nvim|vim)           fzf "$@" --preview "bat --style=numbers --color=always {}" ;;
     *)                  fzf "$@" ;;
   esac
 }
 
 
-
-alias pip="pip3"
-alias makevenv="python3 -m venv .venv"
 alias activate="source .venv/bin/activate"
-
-# # set up pyenv
-# export PYENV_ROOT="$HOME/.pyenv"
-#
-# if test -d "$PYENV_ROOT/bin"; then
-#   export PATH="$PYENV_ROOT/bin:$PATH"
-# fi
-#
-# if test $(command -v pyenv); then
-#   eval "$(pyenv init -)"
-# fi
-
 
 eval $(dircolors $DOTFILES/zsh/LS_COLORS)
 alias ls="ls --color=auto -Fh"
@@ -142,12 +151,6 @@ alias gstl="git stash list"
 alias gstp="git stash pop"
 
 
-if [ -s "$HOME/.nvm/nvm.sh" ]; then
-  export NVM_COLORS=Bmgre
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-fi
 
 
 function collapse_pwd() {
@@ -210,11 +213,6 @@ setopt CORRECT_ALL
 
 # }}}
 # completion {{{
-fpath+="$HOME"/.zfunc
-
-if test $(command -v brew); then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-fi
 
 autoload -Uz compinit && compinit
 # case insensitive path-completion
@@ -223,19 +221,9 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
-# add my own executables to $PATH
-export PATH="$DOTFILES/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
 
-# remove uniques from $PATH and $FPATH
-typeset -aU path
-typeset -aU fpath
-
-# setup fzf
-if [ -f "$HOME"/.fzf.zsh ]; then
-  source "$HOME"/.fzf.zsh
-elif test $(command -v fzf) && $(command -v brew); then
-  $(brew --prefix)/opt/fzf/install
+if test $(command -v fzf); then
+  source <(fzf --zsh)
 fi
 
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -251,7 +239,6 @@ bindkey '^y' autosuggest-accept
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
-alias vf="fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS"
-bindkey -s '^v' 'vf\n'
+bindkey -s '^v' "fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS\n"
 bindkey -s '^f' 'tmux-sessionizer\n'
 bindkey -s '^[t' 'tmux a\n'

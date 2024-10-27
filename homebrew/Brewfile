@@ -1,14 +1,6 @@
 # https://github.com/driesvints/dotfiles/blob/main/Brewfile
 tap 'homebrew/cask'
 
-# https://github.com/pyenv/pyenv/wiki#suggested-build-environment
-brew 'openssl'
-brew 'readline'
-brew 'sqlite3'
-brew 'xz'
-brew 'zlib'
-brew 'tcl-tk'
-
 # Binaries
 brew 'bat'
 brew 'bitwarden-cli'
@@ -22,11 +14,9 @@ brew 'goose'
 brew 'jq'
 brew 'make'
 brew 'mas'
-brew 'neofetch'
 brew 'neovim'
 brew 'netcat'
 brew 'nmap'
-brew 'pyenv'
 brew 'rg'
 brew 'shellcheck'
 brew 'shpotify'
