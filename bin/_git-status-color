@@ -1,0 +1,20 @@
+#!/bin/bash
+
+git_status="$(git status 2> /dev/null)"
+output_styles=""
+
+if [[ $git_status =~ "nothing to commit, working tree clean" ]]; then
+  output_styles="green"
+elif [[ $git_status =~ "nothing added to commit but untracked files present" ]]; then
+  output_styles="red"
+elif [[ $git_status =~ "no changes added to commit" ]]; then
+  output_styles="red"
+elif [[ $git_status =~ "Changes to be committed" ]]; then
+  output_styles="cyan"
+else
+  output_styles="white"
+fi
+
+# echo "[fg=$output_styles]$(git rev-parse --abbrev-ref HEAD)"
+echo $output_styles
+# echo "#[fg=#($output_styles)]#(cd $1; git rev-parse --abbrev-ref HEAD)"
