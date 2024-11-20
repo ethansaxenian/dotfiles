@@ -1,0 +1,16 @@
+#!/bin/bash
+
+git_status="$(git status 2> /dev/null)"
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [[ $git_status =~ "nothing to commit, working tree clean" ]]; then
+  echo "$branch"
+elif [[ $git_status =~ "nothing added to commit but untracked files present" ]]; then
+  echo "++ $branch"
+elif [[ $git_status =~ "no changes added to commit" ]]; then
+  echo "+ $branch"
+elif [[ $git_status =~ "Changes to be committed" ]]; then
+  echo "~ $branch"
+else
+  echo "$branch"
+fi
