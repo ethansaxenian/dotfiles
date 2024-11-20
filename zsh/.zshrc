@@ -159,34 +159,6 @@ function collapse_pwd() {
 
 PROMPT="%B%F{magenta}$(collapse_pwd)%f%b %# "
 
-# shows branch name on right if applicable
-autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
-git_color() {
-  local git_status="$(git status 2> /dev/null)"
-  local output_styles=""
-
-  if [[ $git_status =~ "nothing to commit, working tree clean" ]]; then
-    output_styles="green"
-  elif [[ $git_status =~ "nothing added to commit but untracked files present" ]]; then
-    output_styles="red"
-  elif [[ $git_status =~ "no changes added to commit" ]]; then
-    output_styles="red"
-  elif [[ $git_status =~ "Changes to be committed" ]]; then
-    output_styles="cyan"
-  else
-    output_styles="white"
-  fi
-  output_styles="%F{$output_styles}$1%f"
-
-  echo "$output_styles"
-}
-RPROMPT='$(git_color ${vcs_info_msg_0_})'
-zstyle ':vcs_info:git:*' formats '(%b)'
-zstyle ':vcs_info:*' enable git
-
 # }}}
 # shell options {{{
 export HISTFILE=$HOME/.zsh_history
