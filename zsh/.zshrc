@@ -4,6 +4,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_BIN_HOME="$HOME/.local/bin"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -137,7 +138,6 @@ alias ga="git add -A"
 alias gac="git add -A && git commit -m"
 alias gbd="git branch -D"
 alias gc="git commit -m"
-alias gco="git checkout"
 alias gd="git diff --color | sed 's/^\([^-+ ]*\)[-+ ]/\\1/' | less -RFX"
 alias gf="git fetch"
 alias gl="git pull --prune"
@@ -149,6 +149,7 @@ alias gst="git stash -u"
 alias gstd="git stash drop"
 alias gstl="git stash list"
 alias gstp="git stash pop"
+alias gsw="git switch"
 
 
 

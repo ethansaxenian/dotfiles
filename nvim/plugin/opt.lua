@@ -36,6 +36,9 @@ vim.opt.swapfile = false
 vim.opt.timeoutlen = 500
 
 vim.opt.foldenable = false
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel = 99
 
 vim.opt.termguicolors = true
 
