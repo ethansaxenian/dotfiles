@@ -4,5 +4,5 @@ vim.g.copilot_filetypes = {
 }
 
 return {
-  "github/copilot.vim",
+  -- "github/copilot.vim",
 }
