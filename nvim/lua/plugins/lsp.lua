@@ -1,40 +1,3 @@
-vim.g.virtual_text_on = true
-
-vim.diagnostic.config({
-  underline = false,
-  signs = false,
-  float = {
-    source = "if_many",
-  },
-})
-
-vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
-  vim.diagnostic.config({ virtual_text = not vim.g.virtual_text_on })
-  vim.g.virtual_text_on = not vim.g.virtual_text_on
-  print("Diagnostic Virtual Text: " .. tostring(vim.g.virtual_text_on))
-end, {})
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
-  callback = function(event)
-    local opts = { buffer = event.buf }
-
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, opts)
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-    vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-    vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, opts)
-    vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, opts)
-  end,
-})
-
 local servers = {
   basedpyright = {
     settings = {
@@ -158,7 +121,7 @@ return {
           ensure_installed = vim.tbl_keys(servers),
         },
       },
-      "hrsh7th/cmp-nvim-lsp",
+      { "saghen/blink.cmp" },
       {
         "folke/lazydev.nvim",
         ft = "lua",
@@ -171,16 +134,51 @@ return {
     },
 
     config = function()
-      local capabilities = vim.tbl_deep_extend(
-        "force",
-        vim.lsp.protocol.make_client_capabilities(),
-        require("cmp_nvim_lsp").default_capabilities()
-      )
+      local capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 
       for server, server_opts in pairs(servers) do
         server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
         require("lspconfig")[server].setup(server_opts)
       end
+    end,
+
+    init = function()
+      vim.g.virtual_text_on = true
+
+      vim.diagnostic.config({
+        underline = false,
+        signs = false,
+        float = {
+          source = "if_many",
+        },
+      })
+
+      vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
+        vim.diagnostic.config({ virtual_text = not vim.g.virtual_text_on })
+        vim.g.virtual_text_on = not vim.g.virtual_text_on
+        print("Diagnostic Virtual Text: " .. tostring(vim.g.virtual_text_on))
+      end, {})
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+        callback = function(event)
+          local opts = { buffer = event.buf }
+
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+          vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+          vim.keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, opts)
+          vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+          vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+          vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+          vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, opts)
+          vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, opts)
+        end,
+      })
     end,
   },
 }

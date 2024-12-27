@@ -867,7 +867,7 @@ Resize Split Pane.Move Divider Right</string>
 			<key>Show Timestamps</key>
 			<integer>0</integer>
 			<key>Silence Bell</key>
-			<false/>
+			<true/>
 			<key>Smart Cursor Color</key>
 			<true/>
 			<key>Space</key>

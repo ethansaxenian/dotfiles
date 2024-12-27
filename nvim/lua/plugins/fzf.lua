@@ -33,10 +33,8 @@ return {
       },
     },
   },
-  config = function(_, opts)
+  init = function()
     local fzf = require("fzf-lua")
-    fzf.setup(opts)
-
     vim.keymap.set("n", "<leader>b", fzf.buffers)
     vim.keymap.set("n", "<leader>f", fzf.files)
     vim.keymap.set("n", "<leader>g", fzf.live_grep_native)
