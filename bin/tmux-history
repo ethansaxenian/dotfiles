@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+tmp_file=$(mktemp)
+
+tmux capture-pane -pS - > $tmp_file
+
+cat $tmp_file | fzf --tac --no-sort --exact --bind="ctrl-e:execute($EDITOR $tmp_file)"
+
+rm -rf $tmp_file

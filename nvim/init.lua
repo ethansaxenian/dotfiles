@@ -19,7 +19,7 @@ require("lazy").setup({
 })
 
 -- fix slow python loading time
-vim.g.python3_host_prog = os.execute("which python3")
+vim.g.python3_host_prog = vim.fn.exepath("python3")
 
 vim.filetype.add({ extension = { templ = "templ" } })
 

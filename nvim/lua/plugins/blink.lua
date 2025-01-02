@@ -16,7 +16,7 @@ return {
 
         menu = {
           draw = {
-            treesitter = { "lsp", "buffer", "path" },
+            treesitter = { "lsp", "buffer", "path", "snippets" },
             gap = 1,
             columns = {
               { "label" },
