@@ -34,6 +34,7 @@ return {
     },
     init = function()
       vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { link = "Special" })
+      vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { link = "Comment" })
       vim.api.nvim_set_hl(0, "BlinkCmpSource", { link = "Comment" })
     end,
   },
