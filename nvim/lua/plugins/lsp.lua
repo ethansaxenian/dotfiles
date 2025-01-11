@@ -104,6 +104,8 @@ local servers = {
   ts_ls = {},
   jsonls = {},
   templ = {},
+  docker_compose_language_service = {},
+  dockerls = {},
 }
 
 return {
