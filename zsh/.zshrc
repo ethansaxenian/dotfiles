@@ -151,7 +151,7 @@ alias gstl="git stash list"
 alias gstp="git stash pop"
 alias gsw="git switch"
 
-
+alias dc="docker compose"
 
 
 function collapse_pwd() {

@@ -1,16 +1,17 @@
 theme = iTerm2 Default
 font-size = 14
 background = 000000
-fullscreen = true
 cursor-style = block
 cursor-style-blink = true
 window-theme = dark
 link-url = true
+window-height = 1000
+window-width = 1000
+bold-is-bright = true
+
 
 shell-integration = zsh
 shell-integration-features = no-cursor,sudo,no-title
-macos-titlebar-style = transparent
+macos-titlebar-style = tabs
 quick-terminal-position = center
 quick-terminal-animation-duration = 0
-
-keybind = global:shift+super+space=toggle_quick_terminal

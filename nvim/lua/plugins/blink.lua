@@ -10,15 +10,15 @@ return {
       },
 
       completion = {
-        ghost_text = {
-          enabled = true,
+        accept = {
+          auto_brackets = { enabled = false },
         },
 
         menu = {
           draw = {
-            treesitter = { "lsp", "buffer", "path", "snippets" },
             gap = 1,
             columns = {
+              { "kind_icon" },
               { "label" },
               { "label_description" },
               { "kind" },
