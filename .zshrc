@@ -1,4 +1,4 @@
-export DOTFILES=$HOME/.dotfiles
+export DOTFILES="$HOME/.dotfiles"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -13,12 +13,7 @@ export GOPATH="$HOME/go"
 
 export MANPAGER='nvim +Man!'
 
-if [ -s "$HOME/.nvm/nvm.sh" ]; then
-  export NVM_COLORS=Bmgre
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # add my own executables to $PATH
 path=(
