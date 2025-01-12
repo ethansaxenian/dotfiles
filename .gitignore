@@ -2,9 +2,4 @@
 .idea/
 .vscode/
 *.swp
-vim/autoload
-vim/plugged
-vim/swp
-vim/undo
-vim/.netrwhist
-!python/pyrightconfig.json
+:*

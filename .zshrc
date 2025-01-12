@@ -52,7 +52,7 @@ alias sudo="sudo "
 alias vim="$EDITOR"
 
 # opens the zsh config file for editing
-alias config="vim $DOTFILES/zsh/.zshrc"
+alias config="vim $DOTFILES/.zshrc"
 
 alias vconfig="nvim $DOTFILES/nvim/init.lua"
 
@@ -132,7 +132,7 @@ _fzf_comprun() {
 
 alias activate="source .venv/bin/activate"
 
-eval $(dircolors $DOTFILES/zsh/LS_COLORS)
+eval $(dircolors $DOTFILES/LS_COLORS)
 alias ls="ls --color=auto -Fh"
 alias la="ls -A"
 alias ll="ls -l"
