@@ -10,7 +10,6 @@ return {
       ensure_installed = {
         "bash",
         "css",
-        "dockerfile",
         "html",
         "go",
         "gomod",

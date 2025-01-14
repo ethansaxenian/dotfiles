@@ -46,6 +46,8 @@ alias sudo="sudo "
 
 alias vim="$EDITOR"
 
+alias dc="docker compose"
+
 # opens the zsh config file for editing
 alias config="vim $DOTFILES/.zshrc"
 

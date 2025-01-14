@@ -1,17 +1,16 @@
 theme = iTerm2 Default
+font-family = Monaco
 font-size = 14
-background = 000000
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
 cursor-style = block
 cursor-style-blink = true
-window-theme = dark
 link-url = true
 window-height = 1000
 window-width = 1000
 bold-is-bright = true
 
-
 shell-integration = zsh
-shell-integration-features = no-cursor,sudo,no-title
+shell-integration-features = no-cursor,sudo,title
 macos-titlebar-style = tabs
-quick-terminal-position = center
-quick-terminal-animation-duration = 0

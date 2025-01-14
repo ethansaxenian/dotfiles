@@ -2,6 +2,7 @@ return {
   {
     "saghen/blink.cmp",
     version = "*",
+    dependencies = "rafamadriz/friendly-snippets",
     opts = {
       keymap = {
         preset = "default",
@@ -15,21 +16,20 @@ return {
         },
 
         menu = {
+          auto_show = function(ctx)
+            return ctx.mode ~= "cmdline"
+          end,
           draw = {
             gap = 1,
             columns = {
-              { "kind_icon" },
               { "label" },
               { "label_description" },
+              { "kind_icon" },
               { "kind" },
               { "source_name" },
             },
           },
         },
-      },
-
-      sources = {
-        cmdline = {},
       },
     },
     init = function()
