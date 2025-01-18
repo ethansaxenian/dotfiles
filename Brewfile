@@ -31,6 +31,17 @@ brew 'zsh'
 brew 'zsh-autosuggestions'
 brew 'zsh-syntax-highlighting'
 
+# lsp
+brew 'basedpyright'
+brew 'bash-language-server'
+brew 'dockerfile-language-server'
+brew 'lua-language-server'
+brew 'ruff'
+brew 'tailwindcss'
+brew 'templ'
+brew 'typescript-language-server'
+brew 'vscode-langservers-extracted'
+
 # Apps
 # cask 'bitwarden'
 cask 'brave-browser'

@@ -16,9 +16,6 @@ return {
         },
 
         menu = {
-          auto_show = function(ctx)
-            return ctx.mode ~= "cmdline"
-          end,
           draw = {
             gap = 1,
             columns = {
@@ -31,6 +28,7 @@ return {
           },
         },
       },
+      sources = { cmdline = {} },
     },
     init = function()
       vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { link = "Special" })

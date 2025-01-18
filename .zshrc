@@ -28,7 +28,6 @@ path=(
 
 if command -v uv >/dev/null; then
   for dir in $(uv python dir)/*/bin; do PATH="$dir:$PATH"; done
-  PATH="$PYTHON_PATHS:$PATH"
 fi
 
 fpath=(

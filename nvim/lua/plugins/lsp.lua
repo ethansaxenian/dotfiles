@@ -112,17 +112,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      {
-        "williamboman/mason.nvim",
-        build = ":MasonUpdate",
-        config = true,
-      },
-      {
-        "williamboman/mason-lspconfig.nvim",
-        opts = {
-          ensure_installed = vim.tbl_keys(servers),
-        },
-      },
       { "saghen/blink.cmp" },
       {
         "folke/lazydev.nvim",
