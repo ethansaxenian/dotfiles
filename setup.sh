@@ -6,7 +6,6 @@ export DOTFILES="$HOME/.dotfiles"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 brew update
-brew tap homebrew/bundle
 brew bundle --file "$DOTFILES/Brewfile"
 "$(brew --prefix)/opt/fzf/install"
 
