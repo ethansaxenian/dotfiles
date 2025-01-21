@@ -2,7 +2,7 @@ theme = iTerm2 Default
 
 font-family = Monaco
 font-size = 14
-font-thicken = false
+font-thicken = true
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
