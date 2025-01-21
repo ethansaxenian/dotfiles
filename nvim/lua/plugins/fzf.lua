@@ -34,16 +34,15 @@ return {
     },
   },
   init = function()
-    local fzf = require("fzf-lua")
-    vim.keymap.set("n", "<leader>b", fzf.buffers)
-    vim.keymap.set("n", "<leader>f", fzf.files)
-    vim.keymap.set("n", "<leader>g", fzf.live_grep_native)
-    vim.keymap.set("n", "<leader>sh", fzf.helptags)
-    vim.keymap.set("n", "<leader>ch", fzf.command_history)
-    vim.keymap.set("n", "<leader>r", fzf.registers)
-    vim.keymap.set("n", "<leader>q", fzf.quickfix)
-    vim.keymap.set("n", "<leader>l", fzf.loclist)
-    vim.keymap.set("n", "<leader>ds", fzf.lsp_document_symbols)
-    vim.keymap.set("n", "<leader>ws", fzf.lsp_live_workspace_symbols)
+    vim.keymap.set("n", "<leader>b", require("fzf-lua").buffers)
+    vim.keymap.set("n", "<leader>f", require("fzf-lua").files)
+    vim.keymap.set("n", "<leader>g", require("fzf-lua").live_grep_native)
+    vim.keymap.set("n", "<leader>sh", require("fzf-lua").helptags)
+    vim.keymap.set("n", "<leader>ch", require("fzf-lua").command_history)
+    vim.keymap.set("n", "<leader>r", require("fzf-lua").registers)
+    vim.keymap.set("n", "<leader>q", require("fzf-lua").quickfix)
+    vim.keymap.set("n", "<leader>l", require("fzf-lua").loclist)
+    vim.keymap.set("n", "<leader>ds", require("fzf-lua").lsp_document_symbols)
+    vim.keymap.set("n", "<leader>ws", require("fzf-lua").lsp_live_workspace_symbols)
   end,
 }

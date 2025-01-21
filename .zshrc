@@ -216,3 +216,27 @@ bindkey '^n' history-search-forward
 bindkey -s '^v' "fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS\n"
 bindkey -s '^f' 'tmux-sessionizer\n'
 bindkey -s '^[t' 'tmux a\n'
+
+export NVM_DIR="$XDG_CONFIG_HOME/nvm"
+if [[ -d "$NVM_DIR" ]]; then
+  __lazy_nvm() {
+    unset -f nvm node npm
+    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
+  }
+
+  nvm() {
+    __lazy_nvm
+    nvm "$@"
+  }
+
+  node() {
+    __lazy_nvm
+    node "$@"
+  }
+
+  npm() {
+    __lazy_nvm
+    npm "$@"
+  }
+fi
