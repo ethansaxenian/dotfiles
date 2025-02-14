@@ -27,7 +27,7 @@ eval "$git_files" | fzf --no-sort --tiebreak=index --ansi --header-lines=1 --nth
   --bind="tab:execute-silent(_git-stage-toggle {-1})+reload($git_files)" \
   --bind="ctrl-a:execute-silent(git add -A)+reload($git_files)" \
   --bind="ctrl-r:execute-silent(git restore --staged .)+reload($git_files)" \
-  --bind="ctrl-c:accept+execute(git commit)" \
+  --bind="ctrl-c:execute(git commit)+accept" \
   --bind="alt-d:execute-silent(git restore {-1})+reload($git_files)" \
   --bind="alt-s:execute-silent(git stash -u)+accept" \
   --bind="ctrl-e:execute($EDITOR {-1})+reload($git_files)" \
