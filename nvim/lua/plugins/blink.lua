@@ -3,6 +3,9 @@ return {
     "saghen/blink.cmp",
     version = "*",
     dependencies = "rafamadriz/friendly-snippets",
+
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
       keymap = {
         preset = "default",
@@ -28,10 +31,9 @@ return {
           },
         },
       },
-      sources = { cmdline = {} },
+      cmdline = { sources = {} },
     },
     init = function()
-      vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { link = "Special" })
       vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { link = "Comment" })
       vim.api.nvim_set_hl(0, "BlinkCmpSource", { link = "Comment" })
     end,
