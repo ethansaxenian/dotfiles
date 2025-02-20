@@ -11,6 +11,7 @@ return {
       go = { "gofmt" },
       lua = { "stylua" },
       templ = { "templ" },
+      json = { "prettier" },
     },
     format_on_save = function()
       if not vim.g.format_on_save then
