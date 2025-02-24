@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
 if [ "$#" -eq 0 ]; then
-  chosen_branch=$(git branch --sort=-HEAD | fzf --header-lines=1 \
-    --preview="git log {-1} --color=always --format='%C(bold red)%h%C(auto)%d %s %C(green)(%cr) %C(bold blue)<%an>'" \
-    --preview-window="hidden" \
-    --bind="ctrl-/:change-preview-window(down,50%,border-top|right,50%,border-left|)")
+  chosen_branch=$(
+    git branch -v --sort=-HEAD \
+    | fzf \
+      --header-lines 1 \
+      --accept-nth 1 \
+      --preview="git log {1} --color=always --format='%C(bold red)%h%C(auto)%d %s %C(green)(%cr) %C(bold blue)<%an>'" \
+      --preview-window="hidden" \
+      --bind="ctrl-/:change-preview-window(down,50%,border-top|right,50%,border-left|)"
+  )
 
   if [ -n "$chosen_branch" ]; then
-    git switch "$(echo "$chosen_branch" | awk '{print $1}')"
+    git switch "$chosen_branch"
   fi
 
 else

@@ -125,11 +125,17 @@ return {
     },
 
     config = function()
+      local lspconfig = require("lspconfig")
+
       local capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 
       for server, server_opts in pairs(servers) do
         server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
-        require("lspconfig")[server].setup(server_opts)
+
+        local cmd = lspconfig[server].document_config.default_config.cmd[1]
+        if vim.fn.executable(cmd) == 1 then
+          lspconfig[server].setup(server_opts)
+        end
       end
     end,
 

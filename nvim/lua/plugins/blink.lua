@@ -31,7 +31,15 @@ return {
           },
         },
       },
-      cmdline = { sources = {} },
+      sources = {
+        min_keyword_length = function(ctx)
+          -- only applies when typing a command, doesn't apply to arguments
+          if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
+            return 2
+          end
+          return 0
+        end,
+      },
     },
     init = function()
       vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { link = "Comment" })
