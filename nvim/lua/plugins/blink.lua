@@ -1,12 +1,34 @@
 return {
   {
+    "saghen/blink.compat",
+    version = "*",
+    lazy = true,
+    opts = {},
+  },
+  {
     "saghen/blink.cmp",
     version = "*",
-    dependencies = "rafamadriz/friendly-snippets",
+    dependencies = { "rafamadriz/friendly-snippets", "andersevenrud/cmp-tmux" },
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+      sources = {
+        default = { "lazydev", "tmux", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
+          },
+          tmux = {
+            name = "tmux",
+            module = "blink.compat.source",
+            opts = { label = "" },
+          },
+        },
+      },
+
       keymap = {
         preset = "default",
         ["<C-k>"] = { "select_prev", "fallback" },
@@ -31,19 +53,6 @@ return {
           },
         },
       },
-      sources = {
-        min_keyword_length = function(ctx)
-          -- only applies when typing a command, doesn't apply to arguments
-          if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
-            return 2
-          end
-          return 0
-        end,
-      },
     },
-    init = function()
-      vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { link = "Comment" })
-      vim.api.nvim_set_hl(0, "BlinkCmpSource", { link = "Comment" })
-    end,
   },
 }
