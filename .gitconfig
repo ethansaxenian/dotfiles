@@ -18,3 +18,24 @@
 	format = ssh
 [commit]
 	gpgsign = true
+[column]
+  ui = auto
+[branch]
+  sort = -committerdate
+[tag]
+  sort = version:reference
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
+[push]
+  followTags = true
+[fetch]
+  prine = true
+  prineTags = true
+  all = true
+[help]
+  autocorrect = prompt
+[merge]
+  conflictstyle = zdiff3

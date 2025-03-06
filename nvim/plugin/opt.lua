@@ -43,6 +43,8 @@ vim.opt.foldlevel = 99
 vim.opt.termguicolors = true
 
 vim.opt.formatoptions:remove("o")
+vim.opt.formatoptions:remove("t")
+vim.opt.formatoptions:remove("c")
 
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"

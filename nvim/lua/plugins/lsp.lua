@@ -12,6 +12,8 @@ local servers = {
             strictParameterNoneValue = true,
             deprecateTypingAliases = true,
             reportUnusedVariable = false,
+            reportUnusedParameter = false,
+            reportUnusedImport = false,
             reportUndefinedVariable = false,
             reportDeprecated = "warning",
             reportMatchNotExhaustive = "error",
@@ -89,6 +91,7 @@ local servers = {
       },
     },
   },
+  golangci_lint_ls = {},
 
   html = {
     filetypes = { "html", "templ" },
