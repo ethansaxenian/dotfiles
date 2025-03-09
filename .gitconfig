@@ -18,6 +18,7 @@
 	format = ssh
 [commit]
 	gpgsign = true
+  verbose = true
 [column]
   ui = auto
 [branch]
