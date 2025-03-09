@@ -25,6 +25,7 @@ return {
             name = "tmux",
             module = "blink.compat.source",
             opts = { label = "" },
+            score_offset = -10,
           },
         },
       },
