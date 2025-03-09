@@ -1,2 +1,2 @@
-vim.bo.wrap = true
-vim.bo.spell = true
+vim.wo.wrap = true
+vim.wo.spell = true

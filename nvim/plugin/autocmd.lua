@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
   group = nvim_config,
   callback = function()
     vim.cmd("startinsert!")
-    vim.bo.number = false
-    vim.bo.relativenumber = false
+    vim.wo.number = false
+    vim.wo.relativenumber = false
   end,
 })
