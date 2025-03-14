@@ -1,40 +1,40 @@
 [user]
-  name = Ethan Saxenian
-  email = ethansaxenian+github@proton.me
+	name = Ethan Saxenian
+	email = ethansaxenian+github@proton.me
 	signingkey = /Users/ethansaxenian/.ssh/id_ed25519.pub
 [init]
-  defaultBranch = main
+	defaultBranch = main
 [color]
-  ui = auto
+	ui = auto
 [core]
-  editor = nvim
-  excludesfile = ~/.gitignore
+	editor = nvim
+	excludesfile = ~/.gitignore
 [filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [gpg]
 	format = ssh
 [commit]
 	gpgsign = true
-  verbose = true
+	verbose = true
 [column]
-  ui = auto
+	ui = auto
 [branch]
-  sort = -committerdate
+	sort = -committerdate
 [tag]
-  sort = version:reference
+	sort = version:refname
 [diff]
-  algorithm = histogram
-  colorMoved = plain
-  mnemonicPrefix = true
-  renames = true
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
 [push]
-  followTags = true
+	followTags = true
 [fetch]
-  prine = true
-  prineTags = true
-  all = true
+	prune = true
+	pruneTags = true
+	all = true
 [help]
-  autocorrect = prompt
+	autocorrect = prompt

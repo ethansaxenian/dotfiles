@@ -37,6 +37,8 @@ return {
       },
 
       completion = {
+        keyword = { range = "full" },
+
         accept = {
           auto_brackets = { enabled = false },
         },

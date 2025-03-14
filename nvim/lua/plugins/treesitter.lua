@@ -6,6 +6,7 @@ return {
       "nvim-treesitter/nvim-treesitter-context",
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
+    main = "nvim-treesitter.configs",
     opts = {
       ensure_installed = {
         "bash",
@@ -65,8 +66,5 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
   },
 }
