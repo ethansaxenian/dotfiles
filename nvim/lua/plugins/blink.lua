@@ -53,6 +53,16 @@ return {
               { "kind" },
               { "source_name" },
             },
+            components = {
+              label_description = {
+                text = function(ctx)
+                  if ctx.kind == "Module" and ctx.item.detail and ctx.item.client_name == "gopls" then
+                    return ctx.label_description .. ctx.item.detail
+                  end
+                  return ctx.label_description
+                end,
+              },
+            },
           },
         },
       },

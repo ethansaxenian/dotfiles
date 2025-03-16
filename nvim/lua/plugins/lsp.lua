@@ -88,6 +88,7 @@ local servers = {
           useany = true,
         },
         staticcheck = true,
+        vulncheck = "Imports",
       },
     },
   },
