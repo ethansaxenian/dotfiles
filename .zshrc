@@ -26,11 +26,11 @@ path=(
   $path
 )
 
+for dir in "$XDG_CONFIG_HOME"/nvm/versions/node/*/bin(N); do PATH="$dir:$PATH"; done
+
 if command -v uv >/dev/null; then
   for dir in $(uv python dir)/*/bin; do PATH="$dir:$PATH"; done
 fi
-
-for dir in "$XDG_CONFIG_HOME"/nvm/versions/node/*/bin(N); do PATH="$dir:$PATH"; done
 
 fpath=(
   "$(brew --prefix)/share/zsh/site-functions"

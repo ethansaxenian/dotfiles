@@ -49,6 +49,7 @@ vim.lsp.enable({
   "html",
   "jsonls",
   "lua_ls",
+  "ruff",
   "tailwindcss",
   "templ",
   "ts_ls",
