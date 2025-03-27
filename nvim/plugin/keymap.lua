@@ -43,9 +43,6 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
-vim.keymap.set("n", "]c", vim.cmd.cnext)
-vim.keymap.set("n", "[c", vim.cmd.cprev)
-
 -- Terminal Mode
 
 vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")

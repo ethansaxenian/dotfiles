@@ -3,6 +3,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*.env",
   group = group,
   callback = function(args)
-    vim.diagnostic.enable(false, { bufnr = args.bufnr })
+    vim.diagnostic.enable(false, { bufnr = args.buf })
   end,
 })
