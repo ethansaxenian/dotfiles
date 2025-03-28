@@ -1,24 +1,39 @@
-vim.lsp.config("*", {
-  root_markers = { ".git" },
-  capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities()),
-})
-
-vim.g.virtual_text_on = true
-
 vim.diagnostic.config({
-  virtual_text = vim.g.virtual_text_on,
-  underline = not vim.g.virtual_text_on,
+  virtual_text = true,
+  underline = false,
+  virtual_lines = false,
   signs = false,
   float = {
     source = "if_many",
   },
 })
 
-vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
-  vim.diagnostic.config({ virtual_text = not vim.g.virtual_text_on, underline = vim.g.virtual_text_on })
-  vim.g.virtual_text_on = not vim.g.virtual_text_on
-  print("Diagnostic Virtual Text: " .. tostring(vim.g.virtual_text_on))
-end, {})
+vim.api.nvim_create_user_command("DC", function(cmd_args)
+  arg = cmd_args.fargs[1]
+
+  local config
+  if arg == "virtual_text" then
+    config = { virtual_text = true, virtual_lines = false, underline = false }
+  elseif arg == "virtual_lines" then
+    config = { virtual_text = false, virtual_lines = true, underline = false }
+  elseif arg == "underline" then
+    config = { virtual_text = false, virtual_lines = false, underline = true }
+  elseif arg == "off" then
+    config = { virtual_text = false, virtual_lines = false, underline = false }
+  else
+    print("Invalid argument")
+    return
+  end
+
+  vim.diagnostic.config(config)
+
+  print("Diagnostics: " .. arg)
+end, {
+  nargs = 1,
+  complete = function()
+    return { "virtual_text", "virtual_lines", "underline" }
+  end,
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
@@ -37,6 +52,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, opts)
     vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, opts)
   end,
+})
+
+vim.lsp.config("*", {
+  root_markers = { ".git" },
+  capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
 vim.lsp.enable({
