@@ -27,11 +27,6 @@ return {
     fzf_opts = {
       ["--layout"] = "default",
     },
-    lsp = {
-      symbols = {
-        symbol_style = 3,
-      },
-    },
   },
   init = function()
     vim.keymap.set("n", "<leader>b", require("fzf-lua").buffers)
