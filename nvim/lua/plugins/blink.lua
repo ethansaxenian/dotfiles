@@ -1,20 +1,21 @@
 return {
   {
-    "saghen/blink.compat",
-    version = "*",
-    lazy = true,
-    opts = {},
-  },
-  {
     "saghen/blink.cmp",
     version = "*",
-    dependencies = { "rafamadriz/friendly-snippets", "andersevenrud/cmp-tmux" },
+    dependencies = { "rafamadriz/friendly-snippets", "ethansaxenian/blink-cmp-tmux" },
 
-    ---@module 'blink.cmp'
-    ---@type blink.cmp.Config
+    --- @module 'blink.cmp'
+    --- @type blink.cmp.Config
     opts = {
       sources = {
-        default = { "lazydev", "tmux", "lsp", "path", "snippets", "buffer" },
+        default = {
+          "lazydev",
+          "tmux",
+          "lsp",
+          "path",
+          "snippets",
+          "buffer",
+        },
         providers = {
           lazydev = {
             name = "LazyDev",
@@ -23,8 +24,11 @@ return {
           },
           tmux = {
             name = "tmux",
-            module = "blink.compat.source",
-            opts = { label = "" },
+            module = "blink-cmp-tmux",
+            --- @type blink-cmp-tmux.Opts
+            opts = {
+              panes = "session",
+            },
             score_offset = -10,
           },
         },

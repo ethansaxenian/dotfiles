@@ -1,5 +1,5 @@
----@param workspace string?
----@return string
+--- @param workspace string?
+--- @return string
 local function get_python_path(workspace)
   -- Use activated virtualenv.
   if vim.env.VIRTUAL_ENV then
