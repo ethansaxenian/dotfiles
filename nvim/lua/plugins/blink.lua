@@ -1,10 +1,22 @@
+--- @module 'lazy'
+--- @module 'blink.cmp'
+--- @module 'blink-cmp-tmux'
+
+--- @type LazySpec
 return {
   {
     "saghen/blink.cmp",
     version = "*",
-    dependencies = { "rafamadriz/friendly-snippets", "ethansaxenian/blink-cmp-tmux" },
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      {
+        "ethansaxenian/blink-cmp-tmux",
+        -- dir = "~/projects/blink-cmp-tmux/",
+        -- name = "blink-cmp-tmux",
+        -- dev = true,
+      },
+    },
 
-    --- @module 'blink.cmp'
     --- @type blink.cmp.Config
     opts = {
       sources = {

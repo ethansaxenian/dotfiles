@@ -1,3 +1,8 @@
+--- @module 'lazy'
+--- @module 'nvim-treesitter'
+--- @module 'treesitter-context'
+
+--- @type LazySpec
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -7,6 +12,7 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
     main = "nvim-treesitter.configs",
+    --- @type TSConfig | TSContext.UserConfig
     opts = {
       ensure_installed = {
         "bash",
