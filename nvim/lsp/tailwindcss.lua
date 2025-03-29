@@ -3,6 +3,7 @@ return {
   cmd = { "tailwindcss-language-server", "--stdio" },
   filetypes = { "templ", "javascript", "typescript", "react" },
   root_markers = {
+    ".git",
     "tailwind.config.js",
     "tailwind.config.cjs",
     "tailwind.config.mjs",

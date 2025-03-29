@@ -3,6 +3,7 @@ return {
   cmd = { "golangci-lint-langserver" },
   filetypes = { "go", "gomod" },
   root_markers = {
+    ".git",
     ".golangci.yml",
     ".golangci.yaml",
     ".golangci.toml",

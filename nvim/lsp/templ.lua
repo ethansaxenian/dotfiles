@@ -2,5 +2,5 @@
 return {
   cmd = { "templ", "lsp" },
   filetypes = { "templ" },
-  root_markers = { "go.mod", "go.work" },
+  root_markers = { ".git", "go.mod", "go.work" },
 }

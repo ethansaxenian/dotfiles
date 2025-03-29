@@ -9,6 +9,6 @@ return {
     "typescriptreact",
     "typescript.tsx",
   },
-  root_markers = { "tsconfig.json", "jsconfig.json", "package.json" },
+  root_markers = { ".git", "tsconfig.json", "jsconfig.json", "package.json" },
   init_options = { hostInfo = "neovim" },
 }

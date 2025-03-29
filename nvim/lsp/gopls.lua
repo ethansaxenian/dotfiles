@@ -2,7 +2,7 @@
 return {
   cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  root_markers = { "go.work", "go.mod", "go.sum" },
+  root_markers = { ".git", "go.work", "go.mod", "go.sum" },
   settings = {
     gopls = {
       analyses = {
