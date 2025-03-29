@@ -16,7 +16,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.lsp.config("*", {
   root_markers = { ".git" },
-  capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
 vim.lsp.enable({

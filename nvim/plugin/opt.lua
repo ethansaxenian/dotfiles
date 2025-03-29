@@ -59,3 +59,6 @@ local cursor_pos = "%(%l/%L,%c%V%)  %P"
 
 vim.opt.statusline =
   string.format("%s %s %s %s %s %s %%= %s", bufnr, filename, flags, git_branch, git_status, filetype, cursor_pos)
+
+vim.opt.exrc = true
+vim.opt.secure = true
