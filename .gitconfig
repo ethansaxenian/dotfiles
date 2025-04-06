@@ -1,7 +1,7 @@
 [user]
 	name = Ethan Saxenian
 	email = ethansaxenian+github@proton.me
-	signingkey = /Users/ethansaxenian/.ssh/id_ed25519.pub
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJbnaX2PgEOXzKULIf+NmKEgSaQkGngGu+gCClPcnrx
 [init]
 	defaultBranch = main
 [color]
