@@ -3,4 +3,5 @@
 return {
   "romainl/vim-cool",
   "tpope/vim-surround",
+  "b0o/schemastore.nvim",
 }

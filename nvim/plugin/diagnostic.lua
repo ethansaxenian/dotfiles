@@ -25,8 +25,8 @@ end
 
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist)
-vim.keymap.set("n", "<leader>of", vim.diagnostic.open_float)
-vim.keymap.set("n", "<leader>e", function()
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>tv", function()
   if get_diagnostic_opt("virtual_lines") then
     close_float()
   else
