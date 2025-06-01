@@ -18,4 +18,5 @@ git log \
   --no-multi \
   --ansi \
   --preview="${VIEW_GIT_LOG_LINE}" \
-  --bind="enter:execute:${VIEW_GIT_LOG_LINE} | less -R"
+  --bind="enter:execute:${VIEW_GIT_LOG_LINE} | less -R" \
+  --bind="ctrl-/:change-preview-window(down,50%,border-top|hidden|)"
