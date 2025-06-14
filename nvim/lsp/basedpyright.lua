@@ -7,13 +7,15 @@ local function get_python_path(workspace)
   end
 
   -- Find and use virtualenv in workspace directory.
-  for _, pattern in ipairs({ "*", ".*" }) do
-    local match = vim.fn.glob(vim.fs.joinpath(workspace, pattern, "pyvenv.cfg"))
-    if match ~= "" then
-      local venv = vim.fs.dirname(match)
-      vim.env.VIRTUAL_ENV = venv
-      vim.env.PATH = venv .. "/bin:" .. vim.env.PATH
-      return vim.fs.joinpath(venv, "bin", "python")
+  if workspace ~= nil then
+    for _, pattern in ipairs({ "*", ".*" }) do
+      local match = vim.fn.glob(vim.fs.joinpath(workspace, pattern, "pyvenv.cfg"))
+      if match ~= "" then
+        local venv = vim.fs.dirname(match)
+        vim.env.VIRTUAL_ENV = venv
+        vim.env.PATH = venv .. "/bin:" .. vim.env.PATH
+        return vim.fs.joinpath(venv, "bin", "python")
+      end
     end
   end
 

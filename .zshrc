@@ -20,7 +20,6 @@ path=(
   "$HOME/.local/bin"
   "$DOTFILES/bin"
   "$GOPATH/bin"
-  "/opt/homebrew/bin"
   "/opt/homebrew/opt/coreutils/libexec/gnubin"
   "/opt/homebrew/opt/libpq/bin"
   $path
@@ -29,7 +28,7 @@ path=(
 for dir in "$XDG_CONFIG_HOME"/nvm/versions/node/*/bin(N); do PATH="$dir:$PATH"; done
 
 if command -v uv >/dev/null; then
-  for dir in $(uv python dir)/*/bin; do PATH="$dir:$PATH"; done
+  for dir in $(uv python dir)/*/bin(N); do PATH="$dir:$PATH"; done
 fi
 
 fpath=(
