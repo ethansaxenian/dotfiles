@@ -23,8 +23,7 @@ local function get_python_path(workspace)
   if vim.fn.executable("uv") then
     local uv_python = vim.system({ "uv", "python", "find" }):wait()
     if uv_python.stdout ~= "" then
-      local path, _ = string.gsub(uv_python.stdout, "\n", "")
-      return path
+      return vim.fn.trim(uv_python.stdout)
     end
   end
 

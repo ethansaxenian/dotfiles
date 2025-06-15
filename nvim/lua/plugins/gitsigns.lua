@@ -10,12 +10,15 @@ return {
         delete = { text = "_" },
         topdelete = { text = "‾" },
         changedelete = { text = "~" },
+        untracked = { text = "┆" },
       },
     },
     init = function()
-      vim.keymap.set("n", "<leader>hp", require("gitsigns").preview_hunk)
-      vim.keymap.set("n", "<leader>hr", require("gitsigns").reset_hunk)
-      vim.keymap.set("n", "<leader>hq", require("gitsigns").setqflist)
+      local gitsigns = require("gitsigns")
+
+      vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk)
+      vim.keymap.set("n", "<leader>hr", gitsigns.reset_hunk)
+      vim.keymap.set("n", "<leader>hq", gitsigns.setqflist)
     end,
   },
 }

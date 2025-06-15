@@ -4,7 +4,7 @@ vim.diagnostic.config({
   underline = false,
   signs = false,
   float = {
-    source = "if_many",
+    source = true,
   },
 })
 
