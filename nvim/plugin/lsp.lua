@@ -31,6 +31,7 @@ vim.lsp.enable({
   "ruff",
   "tailwindcss",
   "templ",
+  "tinymist",
   "ts_ls",
   "ty",
 })
