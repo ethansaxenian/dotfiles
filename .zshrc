@@ -241,3 +241,7 @@ if [[ -d "$NVM_DIR" ]]; then
     npm "$@"
   }
 fi
+
+if test $(command -v mise); then
+  eval "$(mise activate zsh)"
+fi
