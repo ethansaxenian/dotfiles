@@ -80,6 +80,9 @@ return {
           },
         },
       },
+      cmdline = {
+        keymap = { preset = "inherit" },
+      },
     },
   },
 }
