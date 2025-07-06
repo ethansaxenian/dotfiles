@@ -46,6 +46,8 @@ return {
         },
       },
 
+      snippets = { preset = "luasnip" },
+
       keymap = {
         preset = "default",
         ["<C-k>"] = { "select_prev", "fallback" },
@@ -80,6 +82,7 @@ return {
           },
         },
       },
+
       cmdline = {
         keymap = { preset = "inherit" },
       },
