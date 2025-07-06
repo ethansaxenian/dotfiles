@@ -84,7 +84,11 @@ return {
       },
 
       cmdline = {
-        keymap = { preset = "inherit" },
+        keymap = {
+          preset = "cmdline",
+          ["<C-k>"] = { "select_prev", "fallback" },
+          ["<C-j>"] = { "select_next", "fallback" },
+        },
       },
     },
   },
