@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 
-tmp_file=$(mktemp)
-
-tmux capture-pane -pS - > "$tmp_file"
-tmux new-window -n:history "$EDITOR $tmp_file"
+curr_pane=$(tmux display-message -p '#{pane_id}')
+tmux new-window -n history "tmux capture-pane -pt ${curr_pane} -S - | nvim -c 'normal! G' -"
