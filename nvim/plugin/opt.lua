@@ -50,7 +50,7 @@ vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 
 local bufnr = "%2.2n"
-local filename = "%.35F"
+local filename = "%.50F"
 local flags = "%h%m%r%w"
 local git_branch = "%{get(b:,'gitsigns_head','')}"
 local git_status = "%{get(b:,'gitsigns_status','')}"

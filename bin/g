@@ -33,9 +33,9 @@ eval "$GIT_FILES" \
   --bind="tab:execute-silent(_git-stage-toggle {-1})+reload($GIT_FILES)" \
   --bind="ctrl-a:execute-silent(git add -A)+reload($GIT_FILES)" \
   --bind="ctrl-r:execute-silent(git restore --staged .)+reload($GIT_FILES)" \
-  --bind="ctrl-c:execute(git commit)+accept" \
+  --bind="ctrl-c:execute(git commit)+abort" \
   --bind="alt-d:execute-silent(git restore {-1})+reload($GIT_FILES)" \
-  --bind="alt-s:execute-silent(git stash -u)+accept" \
+  --bind="alt-s:execute-silent(git stash -u)+abort" \
   --bind="ctrl-e:execute($EDITOR {-1})+reload($GIT_FILES)" \
   --header="# enter: view full-screen diff
 # tab: stage/unstage a file
