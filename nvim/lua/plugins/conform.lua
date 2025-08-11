@@ -8,13 +8,14 @@ return {
   --- @type conform.setupOpts
   opts = {
     formatters_by_ft = {
-      python = { "ruff_organize_imports", "ruff_format" },
-      javascript = { "prettier" },
-      typescript = { "prettier" },
       go = { "gofmt" },
-      lua = { "stylua" },
-      templ = { "templ" },
+      javascript = { "prettier" },
       json = { "prettier" },
+      lua = { "stylua" },
+      python = { "ruff_organize_imports", "ruff_format" },
+      templ = { "templ" },
+      typescript = { "prettier" },
+      typst = { "typstyle" },
     },
     format_on_save = function()
       if not vim.g.format_on_save then

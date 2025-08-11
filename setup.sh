@@ -21,3 +21,5 @@ ln -sf "$DOTFILES/nvim" "$XDG_CONFIG_HOME/nvim"
 ln -sf "$DOTFILES/.config/bat" "$XDG_CONFIG_HOME/bat"
 ln -sf "$DOTFILES/.config/fd" "$XDG_CONFIG_HOME/fd"
 ln -sf "$DOTFILES/.config/ghostty" "$XDG_CONFIG_HOME/ghostty"
+
+uv python install --default
