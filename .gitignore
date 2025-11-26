@@ -4,3 +4,4 @@
 *.swp
 :*
 .nvim.lua
+mise.local.toml

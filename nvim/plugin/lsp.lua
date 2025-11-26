@@ -24,10 +24,11 @@ vim.lsp.enable({
   "html",
   "jsonls",
   "lua_ls",
+  -- "pyrefly",
   "ruff",
   "tailwindcss",
   "templ",
   "tinymist",
   "ts_ls",
-  "ty",
+  -- "ty",
 })

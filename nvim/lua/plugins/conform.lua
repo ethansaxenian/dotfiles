@@ -15,6 +15,7 @@ return {
       python = { "ruff_organize_imports", "ruff_format" },
       templ = { "templ" },
       typescript = { "prettier" },
+      typescriptreact = { "prettier" },
       typst = { "typstyle" },
     },
     format_on_save = function()
