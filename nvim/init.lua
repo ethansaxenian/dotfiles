@@ -16,6 +16,12 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = "plugins",
   change_detection = { notify = false },
+  ---@diagnostic disable-next-line: assign-type-mismatch
+  dev = {
+    path = "~/projects",
+    fallback = true,
+    patterns = { "blink-cmp-" },
+  },
 })
 
 -- fix slow python loading time

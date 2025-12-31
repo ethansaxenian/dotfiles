@@ -157,11 +157,8 @@ alias dc="docker compose"
 function collapse_pwd() {
   echo "%(5~|%-1~/.../%3~|%4~)"
 }
-
 PROMPT="%B%F{magenta}$(collapse_pwd)%f%b %# "
 
-# }}}
-# shell options {{{
 export HISTFILE=$HOME/.zsh_history
 export SAVEHIST=5000
 export HISTSIZE=5000
@@ -184,8 +181,6 @@ setopt HIST_VERIFY
 setopt CORRECT
 setopt CORRECT_ALL
 
-# }}}
-# completion {{{
 
 autoload -Uz compinit && compinit
 # case insensitive path-completion
@@ -206,15 +201,59 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey -v
 export KEYTIMEOUT=1
 
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
+autoload -Uz select-bracketed select-quoted
+zle -N select-quoted
+zle -N select-bracketed
+for km in viopp visual; do
+  bindkey -M $km -- '-' vi-up-line-or-history
+  for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
+    bindkey -M $km $c select-quoted
+  done
+  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $km $c select-bracketed
+  done
+done
+
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -M vicmd cs change-surround
+bindkey -M vicmd ds delete-surround
+bindkey -M vicmd ys add-surround
+bindkey -M visual S add-surround
+
 # ctrl-space accepts autosuggestion
 bindkey '^y' autosuggest-accept
 
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
-bindkey -s '^v' "fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS\n"
-bindkey -s '^f' 'tmux-sessionizer\n'
-bindkey -s '^[t' 'tmux a\n'
+bindkey '^_' undo
+
+function _tmux-attach() {
+  tmux a
+}
+zle -N _tmux-attach
+bindkey '^[t' _tmux-attach
+
+function _fzf-nvim() {
+  local -a fzf_opts
+  fzf_opts=("${(@Q)${(z)FZF_CTRL_T_OPTS}}")
+  "${(z)FZF_DEFAULT_COMMAND}" | fzf --bind 'enter:become(nvim {})' "${fzf_opts[@]}"
+}
+zle -N _fzf-nvim
+bindkey '^v' _fzf-nvim
+
+function _tmux-sessionizer() {
+  tmux-sessionizer
+}
+zle -N _tmux-sessionizer
+bindkey '^f' _tmux-sessionizer
 
 export NVM_DIR="$XDG_CONFIG_HOME/nvm"
 if [[ -d "$NVM_DIR" ]]; then
@@ -243,3 +282,5 @@ fi
 if test $(command -v mise); then
   eval "$(mise activate zsh)"
 fi
+
+autoload -Uz zmv

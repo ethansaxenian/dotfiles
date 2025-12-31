@@ -1,6 +1,7 @@
 --- @module 'lazy'
 --- @module 'blink.cmp'
 --- @module 'blink-cmp-tmux'
+--- @module 'blink-cmp-env'
 
 --- @type LazySpec
 return {
@@ -11,9 +12,11 @@ return {
       "rafamadriz/friendly-snippets",
       {
         "ethansaxenian/blink-cmp-tmux",
-        -- dir = "~/projects/blink-cmp-tmux/",
-        -- name = "blink-cmp-tmux",
-        -- dev = true,
+        name = "blink-cmp-tmux",
+      },
+      {
+        "ethansaxenian/blink-cmp-env",
+        name = "blink-cmp-env",
       },
     },
 
@@ -27,6 +30,7 @@ return {
           "path",
           "snippets",
           "buffer",
+          "env",
         },
         providers = {
           lazydev = {
@@ -41,6 +45,11 @@ return {
             opts = {
               panes = "session",
             },
+            score_offset = -10,
+          },
+          env = {
+            name = "env",
+            module = "blink-cmp-env",
             score_offset = -10,
           },
         },
