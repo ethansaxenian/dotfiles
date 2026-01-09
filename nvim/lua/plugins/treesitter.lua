@@ -6,16 +6,11 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-context",
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-    branch = "master",
-    main = "nvim-treesitter.configs",
-    --- @type TSConfig | TSContext.UserConfig
-    opts = {
-      ensure_installed = {
+    opts = {},
+    init = function()
+      require("nvim-treesitter").install({
         "bash",
         "css",
         "dockerfile",
@@ -36,50 +31,69 @@ return {
         "typescript",
         "typst",
         "yaml",
+      })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("treesitter.setup", { clear = true }),
+        callback = function(args)
+          local buf = args.buf
+          local filetype = args.match
+
+          -- you need some mechanism to avoid running on buffers that do not
+          -- correspond to a language (like oil.nvim buffers), this implementation
+          -- checks if a parser exists for the current language
+          local language = vim.treesitter.language.get_lang(filetype) or filetype
+          if not vim.treesitter.language.add(language) then
+            return
+          end
+
+          vim.wo.foldmethod = "expr"
+          vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+          vim.treesitter.start(buf, language)
+
+          vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+    end,
+
+    require("vim.treesitter.query").add_predicate("is-mise?", function(_, _, bufnr, _)
+      local filepath = vim.api.nvim_buf_get_name(tonumber(bufnr) or 0)
+      local filename = vim.fn.fnamemodify(filepath, ":t")
+      return string.match(filename, ".*mise.*%.toml$") ~= nil
+    end, { force = true, all = false }),
+  },
+
+  { "nvim-treesitter/nvim-treesitter-context" },
+
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    ---@type TSTextObjects.Config
+    opts = {
+      select = {
+        lookahead = true,
+        include_surrounding_whitespace = true,
       },
-      sync_install = false,
-      highlight = { enable = true },
-      indent = { enable = true },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true,
-          keymaps = {
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-          },
-          include_surrounding_whitespace = true,
-        },
-        move = {
-          enable = true,
-          set_jumps = true,
-          goto_next_start = {
-            ["]f"] = "@function.outer",
-            ["]]"] = "@class.outer",
-          },
-          goto_next_end = {
-            ["]F"] = "@function.outer",
-            ["]["] = "@class.outer",
-          },
-          goto_previous_start = {
-            ["[f"] = "@function.outer",
-            ["[["] = "@class.outer",
-          },
-          goto_previous_end = {
-            ["[F"] = "@function.outer",
-            ["[]"] = "@class.outer",
-          },
-        },
+      move = {
+        set_jumps = true,
       },
     },
     init = function()
-      require("vim.treesitter.query").add_predicate("is-mise?", function(_, _, bufnr, _)
-        local filepath = vim.api.nvim_buf_get_name(tonumber(bufnr) or 0)
-        local filename = vim.fn.fnamemodify(filepath, ":t")
-        return string.match(filename, ".*mise.*%.toml$") ~= nil
-      end, { force = true, all = false })
+      local ts_select = require("nvim-treesitter-textobjects.select")
+
+      vim.keymap.set({ "x", "o" }, "af", function()
+        ts_select.select_textobject("@function.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "if", function()
+        ts_select.select_textobject("@function.inner", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ac", function()
+        ts_select.select_textobject("@class.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ic", function()
+        ts_select.select_textobject("@class.inner", "textobjects")
+      end)
     end,
   },
 }
