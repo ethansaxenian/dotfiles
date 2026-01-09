@@ -235,25 +235,9 @@ bindkey '^n' history-search-forward
 
 bindkey '^_' undo
 
-function _tmux-attach() {
-  tmux a
-}
-zle -N _tmux-attach
-bindkey '^[t' _tmux-attach
-
-function _fzf-nvim() {
-  local -a fzf_opts
-  fzf_opts=("${(@Q)${(z)FZF_CTRL_T_OPTS}}")
-  "${(z)FZF_DEFAULT_COMMAND}" | fzf --bind 'enter:become(nvim {})' "${fzf_opts[@]}"
-}
-zle -N _fzf-nvim
-bindkey '^v' _fzf-nvim
-
-function _tmux-sessionizer() {
-  tmux-sessionizer
-}
-zle -N _tmux-sessionizer
-bindkey '^f' _tmux-sessionizer
+bindkey -s '^v' "fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS\n"
+bindkey -s '^f' 'tmux-sessionizer\n'
+bindkey -s '^[t' 'tmux a\n'
 
 export NVM_DIR="$XDG_CONFIG_HOME/nvm"
 if [[ -d "$NVM_DIR" ]]; then
