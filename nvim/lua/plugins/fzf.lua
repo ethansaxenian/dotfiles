@@ -1,16 +1,23 @@
 --- @module 'lazy'
+--- @module 'fzf-lua'
+
 --- @type LazySpec
 return {
   "ibhagwan/fzf-lua",
+
+  --- @type fzf-lua.config.Base
+  --- @diagnostic disable-next-line: missing-fields
   opts = {
     winopts = {
       fullscreen = true,
+      --- @diagnostic disable-next-line: missing-fields
       preview = {
         horizontal = "right:50%",
         vertical = "up:50%",
         scrollbar = "float",
       },
     },
+    --- @diagnostic disable-next-line: missing-fields
     hls = {
       border = "Comment",
       preview_border = "Comment",

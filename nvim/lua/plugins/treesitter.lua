@@ -69,7 +69,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
-    ---@type TSTextObjects.Config
+    --- @type TSTextObjects.Config
     opts = {
       select = {
         lookahead = true,
