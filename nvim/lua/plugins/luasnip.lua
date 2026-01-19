@@ -11,7 +11,7 @@ return {
         if ls.expand_or_jumpable() then
           ls.expand_or_jump()
         end
-      end, { silent = true })
+      end, { silent = true, desc = "luasnip.expand_or_jump()" })
 
       require("luasnip.loaders.from_lua").lazy_load()
       require("luasnip.loaders.from_vscode").lazy_load()

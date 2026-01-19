@@ -1,11 +1,11 @@
---- @module 'lazy'
---- @module 'mason'
+---@module 'lazy'
+---@module 'mason'
 
---- @type LazySpec
+---@type LazySpec
 return {
   {
     "williamboman/mason.nvim",
-    --- @type MasonSettings
+    ---@type MasonSettings
     opts = {},
   },
 }

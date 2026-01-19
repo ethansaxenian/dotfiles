@@ -25,4 +25,4 @@ function _ToggleNumber()
   end
 end
 
-vim.keymap.set("n", "<Plug>ToggleNumber", _ToggleNumber)
+vim.keymap.set("n", "<Plug>ToggleNumber", _ToggleNumber, { desc = "<Plug>ToggleNumber" })

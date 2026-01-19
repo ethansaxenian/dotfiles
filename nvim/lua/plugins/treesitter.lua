@@ -1,8 +1,8 @@
---- @module 'lazy'
---- @module 'nvim-treesitter'
---- @module 'treesitter-context'
+---@module 'lazy'
+---@module 'nvim-treesitter'
+---@module 'treesitter-context'
 
---- @type LazySpec
+---@type LazySpec
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -69,7 +69,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
-    --- @type TSTextObjects.Config
+    ---@type TSTextObjects.Config
     opts = {
       select = {
         lookahead = true,
@@ -84,16 +84,16 @@ return {
 
       vim.keymap.set({ "x", "o" }, "af", function()
         ts_select.select_textobject("@function.outer", "textobjects")
-      end)
+      end, { desc = "select @function.outer" })
       vim.keymap.set({ "x", "o" }, "if", function()
         ts_select.select_textobject("@function.inner", "textobjects")
-      end)
+      end, { desc = "select @function.inner" })
       vim.keymap.set({ "x", "o" }, "ac", function()
         ts_select.select_textobject("@class.outer", "textobjects")
-      end)
+      end, { desc = "select @class.outer" })
       vim.keymap.set({ "x", "o" }, "ic", function()
         ts_select.select_textobject("@class.inner", "textobjects")
-      end)
+      end, { desc = "select @class.inner" })
     end,
   },
 }

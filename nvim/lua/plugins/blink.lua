@@ -1,9 +1,9 @@
---- @module 'lazy'
---- @module 'blink.cmp'
---- @module 'blink-cmp-tmux'
---- @module 'blink-cmp-env'
+---@module 'lazy'
+---@module 'blink.cmp'
+---@module 'blink-cmp-tmux'
+---@module 'blink-cmp-env'
 
---- @type LazySpec
+---@type LazySpec
 return {
   {
     "saghen/blink.cmp",
@@ -20,7 +20,7 @@ return {
       },
     },
 
-    --- @type blink.cmp.Config
+    ---@type blink.cmp.Config
     opts = {
       sources = {
         default = {
@@ -41,7 +41,7 @@ return {
           tmux = {
             name = "tmux",
             module = "blink-cmp-tmux",
-            --- @type blink-cmp-tmux.Opts
+            ---@type blink-cmp-tmux.Opts
             opts = {
               panes = "session",
             },

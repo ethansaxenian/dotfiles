@@ -32,3 +32,20 @@ vim.api.nvim_create_autocmd("TermOpen", {
     vim.wo.relativenumber = false
   end,
 })
+
+-- find and read .nvim.lua files in parent directories
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = nvim_config,
+  callback = function()
+    if vim.opt.exrc == false then
+      return
+    end
+
+    local dir = vim.fs.root(0, ".nvim.lua")
+    if dir ~= nil then
+      local nvim_lua = vim.fs.joinpath(dir, ".nvim.lua")
+      vim.secure.read(nvim_lua)
+      vim.cmd("source " .. nvim_lua)
+    end
+  end,
+})

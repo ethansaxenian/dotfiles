@@ -1,11 +1,11 @@
---- @module 'lazy'
---- @module 'conform'
+---@module 'lazy'
+---@module 'conform'
 
---- @type LazySpec
+---@type LazySpec
 return {
   "stevearc/conform.nvim",
 
-  --- @type conform.setupOpts
+  ---@type conform.setupOpts
   opts = {
     formatters_by_ft = {
       go = { "gofmt" },

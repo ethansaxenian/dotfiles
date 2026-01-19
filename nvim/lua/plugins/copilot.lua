@@ -1,5 +1,5 @@
---- @module 'lazy'
---- @type LazySpec
+---@module 'lazy'
+---@type LazySpec
 return {
   {
     "github/copilot.vim",

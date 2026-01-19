@@ -1,23 +1,23 @@
---- @module 'lazy'
---- @module 'fzf-lua'
+---@module 'lazy'
+---@module 'fzf-lua'
 
---- @type LazySpec
+---@type LazySpec
 return {
   "ibhagwan/fzf-lua",
 
-  --- @type fzf-lua.config.Base
-  --- @diagnostic disable-next-line: missing-fields
+  ---@type fzf-lua.config.Base
+  ---@diagnostic disable-next-line: missing-fields
   opts = {
     winopts = {
       fullscreen = true,
-      --- @diagnostic disable-next-line: missing-fields
+      ---@diagnostic disable-next-line: missing-fields
       preview = {
         horizontal = "right:50%",
         vertical = "up:50%",
         scrollbar = "float",
       },
     },
-    --- @diagnostic disable-next-line: missing-fields
+    ---@diagnostic disable-next-line: missing-fields
     hls = {
       border = "Comment",
       preview_border = "Comment",
@@ -40,15 +40,20 @@ return {
   init = function()
     local fzf_lua = require("fzf-lua")
 
-    vim.keymap.set("n", "<leader>b", fzf_lua.buffers)
-    vim.keymap.set("n", "<leader>f", fzf_lua.files)
-    vim.keymap.set("n", "<leader>g", fzf_lua.live_grep_native)
-    vim.keymap.set("n", "<leader>sh", fzf_lua.helptags)
-    vim.keymap.set("n", "<leader>ch", fzf_lua.command_history)
-    vim.keymap.set("n", "<leader>r", fzf_lua.registers)
-    vim.keymap.set("n", "<leader>q", fzf_lua.quickfix)
-    vim.keymap.set("n", "<leader>l", fzf_lua.loclist)
-    vim.keymap.set("n", "<leader>ds", fzf_lua.lsp_document_symbols)
-    vim.keymap.set("n", "<leader>ws", fzf_lua.lsp_live_workspace_symbols)
+    vim.keymap.set("n", "<leader>b", fzf_lua.buffers, { desc = "fzf_lua.buffers" })
+    vim.keymap.set("n", "<leader>f", fzf_lua.files, { desc = "fzf_lua.files" })
+    vim.keymap.set("n", "<leader>g", fzf_lua.live_grep_native, { desc = "fzf_lua.live_grep_native" })
+    vim.keymap.set("n", "<leader>sh", fzf_lua.helptags, { desc = "fzf_lua.helptags" })
+    vim.keymap.set("n", "<leader>ch", fzf_lua.command_history, { desc = "fzf_lua.command_history" })
+    vim.keymap.set("n", "<leader>r", fzf_lua.registers, { desc = "fzf_lua.registers" })
+    vim.keymap.set("n", "<leader>q", fzf_lua.quickfix, { desc = "fzf_lua.quickfix" })
+    vim.keymap.set("n", "<leader>l", fzf_lua.loclist, { desc = "fzf_lua.loclist" })
+    vim.keymap.set("n", "<leader>ds", fzf_lua.lsp_document_symbols, { desc = "fzf_lua.lsp_document_symbols" })
+    vim.keymap.set(
+      "n",
+      "<leader>ws",
+      fzf_lua.lsp_live_workspace_symbols,
+      { desc = "fzf_lua.lsp_live_workspace_symbols" }
+    )
   end,
 }

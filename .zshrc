@@ -15,11 +15,14 @@ export MANPAGER='nvim +Man!'
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+export BUN_INSTALL="$HOME/.bun"
+
 # add my own executables to $PATH
 path=(
   "$HOME/.local/bin"
   "$DOTFILES/bin"
   "$GOPATH/bin"
+  "$BUN_INSTALL/bin"
   "/opt/homebrew/opt/coreutils/libexec/gnubin"
   "/opt/homebrew/opt/libpq/bin"
   $path
@@ -150,6 +153,7 @@ alias gstd="git stash drop"
 alias gstl="git stash list"
 alias gstp="git stash pop"
 alias gsw="git switch"
+alias gw="git worktree"
 
 alias dc="docker compose"
 
@@ -268,3 +272,7 @@ if test $(command -v mise); then
 fi
 
 autoload -Uz zmv
+
+# bun completions
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
+

@@ -1,5 +1,5 @@
---- @module 'lazy'
---- @type LazySpec
+---@module 'lazy'
+---@type LazySpec
 return {
   {
     "ThePrimeagen/harpoon",
@@ -11,21 +11,21 @@ return {
 
       vim.keymap.set("n", "<leader>ha", function()
         harpoon:list():add()
-      end)
+      end, { desc = "add to harpoon list" })
 
       vim.keymap.set("n", "<leader>ho", function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
-      end)
+      end, { desc = "view harpoon list" })
 
       for i = 1, 9 do
         vim.keymap.set("n", "<leader>" .. i, function()
           harpoon:list():select(i)
-        end)
+        end, { desc = "harpoon select " .. i })
       end
 
       vim.keymap.set("n", "<leader>0", function()
         harpoon:list():select(10)
-      end)
+      end, { desc = "harpoon select 10" })
     end,
   },
 }

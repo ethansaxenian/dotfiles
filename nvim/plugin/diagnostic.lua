@@ -8,8 +8,8 @@ vim.diagnostic.config({
   },
 })
 
---- @param field 'virtual_text'|'virtual_lines'
---- @return boolean|table
+---@param field 'virtual_text'|'virtual_lines'
+---@return boolean|table
 local function get_diagnostic_opt(field)
   local config = vim.diagnostic.config()
   return config and config[field] or false
@@ -23,9 +23,9 @@ local function close_float()
   vim.diagnostic.config({ virtual_lines = false })
 end
 
-vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist)
-vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist)
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
 vim.keymap.set("n", "<leader>tv", function()
   if get_diagnostic_opt("virtual_lines") then
     close_float()
@@ -38,7 +38,7 @@ vim.keymap.set("n", "<leader>tv", function()
     once = true,
     callback = close_float,
   })
-end)
+end, { desc = "toggle virtual lines" })
 
 vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
   local virtual_text = get_diagnostic_opt("virtual_text")

@@ -1,7 +1,7 @@
---- @type vim.lsp.Config
+---@type vim.lsp.Config
 return {
   cmd = { "tailwindcss-language-server", "--stdio" },
-  filetypes = { "templ", "javascript", "typescript", "react" },
+  filetypes = { "templ", "javascript", "typescript", "react", "typescriptreact" },
   root_markers = {
     ".git",
     "tailwind.config.js",

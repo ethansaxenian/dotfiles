@@ -14,6 +14,9 @@ if vim.env.VIRTUAL_ENV == nil then
   })
 
   if root_dir ~= nil then
-    python.activate_venv(root_dir)
+    local venv, is_active = python.find_venv(root_dir)
+    if venv ~= nil and not is_active then
+      python.activate_venv(venv)
+    end
   end
 end

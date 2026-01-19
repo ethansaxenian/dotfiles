@@ -1,6 +1,6 @@
 local python = require("util.python")
 
---- @type vim.lsp.Config
+---@type vim.lsp.Config
 return {
   cmd = { "basedpyright-langserver", "--stdio" },
   filetypes = { "python" },
