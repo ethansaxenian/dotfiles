@@ -1,3 +1,5 @@
+vim.pack.add({ "https://github.com/b0o/schemastore.nvim" })
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(event)
