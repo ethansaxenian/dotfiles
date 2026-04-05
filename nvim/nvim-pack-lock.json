@@ -31,11 +31,11 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
-      "rev": "c9e7b7bfbd01f949164988ee1684035468e1995c",
+      "rev": "abacb0693d7a37de9e85e6fcb2d22d848cb75cef",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "50c205548d8b037b7ff6378fca6d21146f0b6161",
+      "rev": "944ef13cc8d8fe8b846c91f36041c8dfb85ca000",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "harpoon": {
@@ -56,12 +56,12 @@
       "src": "https://github.com/EdenEast/nightfox.nvim"
     },
     "nvim-treesitter": {
-      "rev": "7caec274fd19c12b55902a5b795100d21531391f",
+      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
     "nvim-treesitter-context": {
-      "rev": "adf4b6b0420b7be6c717ef0ac7993183d6c201b1",
+      "rev": "b0c45cefe2c8f7b55fc46f34e563bc428ef99636",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "nvim-treesitter-textobjects": {
@@ -74,7 +74,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "schemastore.nvim": {
-      "rev": "24eeb97da8d605c480dc68bb6276248702e31d2a",
+      "rev": "6d0329adb9c8cbe51b9a28299890a5eb104db7dc",
       "src": "https://github.com/b0o/schemastore.nvim"
     },
     "vim-cool": {

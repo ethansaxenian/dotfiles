@@ -17,7 +17,7 @@ require("blink.cmp").setup(
   {
     sources = {
       default = {
-        -- "lazydev",
+        "lazydev",
         "tmux",
         "lsp",
         "path",
@@ -26,11 +26,11 @@ require("blink.cmp").setup(
         "env",
       },
       providers = {
-        -- lazydev = {
-        --   name = "LazyDev",
-        --   module = "lazydev.integrations.blink",
-        --   score_offset = 100,
-        -- },
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          score_offset = 100,
+        },
         tmux = {
           name = "tmux",
           module = "blink-cmp-tmux",
