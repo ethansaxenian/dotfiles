@@ -22,6 +22,7 @@ vim.pack.add({
 require("nvim-treesitter").install({
   "bash",
   "css",
+  "diff",
   "dockerfile",
   "go",
   "gomod",
@@ -39,28 +40,21 @@ require("nvim-treesitter").install({
   "yaml",
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("treesitter.setup", { clear = true }),
-  callback = function(args)
-    local buf = args.buf
-    local filetype = args.match
-
-    -- you need some mechanism to avoid running on buffers that do not
-    -- correspond to a language (like oil.nvim buffers), this implementation
-    -- checks if a parser exists for the current language
-    local language = vim.treesitter.language.get_lang(filetype) or filetype
-    if not vim.treesitter.language.add(language) then
-      return
-    end
-
-    vim.wo.foldmethod = "expr"
-    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-
-    vim.treesitter.start(buf, language)
-
-    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-  end,
-})
+local installed_parsers = require("nvim-treesitter").get_installed("parsers")
+local treesitter_group = vim.api.nvim_create_augroup("treesitter.setup", { clear = true })
+for _, parser in pairs(installed_parsers) do
+  local filetypes = vim.treesitter.language.get_filetypes(parser)
+  vim.api.nvim_create_autocmd("FileType", {
+    group = treesitter_group,
+    pattern = filetypes,
+    callback = function()
+      vim.wo.foldmethod = "expr"
+      vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      vim.treesitter.start()
+    end,
+  })
+end
 
 require("vim.treesitter.query").add_predicate("is-mise?", function(_, _, bufnr, _)
   local filepath = vim.api.nvim_buf_get_name(tonumber(bufnr) or 0)

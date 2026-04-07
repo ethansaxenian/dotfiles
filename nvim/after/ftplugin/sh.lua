@@ -5,4 +5,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = function(args)
     vim.diagnostic.enable(false, { bufnr = args.buf })
   end,
+  desc = "don't show diagnostics in .env files",
 })
