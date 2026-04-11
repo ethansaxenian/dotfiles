@@ -4,6 +4,7 @@ vim.pack.add({
 })
 
 local harpoon = require("harpoon")
+harpoon:setup()
 
 vim.keymap.set("n", "<leader>ha", function()
   harpoon:list():add()
