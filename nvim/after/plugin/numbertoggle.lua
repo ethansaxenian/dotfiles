@@ -1,3 +1,5 @@
+local group = vim.api.nvim_create_augroup("numbertoggle", { clear = true })
+
 vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
   callback = function()
     if vim.o.number and vim.fn.mode() ~= "i" then
@@ -5,6 +7,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnte
     end
   end,
   pattern = "*",
+  group = group,
 })
 
 vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
@@ -14,6 +17,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave"
     end
   end,
   pattern = "*",
+  group = group,
 })
 
 function _ToggleNumber()

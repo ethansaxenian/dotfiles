@@ -1,5 +1,3 @@
----@module 'fzf-lua'
-
 vim.pack.add({ "https://github.com/ibhagwan/fzf-lua" })
 
 local fzf_lua = require("fzf-lua")

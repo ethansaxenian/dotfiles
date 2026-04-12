@@ -1,4 +1,3 @@
----@module 'blink.cmp'
 ---@module 'blink-cmp-tmux'
 ---@module 'blink-cmp-env'
 

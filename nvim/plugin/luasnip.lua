@@ -17,11 +17,17 @@ vim.pack.add({
 
 local ls = require("luasnip")
 
-vim.keymap.set({ "i", "s" }, "<C-s>", function()
+vim.keymap.set({ "i", "s" }, "<C-n>", function()
   if ls.expand_or_jumpable() then
     ls.expand_or_jump()
   end
 end, { silent = true, desc = "luasnip.expand_or_jump()" })
+
+vim.keymap.set({ "i", "s" }, "<C-p>", function()
+  if ls.expand_or_jumpable() then
+    ls.jump(-1)
+  end
+end, { silent = true, desc = "luasnip.jump(-1)" })
 
 require("luasnip.loaders.from_lua").lazy_load()
 require("luasnip.loaders.from_vscode").lazy_load()
