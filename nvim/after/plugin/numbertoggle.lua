@@ -20,13 +20,11 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave"
   group = group,
 })
 
-function _ToggleNumber()
+vim.keymap.set("n", "<Plug>ToggleNumber", function()
   if vim.o.relativenumber then
     vim.o.number = true
     vim.o.relativenumber = false
   else
     vim.o.relativenumber = true
   end
-end
-
-vim.keymap.set("n", "<Plug>ToggleNumber", _ToggleNumber, { desc = "<Plug>ToggleNumber" })
+end, { desc = "<Plug>ToggleNumber" })

@@ -15,15 +15,15 @@ vim.pack.add({
   { src = "https://github.com/L3MON4D3/LuaSnip", version = vim.version.range("v2.*") },
 })
 
-local ls = require("luasnip")
-
 vim.keymap.set({ "i", "s" }, "<C-n>", function()
+  local ls = require("luasnip")
   if ls.expand_or_jumpable() then
     ls.expand_or_jump()
   end
 end, { silent = true, desc = "luasnip.expand_or_jump()" })
 
 vim.keymap.set({ "i", "s" }, "<C-p>", function()
+  local ls = require("luasnip")
   if ls.expand_or_jumpable() then
     ls.jump(-1)
   end

@@ -73,6 +73,7 @@ require("blink.cmp").setup(
           components = {
             label_description = {
               text = function(ctx)
+                -- Add source module to gopls completions
                 if ctx.kind == "Module" and ctx.item.detail and ctx.item.client_name == "gopls" then
                   return ctx.label_description .. ctx.item.detail
                 end

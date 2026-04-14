@@ -3,15 +3,18 @@
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(event)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf, desc = "vim.lsp.buf.definition" })
-    vim.keymap.set(
-      { "n", "i" },
-      "<C-k>",
-      vim.lsp.buf.signature_help,
-      { buffer = event.buf, desc = "vim.lsp.buf.signature_help" }
-    )
-
     local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
+
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf, desc = "vim.lsp.buf.definition" })
+
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_signatureHelp, event.buf) then
+      vim.keymap.set(
+        { "n", "i" },
+        "<C-k>",
+        vim.lsp.buf.signature_help,
+        { buffer = event.buf, desc = "vim.lsp.buf.signature_help" }
+      )
+    end
 
     if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, event.buf) then
       vim.lsp.inline_completion.enable(true, { bufnr = event.buf })
@@ -117,24 +120,7 @@ local servers = {
     capabilities = { textDocument = { completion = { completionItem = { snippetSupport = true } } } },
   },
 
-  lua_ls = {
-    ---@type lspconfig.settings.lua_ls
-    settings = {
-      Lua = {
-        runtime = {
-          version = "LuaJIT",
-          path = {
-            "lua/?.lua",
-            "lua/?/init.lua",
-          },
-        },
-        workspace = {
-          checkThirdParty = false,
-          library = { vim.env.VIMRUNTIME },
-        },
-      },
-    },
-  },
+  lua_ls = {},
 
   -- pyrefly = {
   --   on_attach = function(client)

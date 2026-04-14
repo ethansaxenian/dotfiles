@@ -5,7 +5,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
       if not ev.data.active then
         vim.cmd.packadd("nvim-treesitter")
       end
-      vim.cmd("TSUpdate")
+      vim.cmd.TSUpdate()
     end
   end,
 })
@@ -16,7 +16,7 @@ vim.pack.add({
   { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
 })
 
-require("nvim-treesitter").install({
+local parsers = {
   "bash",
   "css",
   "diff",
@@ -35,15 +35,15 @@ require("nvim-treesitter").install({
   "typescript",
   "typst",
   "yaml",
-})
+}
 
-local installed_parsers = require("nvim-treesitter").get_installed("parsers")
-local treesitter_group = vim.api.nvim_create_augroup("treesitter.setup", { clear = true })
-for _, parser in pairs(installed_parsers) do
-  local filetypes = vim.treesitter.language.get_filetypes(parser)
+require("nvim-treesitter").install(parsers)
+
+local treesitter_group = vim.api.nvim_create_augroup("treesitter_setup", { clear = true })
+for _, p in pairs(parsers) do
   vim.api.nvim_create_autocmd("FileType", {
     group = treesitter_group,
-    pattern = filetypes,
+    pattern = vim.treesitter.language.get_filetypes(p),
     callback = function()
       vim.wo.foldmethod = "expr"
       vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
@@ -60,7 +60,7 @@ require("vim.treesitter.query").add_predicate("is-mise?", function(_, _, bufnr, 
 end, { force = true, all = false })
 
 require("nvim-treesitter-textobjects").setup(
-  ---@type TSTextObjects.Config
+  ---@type TSTextObjects.UserConfig
   {
     select = {
       lookahead = true,
@@ -72,17 +72,18 @@ require("nvim-treesitter-textobjects").setup(
   }
 )
 
-local ts_select = require("nvim-treesitter-textobjects.select")
-
 vim.keymap.set({ "x", "o" }, "af", function()
-  ts_select.select_textobject("@function.outer", "textobjects")
+  require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
 end, { desc = "select @function.outer" })
+
 vim.keymap.set({ "x", "o" }, "if", function()
-  ts_select.select_textobject("@function.inner", "textobjects")
+  require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
 end, { desc = "select @function.inner" })
+
 vim.keymap.set({ "x", "o" }, "ac", function()
-  ts_select.select_textobject("@class.outer", "textobjects")
+  require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
 end, { desc = "select @class.outer" })
+
 vim.keymap.set({ "x", "o" }, "ic", function()
-  ts_select.select_textobject("@class.inner", "textobjects")
+  require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
 end, { desc = "select @class.inner" })

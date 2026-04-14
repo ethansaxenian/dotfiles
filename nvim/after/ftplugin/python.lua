@@ -1,5 +1,3 @@
-local python = require("util.python")
-
 vim.bo.tabstop = 4
 vim.bo.shiftwidth = 4
 vim.bo.softtabstop = 4
@@ -14,6 +12,7 @@ if vim.env.VIRTUAL_ENV == nil then
   })
 
   if root_dir ~= nil then
+    local python = require("util.python")
     local venv, is_active = python.find_venv(root_dir)
     if venv ~= nil and not is_active then
       python.activate_venv(venv)

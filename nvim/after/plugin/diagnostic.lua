@@ -8,43 +8,26 @@ vim.diagnostic.config({
   },
 })
 
----@param field 'virtual_text'|'virtual_lines'
----@return boolean|table
-local function get_diagnostic_opt(field)
-  local config = vim.diagnostic.config()
-  return config and config[field] or false
-end
-
-local function open_float()
-  vim.diagnostic.config({ virtual_lines = { current_line = true } })
-end
-
-local function close_float()
-  vim.diagnostic.config({ virtual_lines = false })
-end
-
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist" })
 vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
-vim.keymap.set("n", "<leader>tv", function()
-  if get_diagnostic_opt("virtual_lines") then
-    close_float()
-  else
-    open_float()
+
+local valid_fields = { "virtual_text", "virtual_lines", "underline", "signs" }
+
+vim.api.nvim_create_user_command("DiagnosticDisplayMode", function(opts)
+  local arg = opts.fargs[1]
+  local next_config = vim.diagnostic.config()
+
+  for _, field in ipairs(valid_fields) do
+    next_config[field] = arg == field
   end
 
-  vim.api.nvim_create_autocmd("CursorMoved", {
-    group = vim.api.nvim_create_augroup("diagnostics", { clear = true }),
-    once = true,
-    callback = close_float,
-  })
-end, { desc = "toggle virtual lines" })
-
-vim.api.nvim_create_user_command("ToggleDiagnosticVirtualText", function()
-  local virtual_text = get_diagnostic_opt("virtual_text")
-  vim.diagnostic.config({
-    virtual_text = not virtual_text,
-    underline = virtual_text,
-  })
-  print("Diagnostic Virtual Text: " .. tostring(not virtual_text))
-end, {})
+  vim.diagnostic.config(next_config)
+  print(arg)
+end, {
+  nargs = 1,
+  complete = function()
+    return vim.list_extend({ "none" }, valid_fields)
+  end,
+  desc = "Toggle diagnostic display mode",
+})

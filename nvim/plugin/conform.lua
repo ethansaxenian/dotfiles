@@ -25,6 +25,8 @@ require("conform").setup(
   }
 )
 
+vim.o.formatexpr = "v:lua.require('conform').formatexpr()"
+
 vim.g.format_on_save = true
 
 vim.api.nvim_create_user_command("ToggleFormatOnSave", function()
