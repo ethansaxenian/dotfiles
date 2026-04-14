@@ -1,5 +1,8 @@
 ---@module 'lspconfig'
 
+vim.lsp.inlay_hint.enable(false)
+vim.lsp.codelens.enable(false)
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(event)
@@ -101,6 +104,24 @@ local servers = {
         },
         staticcheck = true,
         vulncheck = "Imports",
+        codelenses = {
+          generate = true,
+          regenerate_cgo = true,
+          run_govulncheck = true,
+          tidy = true,
+          upgrade_dependency = true,
+          vendor = true,
+        },
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          ignoredError = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+        },
       },
     },
   },
@@ -158,3 +179,21 @@ for name, server in pairs(servers) do
   vim.lsp.config(name, server)
   vim.lsp.enable(name)
 end
+
+vim.api.nvim_create_user_command("ToggleCodelens", function()
+  local val = not vim.lsp.codelens.is_enabled()
+  vim.lsp.codelens.enable(val)
+  print("codelens: " .. tostring(val))
+end, { desc = "Toggle LSP codelens" })
+
+vim.api.nvim_create_user_command("ToggleInlineCompletion", function()
+  local val = not vim.lsp.inline_completion.is_enabled()
+  vim.lsp.inline_completion.enable(val)
+  print("inline completion: " .. tostring(val))
+end, { desc = "Toggle LSP codelens" })
+
+vim.api.nvim_create_user_command("ToggleInlayHints", function()
+  local val = not vim.lsp.inlay_hint.is_enabled()
+  vim.lsp.inlay_hint.enable(val)
+  print("inlay hints: " .. tostring(val))
+end, { desc = "Toggle LSP inlay hints" })
