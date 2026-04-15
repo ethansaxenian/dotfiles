@@ -15,10 +15,10 @@ fzf_lua.setup(
       },
     },
     ---@diagnostic disable-next-line: missing-fields
-    hls = {
-      border = "Comment",
-      preview_border = "Comment",
-    },
+    -- hls = {
+    --   border = "Comment",
+    --   preview_border = "Comment",
+    -- },
     keymap = {
       builtin = {
         ["<F1>"] = "toggle-help",

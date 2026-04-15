@@ -1,5 +1,6 @@
 vim.pack.add({
   { src = "https://github.com/EdenEast/nightfox.nvim" },
+  { src = "https://github.com/folke/tokyonight.nvim" },
 })
 
 require("nightfox").setup({
@@ -13,4 +14,11 @@ require("nightfox").setup({
   },
 })
 
-vim.cmd.colorscheme("nightfox")
+require("tokyonight").setup({
+  styles = {
+    comments = { italic = false },
+    keywords = { italic = false },
+  },
+})
+
+vim.cmd.colorscheme("tokyonight-night")

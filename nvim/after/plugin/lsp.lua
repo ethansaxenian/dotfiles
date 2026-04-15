@@ -3,6 +3,15 @@
 vim.lsp.inlay_hint.enable(false)
 vim.lsp.codelens.enable(false)
 
+for _, capability in ipairs({ "codelens", "inline_completion", "inlay_hint", "semantic_tokens" }) do
+  vim.api.nvim_create_user_command("Toggle" .. capability:gsub("^%l", string.upper):gsub("_", ""), function()
+    local lsp_capability = vim.lsp[capability]
+    local val = not lsp_capability.is_enabled()
+    lsp_capability.enable(val)
+    print(capability .. ": " .. tostring(val))
+  end, { desc = "Toggle LSP " .. capability })
+end
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(event)
@@ -73,7 +82,6 @@ local servers = {
           pythonPath = require("util.python").get_python_path(client.root_dir),
         },
       })
-      client.server_capabilities.semanticTokensProvider = nil
     end,
     capabilities = {
       textDocument = {
@@ -166,9 +174,15 @@ local servers = {
 
   templ = {},
   tinymist = {},
-  tombi = {},
+
+  tombi = {
+    on_attach = function(client)
+      client.server_capabilities.semanticTokensProvider = nil
+    end,
+  },
+
   ts_ls = {},
-  ty = {},
+  -- ty = {},
 }
 
 vim.lsp.config("*", {
@@ -179,21 +193,3 @@ for name, server in pairs(servers) do
   vim.lsp.config(name, server)
   vim.lsp.enable(name)
 end
-
-vim.api.nvim_create_user_command("ToggleCodelens", function()
-  local val = not vim.lsp.codelens.is_enabled()
-  vim.lsp.codelens.enable(val)
-  print("codelens: " .. tostring(val))
-end, { desc = "Toggle LSP codelens" })
-
-vim.api.nvim_create_user_command("ToggleInlineCompletion", function()
-  local val = not vim.lsp.inline_completion.is_enabled()
-  vim.lsp.inline_completion.enable(val)
-  print("inline completion: " .. tostring(val))
-end, { desc = "Toggle LSP codelens" })
-
-vim.api.nvim_create_user_command("ToggleInlayHints", function()
-  local val = not vim.lsp.inlay_hint.is_enabled()
-  vim.lsp.inlay_hint.enable(val)
-  print("inlay hints: " .. tostring(val))
-end, { desc = "Toggle LSP inlay hints" })
