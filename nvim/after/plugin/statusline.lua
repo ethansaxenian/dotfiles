@@ -20,9 +20,13 @@ local function git()
 
   return table.concat({
     head,
+    "%#GitSignsAdd#",
     added,
+    "%#GitSignsChange#",
     changed,
+    "%#GitSignsDelete#",
     removed,
+    "%#StatusLine#",
   })
 end
 
@@ -39,4 +43,10 @@ function Statusline()
   })
 end
 
-vim.o.statusline = "%!v:lua.Statusline()"
+vim.api.nvim_create_autocmd("User", {
+  pattern = "GitSignsUpdate",
+  group = vim.api.nvim_create_augroup("statusline_git", {}),
+  command = "redrawstatus",
+})
+
+vim.o.statusline = "%{%v:lua.Statusline()%}"

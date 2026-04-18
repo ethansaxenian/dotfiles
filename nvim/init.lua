@@ -2,8 +2,8 @@ vim.g.mapleader = " "
 
 require("vim._core.ui2").enable({ enable = true })
 
--- fix slow python loading time
-vim.g.python3_host_prog = require("util.python").get_python_path()
+-- Disable python integration. Speeds up startup time.
+vim.g.loaded_python3_provider = 0
 
 vim.filetype.add({ extension = { templ = "templ" } })
 
@@ -39,6 +39,8 @@ vim.o.swapfile = false
 
 vim.o.foldenable = false
 vim.o.foldlevel = 99
+
+vim.opt.formatoptions:remove("t")
 
 vim.o.cursorline = true
 vim.o.cursorlineopt = "number"

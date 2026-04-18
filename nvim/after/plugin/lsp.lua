@@ -1,5 +1,3 @@
----@module 'lspconfig'
-
 vim.lsp.inlay_hint.enable(false)
 vim.lsp.codelens.enable(false)
 
@@ -16,6 +14,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(event)
     local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
+
+    -- Stop LSP servers that are disabled in project-local configs.
+    if vim.g.project_disabled_lsp_servers then
+      if vim.tbl_contains(vim.g.project_disabled_lsp_servers, client.name) then
+        vim.lsp.enable(client.name, false)
+        return
+      end
+    end
 
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf, desc = "vim.lsp.buf.definition" })
 
@@ -47,149 +53,25 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
----@type table<string, vim.lsp.Config>
 local servers = {
-  basedpyright = {
-    ---@type lspconfig.settings.basedpyright
-    settings = {
-      basedpyright = {
-        disableOrganizeImports = true,
-        analysis = {
-          typeCheckingMode = "standard",
-          diagnosticSeverityOverrides = {
-            strictListInference = true,
-            strictDictionaryInference = true,
-            strictSetInference = true,
-            strictParameterNoneValue = true,
-            deprecateTypingAliases = true,
-            reportUnusedVariable = false,
-            reportUnusedParameter = false,
-            reportUnusedImport = false,
-            reportUndefinedVariable = false,
-            reportDeprecated = "warning",
-            reportMatchNotExhaustive = "error",
-            -- reportPrivateUsage = "warning",
-            reportUnusedClass = "warning",
-            reportUnusedFunction = "warning",
-            reportUnreachable = "warning",
-          },
-        },
-      },
-    },
-    on_attach = function(client)
-      client.settings = vim.tbl_deep_extend("force", client.settings, {
-        python = {
-          pythonPath = require("util.python").get_python_path(client.root_dir),
-        },
-      })
-    end,
-    capabilities = {
-      textDocument = {
-        publishDiagnostics = {
-          tagSupport = {
-            valueSet = { 2 },
-          },
-        },
-      },
-    },
-  },
-
-  bashls = {},
-
-  copilot = { settings = { telemetry = { telemetryLevel = "off" } } },
-
-  docker_compose_language_service = {},
-  dockerls = {},
-  golangci_lint_ls = {},
-
-  gopls = {
-    settings = {
-      gopls = {
-        analyses = {
-          shadow = true,
-          unusedvariable = true,
-          useany = true,
-        },
-        staticcheck = true,
-        vulncheck = "Imports",
-        codelenses = {
-          generate = true,
-          regenerate_cgo = true,
-          run_govulncheck = true,
-          tidy = true,
-          upgrade_dependency = true,
-          vendor = true,
-        },
-        hints = {
-          assignVariableTypes = true,
-          compositeLiteralFields = true,
-          compositeLiteralTypes = true,
-          constantValues = true,
-          functionTypeParameters = true,
-          ignoredError = true,
-          parameterNames = true,
-          rangeVariableTypes = true,
-        },
-      },
-    },
-  },
-
-  html = {
-    filetypes = { "html", "templ" },
-    capabilities = { textDocument = { completion = { completionItem = { snippetSupport = true } } } },
-  },
-
-  jsonls = {
-    settings = {
-      json = {
-        schemas = require("schemastore").json.schemas(),
-        validate = { enable = true },
-      },
-    },
-    capabilities = { textDocument = { completion = { completionItem = { snippetSupport = true } } } },
-  },
-
-  lua_ls = {},
-
-  -- pyrefly = {
-  --   on_attach = function(client)
-  --     client.server_capabilities.semanticTokensProvider = nil
-  --   end,
-  -- },
-
-  ruff = {
-    settings = {
-      init_options = {
-        settings = {
-          configurationPreference = "filesystemFirst",
-          showSyntaxErrors = true,
-        },
-      },
-    },
-  },
-
-  tailwindcss = {
-    init_options = { userLanguages = { templ = "html" } },
-  },
-
-  templ = {},
-  tinymist = {},
-
-  tombi = {
-    on_attach = function(client)
-      client.server_capabilities.semanticTokensProvider = nil
-    end,
-  },
-
-  ts_ls = {},
-  -- ty = {},
+  "basedpyright",
+  "bashls",
+  "copilot",
+  "docker_compose_language_service",
+  "dockerls",
+  "golangci_lint_ls",
+  "gopls",
+  "html",
+  "jsonls",
+  "lua_ls",
+  "pyrefly",
+  "ruff",
+  "tailwindcss",
+  "templ",
+  "tinymist",
+  "tombi",
+  "ts_ls",
+  "ty",
 }
 
-vim.lsp.config("*", {
-  root_markers = { ".git" },
-})
-
-for name, server in pairs(servers) do
-  vim.lsp.config(name, server)
-  vim.lsp.enable(name)
-end
+vim.lsp.enable(servers)
