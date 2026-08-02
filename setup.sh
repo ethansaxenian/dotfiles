@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 export DOTFILES="$HOME/.dotfiles"
 
@@ -9,11 +9,9 @@ brew update
 brew bundle --file "$DOTFILES/Brewfile"
 "$(brew --prefix)/opt/fzf/install"
 
+mkdir -p "$XDG_CONFIG_HOME"
+
 ln -sf "$DOTFILES/.zshrc" "$HOME/.zshrc"
-
-chsh -s "$(which zsh)"
-source "$DOTFILES/.zshrc"
-
 ln -sf "$DOTFILES/.gitconfig" "$HOME/.gitconfig"
 ln -sf "$DOTFILES/.gitignore" "$HOME/.gitignore"
 ln -sf "$DOTFILES/.tmux.conf" "$HOME/.tmux.conf"
@@ -21,5 +19,7 @@ ln -sf "$DOTFILES/nvim" "$XDG_CONFIG_HOME/nvim"
 ln -sf "$DOTFILES/.config/bat" "$XDG_CONFIG_HOME/bat"
 ln -sf "$DOTFILES/.config/fd" "$XDG_CONFIG_HOME/fd"
 ln -sf "$DOTFILES/.config/ghostty" "$XDG_CONFIG_HOME/ghostty"
+
+source "$DOTFILES/.zshrc"
 
 uv python install --default
