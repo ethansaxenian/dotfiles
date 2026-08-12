@@ -47,7 +47,7 @@ vim.o.cursorlineopt = "number"
 
 vim.o.exrc = true
 
-vim.o.winborder = true
+vim.o.winborder = "rounded"
 
 vim.keymap.set("i", "<C-c>", "<ESC>", { desc = "make ctrl-c behave like esc" })
 
