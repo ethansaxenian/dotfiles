@@ -231,13 +231,15 @@ bindkey -M vicmd ds delete-surround
 bindkey -M vicmd ys add-surround
 bindkey -M visual S add-surround
 
-# ctrl-space accepts autosuggestion
+# ctrl-y accepts autosuggestion
 bindkey '^y' autosuggest-accept
 
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
 bindkey '^_' undo
+
+bindkey '^e' edit-command-line
 
 bindkey -s '^v' "fzf --bind 'enter:become(nvim {})' $FZF_CTRL_T_OPTS\n"
 bindkey -s '^f' 'tmux-sessionizer\n'

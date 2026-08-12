@@ -5,10 +5,10 @@ vim.bo.expandtab = true
 
 if vim.env.VIRTUAL_ENV == nil then
   local root_dir = vim.fs.root(0, {
-    ".git",
     "pyproject.toml",
-    "requirements.txt",
     "uv.lock",
+    "requirements.txt",
+    ".git",
   })
 
   if root_dir ~= nil then
